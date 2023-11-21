@@ -40,33 +40,47 @@ def Text(texte):
         textCmd(0x0F)
         textCmd(0x38)
         compteur = 0
-        for c in texte :
-                bus.write_byte_data(DISPLAY_TEXT_ADDR,0x40,ord(c))
+        ligne1 = ""
+        ligne2 = ""
+        for i in range(0,len(c)):
+            compteur = 0
+            if ligne1 == "":
+                bus.write_byte_data(DISPLAY_TEXT_ADDR,0x40,ord(texte[i]))
+                ligne1 += texte[i]
                 compteur += 1
                 if compteur == 16 or c == '\n':
                         textCmd(0xc0)
-                        compteur = 0
+                        timesleep(0.1)
+            elif ligne1 != "" and ligne2 != "":
+                ligne1 = ""
+                for c in ligne2:
+                    bus.write_byte_data(DISPLAY_TEXT_ADDR,0x40,ord(texte[i]))
+                    ligne1 += c
+                    compteur += 1
+                    if compteur == 16 or c == '\n':
+                        textCmd(0xc0)
+                        ligne2 = ""
+                        timesleep(2)
+            elif ligne2 == "":
+                bus.write_byte_data(DISPLAY_TEXT_ADDR,0x40,ord(texte[i]))
+                ligne2 += texte[i]
+                compteur += 1
+                if compteur == 16 or c == '\n':
+                        textCmd(0xc0)
+                        timesleep(2)
         print ("texte ecrit")
 
 def SetText1(texte):
-    nbrepet = len(texte)/32
-    i = 0
-    debi = 0
-    while(nbrepet == 0):
-        compteur = 0
-        for i in range(debi,debi+32):
-            bus.write_byte_data(DISPLAY_TEXT_ADDR,0x40,ord(c))
-            compteur += 1
+    textCmd(0x01)
+    textCmd(0x0F)
+    textCmd(0x38)
+    compteur = 0
+    for c in texte:
+        bus.write_byte_data(DISPLAY_TEXT_ADDR,0x40,ord(c))
+        compteur += 1
             if compteur == 16 or c == '\n':
                     textCmd(0xc0)
-                    compteur = 0
-        time.sleep(2)
-        TextCmd(0x01)
-        TextCmd(0x0F)
-        TextCmd(0x38)
-        debi = debi + 32
-        nbrepet - 1
-
+                    compteur = 0 
 
 def setColor(nomCouleur):
     if nomCouleur == "rouge":
@@ -79,17 +93,3 @@ def setColor(nomCouleur):
         setRGB(0,0,0)
     if nomCouleur == "jaune":
         setRGB(127,127,0)
-
-def setColor(nomCouleur):
-    if nomCouleur == "rouge":
-        setRGB(255,0,0)
-    if nomCouleur == "bleu":
-        setRGB(0,0,255)
-    if nomCouleur == "vert":
-        setRGB(0,255,0)
-    if nomCouleur == "blanc":
-        setRGB(0,0,0)
-    if nomCouleur == "jaune":
-        setRGB(127,127,0)
-
-
