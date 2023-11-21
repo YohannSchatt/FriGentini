@@ -48,7 +48,7 @@ def Text(texte):
                 bus.write_byte_data(DISPLAY_TEXT_ADDR,0x40,ord(texte[i]))
                 ligne1 += texte[i]
                 compteur += 1
-                if compteur == 16 or c == '\n':
+                if compteur == 16 or texte[i] == '\n':
                         textCmd(0xc0)
                         timesleep(0.1)
             elif ligne1 != "" and ligne2 != "":
@@ -57,7 +57,7 @@ def Text(texte):
                     bus.write_byte_data(DISPLAY_TEXT_ADDR,0x40,ord(texte[i]))
                     ligne1 += c
                     compteur += 1
-                    if compteur == 16 or c == '\n':
+                    if compteur == 16 or texte[i] == '\n':
                         textCmd(0xc0)
                         ligne2 = ""
                         timesleep(2)
@@ -65,7 +65,7 @@ def Text(texte):
                 bus.write_byte_data(DISPLAY_TEXT_ADDR,0x40,ord(texte[i]))
                 ligne2 += texte[i]
                 compteur += 1
-                if compteur == 16 or c == '\n':
+                if compteur == 16 or texte[i] == '\n':
                         textCmd(0xc0)
                         timesleep(2)
         print ("texte ecrit")
