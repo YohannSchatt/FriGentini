@@ -42,7 +42,7 @@ def Text(texte):
         compteur = 0
         ligne1 = ""
         ligne2 = ""
-        for i in range(0,len(c)):
+        for i in range(0,len(texte)):
             compteur = 0
             if ligne1 == "":
                 bus.write_byte_data(DISPLAY_TEXT_ADDR,0x40,ord(texte[i]))
@@ -50,7 +50,7 @@ def Text(texte):
                 compteur += 1
                 if compteur == 16 or texte[i] == '\n':
                         textCmd(0xc0)
-                        timesleep(0.1)
+                        time.sleep(0.1)
             elif ligne1 != "" and ligne2 != "":
                 ligne1 = ""
                 for c in ligne2:
@@ -60,14 +60,14 @@ def Text(texte):
                     if compteur == 16 or texte[i] == '\n':
                         textCmd(0xc0)
                         ligne2 = ""
-                        timesleep(2)
+                        time.leep(2)
             elif ligne2 == "":
                 bus.write_byte_data(DISPLAY_TEXT_ADDR,0x40,ord(texte[i]))
                 ligne2 += texte[i]
                 compteur += 1
                 if compteur == 16 or texte[i] == '\n':
                         textCmd(0xc0)
-                        timesleep(2)
+                        time.sleep(2)
         print ("texte ecrit")
 
 def SetText1(texte):
