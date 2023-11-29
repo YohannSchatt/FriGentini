@@ -18,7 +18,7 @@ import smbus
 # use the bus that matches your raspi version
 rev = GPIO.RPI_REVISION
 
-bus = smbus.SMBus(0)
+bus = smbus.SMBus(2)
 
 class hp206c:
 	address = None
