@@ -102,7 +102,6 @@ def Text2(texte):
         compteur = 0
         ligne = 1
         for i in range(0,len(texte)):
-            compteur = 0
             bus.write_byte_data(DISPLAY_TEXT_ADDR,0x40,ord(texte[i]))
             compteur += 1
             if (compteur == 16 or texte[i] == '\n') and ligne == 1 :
@@ -112,7 +111,5 @@ def Text2(texte):
             if (compteur == 32 or texte [i] == '\n') and ligne == 2 :
                 compteur = 0
                 textCmd(0x01)
-                textCmd(0x0F)
-                textCmd(0x38)
                 textCmd(0xc0)
                 ligne = 1
