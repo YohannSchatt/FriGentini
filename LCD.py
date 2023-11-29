@@ -97,8 +97,11 @@ def setColor(nomCouleur):
 def Text2(texte):
         time.sleep(5)
         textCmd(0x01)
+        time.sleep(0.01)
         textCmd(0x0F)
+        time.sleep(0.01)
         textCmd(0x38)
+        time.sleep(0.01)
         compteur = 0
         ligne = 1
         for i in range(0,len(texte)):
@@ -110,6 +113,5 @@ def Text2(texte):
                 ligne = 2
             if (compteur == 32 or texte [i] == '\n') and ligne == 2 :
                 compteur = 0
-                textCmd(0x01)
                 textCmd(0xc0)
                 ligne = 1
