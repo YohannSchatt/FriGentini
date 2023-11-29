@@ -3,8 +3,9 @@
 from driverI2C import *
 from led.py import *
 import time
+import barometer.py as baro
 
-setText("Bonjour je suis FriGent")
-setRGB(0,128,64)
+pr
+
 
 
