@@ -79,9 +79,6 @@ class hp206c:
 		self.HP20X_IIC_WriteCmd(self.HP20X_SOFT_RST)
 		time.sleep(.1)
 
-	def isAvailable(self):
-		return self.HP20X_IIC_ReadReg(self.REG_PARA)
-
 	def ReadTemperature(self):
 		self.HP20X_IIC_WriteCmd(self.HP20X_WR_CONVERT_CMD|self.OSR_CFG)
 		time.sleep(self.OSR_ConvertTime/1000.0)
@@ -103,11 +100,6 @@ class hp206c:
 
 if __name__ == "__main__":
 	h= hp206c()
-	ret=h.isAvailable()
-	if h.OK_HP20X_DEV == ret:
-		print("HP20x_dev is available.")
-	else:
-		print("HP20x_dev isn't available.")
 
 	temp=h.ReadTemperature()
 	pressure=h.ReadPressure()
