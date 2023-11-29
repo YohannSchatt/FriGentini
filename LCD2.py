@@ -39,6 +39,7 @@ def setText(text):
             if row == 2:
                 row = 1
                 time.sleep(1)
+                textCommand(0xc0)
                 textCommand(0x01) # clear display
         count += 1
         bus.write_byte_data(DISPLAY_TEXT_ADDR,0x40,ord(c))
