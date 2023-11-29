@@ -78,7 +78,7 @@ def SetText1(texte):
     for c in texte:
         bus.write_byte_data(DISPLAY_TEXT_ADDR,0x40,ord(c))
         compteur += 1
-            if compteur == 16 or c == '\n':
+        if compteur == 16 or c == '\n':
                     textCmd(0xc0)
                     compteur = 0 
 
