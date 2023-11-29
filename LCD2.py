@@ -1,4 +1,5 @@
 import time,sys
+import smbus
 
 bus = smbus.SMBus(1)
 
