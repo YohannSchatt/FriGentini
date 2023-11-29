@@ -33,6 +33,7 @@ def setText(text):
         if c == '\n' or count == 16:
             count = 0
             if row == 1:
+                row = 2
                 textCommand(0xc0)
                 time.sleep(1)
             if row == 2:
