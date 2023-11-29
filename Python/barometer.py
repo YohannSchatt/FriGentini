@@ -1,6 +1,6 @@
 #Connected to I2C-3
 import hp206c as hp
-h= hp.hp206c(0)
+h= hp.hp206c()
 
 ret=h.isAvailable()
 if h.OK_HP20X_DEV == ret:

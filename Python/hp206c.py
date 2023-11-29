@@ -17,10 +17,8 @@ import smbus
 
 # use the bus that matches your raspi version
 rev = GPIO.RPI_REVISION
-if rev == 2 or rev == 3:
-    bus = smbus.SMBus(1)
-else:
-    bus = smbus.SMBus(0)
+
+bus = smbus.SMBus(0)
 
 class hp206c:
 	address = None
@@ -90,30 +88,11 @@ class hp206c:
 		t_raw = bus.read_i2c_block_data(self.address, self.HP20X_READ_T, 3)
 		t=t_raw[0]<<16|t_raw[1]<<8|t_raw[2]
 		if t&0x800000:
-			t|=0xff000000;
+			t|=0xff000000
 			us = (1<<32)
 			t = -1 * (us - t)
 		return t/100.0
 
-	def ReadPressure(self):
-		self.HP20X_IIC_WriteCmd(self.HP20X_WR_CONVERT_CMD|self.OSR_CFG)
-		time.sleep(self.OSR_ConvertTime/1000.0)
-		p_raw = bus.read_i2c_block_data(self.address, self.HP20X_READ_P, 3)
-		p=p_raw[0]<<16|p_raw[1]<<8|p_raw[2]
-		if p&0x800000:
-			p|=0xff000000;
-		return p/100.0
-
-	def ReadAltitude(self):
-		self.HP20X_IIC_WriteCmd(self.HP20X_WR_CONVERT_CMD|self.OSR_CFG)
-		time.sleep(self.OSR_ConvertTime/1000.0)
-		a_raw = bus.read_i2c_block_data(self.address, self.HP20X_READ_A, 3)
-		a=a_raw[0]<<16|a_raw[1]<<8|a_raw[2]
-		if a&0x800000:
-			a|=0xff000000;
-			us = (1<<32)
-			a = -1 * (us - a)
-		return a/100.0
 
 	def HP20X_IIC_WriteCmd(self,uCmd):
 		bus.write_byte(self.address, uCmd)
