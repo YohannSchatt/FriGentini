@@ -37,7 +37,7 @@ def setText(texte):
         time.sleep(0.00001)
         textCmd(0x0F)
         time.sleep(0.00001)
-        textCmd(0x38)
+        textCmd(0x38) #2eme ligne 
         time.sleep(0.00001)
         antislash = False
         compteur = 0
