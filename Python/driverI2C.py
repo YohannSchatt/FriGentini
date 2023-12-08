@@ -77,10 +77,14 @@ def setTextLigne2(texte):
 def Texte(texte):
         for i in range(0,len(texte)%16):
                 if i%2 == 0:
-                        setTextLigne1(texte[[(i*16):((i+1)*16)]])
+                        a = (i*16)
+                        b = (i+1)*16
+                        setTextLigne1(texte[a:b])
                         time.sleep(0.1)
                 if i%2 == 1:
-                        setTextLigne2(texte[(i*16):((i+1)*16)])
+                        a = (i*16)
+                        b = (i+1)*16
+                        setTextLigne2(texte[a:b])
                         time.sleep(2)
 
 
