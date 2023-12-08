@@ -78,12 +78,12 @@ def Texte(texte):
         for i in range(0,len(texte)%16):
                 if i%2 == 0:
                         a = (i*16)
-                        b = (i+1)*16
+                        b = (i+1)*16-1
                         setTextLigne1(texte[a:b])
                         time.sleep(0.1)
                 if i%2 == 1:
                         a = (i*16)
-                        b = (i+1)*16
+                        b = (i+1)*16-1
                         setTextLigne2(texte[a:b])
                         time.sleep(2)
 
