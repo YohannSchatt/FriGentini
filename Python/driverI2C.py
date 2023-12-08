@@ -64,12 +64,14 @@ def setTextLigne1(texte):
         time.sleep(0.001)
         if len(texte) <= 16:
                 for elt in texte:
+                        print(elt)
                         bus.write_byte_data(DISPLAY_TEXT_ADDR,0x40,ord(elt))
 
 def setTextLigne2(texte):
         if len(texte) <=16:
                 for elt in texte:
                         textCmd(0xc0) # pour passer a la ligne
+                        print(elt)
                         bus.write_byte_data(DISPLAY_TEXT_ADDR,0x40,ord(elt))
 
         
