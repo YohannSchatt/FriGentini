@@ -89,6 +89,9 @@ def Texte(texte):
                         setTextLigne2(texte[a:b])
                         time.sleep(2)
 
+def effacerText():
+        textCmd(0x01)
+
 
                          
         
