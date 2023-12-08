@@ -54,3 +54,34 @@ def setText(texte):
                         antislash = False
                         compteur += 1
         print ("texte ecrit")
+
+def setTextLigne1(texte):
+        textCmd(0x01)
+        time.sleep(0.00001)
+        textCmd(0x0F)
+        time.sleep(0.00001)
+        textCmd(0x38)
+        time.sleep(0.00001)
+        if len(texte) <= 16:
+                for elt in texte:
+                        bus.write_byte_data(DISPLAY_TEXT_ADDR,0x40,ord(i))
+
+def setTextLigne2(texte):
+        if len(texte) <=16
+        textCmd(0xc0) # pour passer a la ligne
+        bus.write_byte_data(DISPLAY_TEXT_ADDR,0x40,ord(i))
+
+        
+
+def Texte(texte):
+        for i in range(0,len(texte)%16):
+                if i%2 == 0:
+                        setTextLigne1(texte[[i*16:(i+1)*16]])
+                        time.sleep(0.1)
+                if i%2 == 1:
+                        setTextLigne2(texte[i*16:(i+1)*16])
+                        time.sleep(2)
+
+
+                         
+        
