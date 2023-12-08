@@ -72,7 +72,7 @@ def setTextLigne2(texte):
                 for elt in texte:
                         textCmd(0xc0) # pour passer a la ligne
                         print(elt)
-                        bus.write_byte_data(DISPLAY_TEXT_ADDR,0x40,ord(elt))
+                        bus.write_byte_data(DISPLAY_TEXT_ADDR,0x80,ord(elt))
 
         
 
