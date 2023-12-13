@@ -55,18 +55,23 @@ def setText(texte):
                         compteur += 1
         print ("texte ecrit")
 
-def setTextLigne1(texte):
+def Textinitialisation(texte):
         textCmd(0x01)
         time.sleep(0.001)
         textCmd(0x0F)
         time.sleep(0.001)
         textCmd(0x38)
         time.sleep(0.001)
+#fonction qui permet d'écrire sur la ligne 1 de l'écran
+#a pour entré un texte qui inférieur ou égal a 16
+def setTextLigne1(texte):
         if len(texte) <= 16:
                 for elt in texte:
                         print(elt)
                         bus.write_byte_data(DISPLAY_TEXT_ADDR,0x40,ord(elt))
 
+#fonction qui permet d'écrire sur la ligne 2 de l'écran
+#a pour entré un texte qui inférieur ou égal a 16
 def setTextLigne2(texte):
         textCmd(0xc0) # pour passer a la ligne
         if len(texte) <=16:
