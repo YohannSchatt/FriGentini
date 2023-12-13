@@ -1,11 +1,13 @@
 # coding: utf-8
 
 from driverI2C import *
-from led.py import *
 import time
-import barometer.py as baro
+import DriverThermometre as thermo
 
-pr
+
+while True :
+        print(thermo.ReadTemperature())
+
 
 
 
