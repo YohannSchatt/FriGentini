@@ -2,8 +2,9 @@
 
 from driverI2C import *
 import time
+import NFCDriver as carte
 
-Texte("Bonjour je suis FriGent")
-setRGB(0,128,64)
+while True : 
+    print(carte.ReadCard())
 
 
