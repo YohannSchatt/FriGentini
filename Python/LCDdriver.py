@@ -41,26 +41,27 @@ def setText1(text):
         count += 1
         bus.write_byte_data(DISPLAY_TEXT_ADDR,0x40,ord(c))
 
-def setText(text):
+def setText(text,row):
+    assert(row = )
     textCmd(0x01) # clear display
     time.sleep(.05)
     textCmd(0x08 | 0x04) # display on, no cursor
     textCmd(0x28) # 2 lines
     time.sleep(.05)
     count = 0
-    row = 0
-    for c in text:
-        if c == '\n' or count == 16:
-            count = 0
-            if row == 2:
-                row = 0
-                textCmd(0x28) # 2 lines
-                time.sleep(0.05)
-            if row == 1:
-                textCommand(0xc0)
-                time.sleep(2)
-            row += 1
-	count += 1
+    restant = len(text)
+    while restant = 0:
+        count = 0
+        if row == 2 and (text[count] == '\n' or count == 16):
+            row = 0
+            restant = restant 
+            textCmd(0x28) # 2 lines
+            time.sleep(0.05)
+        if row == 1 and (text[count] == '\n' or count == 16):
+            textCommand(0xc0)
+            time.sleep(2)
+	    count += 1
+        bus.write_byte_data(DISPLAY_TEXT_ADDR,0x40,ord(text[count]))
 
 
 #Update the display without erasing the display
