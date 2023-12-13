@@ -1,13 +1,10 @@
 # coding: utf-8
 
-from driverI2C import *
+from LCDdriver import *
 import time
 
-Textinitialisation()
-setTextLigne1("Bonjour je suis FriGent")
-setTextLigne2("Au revoir")
-time.sleep(5)
-effacerText()
+setText("Bonjour \n tu vois ce texte")
+print("texte affiché")
 setRGB(0,128,64)
 
 

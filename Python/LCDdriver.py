@@ -1,16 +1,7 @@
 import time,sys
+import smbus
 
-if sys.platform == 'uwp':
-    import winrt_smbus as smbus
-    bus = smbus.SMBus(1)
-else:
-    import smbus
-    import RPi.GPIO as GPIO
-    rev = GPIO.RPI_REVISION
-    if rev == 2 or rev == 3:
-        bus = smbus.SMBus(1)
-    else:
-        bus = smbus.SMBus(0)
+bus = smbus.SMBus(1)
 
 # this device has two I2C addresses
 DISPLAY_RGB_ADDR = 0x62
@@ -30,7 +21,7 @@ def textCmd(cmd):
     bus.write_byte_data(DISPLAY_TEXT_ADDR,0x80,cmd)
 
 # set display text \n for second line(or auto wrap)     
-def setText(text):
+def setText1(text):
     textCmd(0x01) # clear display
     time.sleep(.05)
     textCmd(0x08 | 0x04) # display on, no cursor
@@ -69,6 +60,7 @@ def setText(text):
                 textCommand(0xc0)
                 time.sleep(2)
             row += 1
+	count += 1
 
 
 #Update the display without erasing the display
