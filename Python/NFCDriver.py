@@ -24,10 +24,11 @@ def ReadCard () :
             # Try again if no card is available.
             if uid is None:
                 continue
-            print('Found card with UID:', [hex(i) for i in uid])
+            #print('Found card with UID:', [hex(i) for i in uid])
             lecture = True
-    except : 
+    except Exception as e: 
         print("Exception")
     finally : 
         print("fin")
+        GPIO.cleanup()
         return uid

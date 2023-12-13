@@ -4,7 +4,8 @@ from driverI2C import *
 import time
 import NFCDriver as carte
 
-while True : 
-    print(carte.ReadCard())
+uid = carte.ReadCard()
+for i in uid : 
+    print(i)
 
 
