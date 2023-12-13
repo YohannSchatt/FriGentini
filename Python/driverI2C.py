@@ -65,7 +65,7 @@ def Textinitialisation():
 #fonction qui permet d'écrire sur la ligne 1 de l'écran
 #a pour entré un texte qui inférieur ou égal a 16
 def setTextLigne1(texte):
-        textCmd(0x38)
+        textCmd(0x0F)
         if len(texte) <= 16:
                 for elt in texte:
                         print(elt)
