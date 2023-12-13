@@ -55,7 +55,7 @@ def setText(texte):
                         compteur += 1
         print ("texte ecrit")
 
-def Textinitialisation(texte):
+def Textinitialisation():
         textCmd(0x01)
         time.sleep(0.001)
         textCmd(0x0F)
