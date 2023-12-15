@@ -1,3 +1,4 @@
+#Main code of the project, running the fonctionnal part
 # coding: utf-8
 
 from driverI2C import *
