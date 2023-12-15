@@ -6,11 +6,12 @@ import time
 import DriverThermometre as thermo
 
 LCD.effacerText()
+
+setTextLigne2("    Bienvenue"    )
+time.sleep(2)
+
 while True :
     température = thermo.ReadTemperature()
     print(température)
     LCD.setTextLigne1(str(round(température,2))+' Celsius')
-
-
-
 
