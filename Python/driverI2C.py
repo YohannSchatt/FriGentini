@@ -32,29 +32,8 @@ def textCmd(cmd):
 # Completez le code de la fonction permettant d'ecrire le texte recu en parametre
 # Si le texte contient un \n ou plus de 16 caracteres pensez a gerer
 # le retour a la ligne
-def setText(texte):
-        textCmd(0x01)
-        time.sleep(0.00001)
-        textCmd(0x0F)
-        time.sleep(0.00001)
-        textCmd(0x38) #2eme ligne 
-        time.sleep(0.00001)
-        antislash = False
-        compteur = 0
-        for i in texte :
-                #print(i)
-                if i == "\\" :
-                        antislash = True
-                elif (i == "n" and antislash) or compteur == 16:  # si on rencontre \n ou si on depasse 16 caracteres
-                        textCmd(0xc0) # pour passer a la ligne
-                        compteur = 0
-                        bus.write_byte_data(DISPLAY_TEXT_ADDR,0x40,ord(i))
-                else :
-                        bus.write_byte_data(DISPLAY_TEXT_ADDR,0x40,ord(i))
-                        antislash = False
-                        compteur += 1
-        print ("texte ecrit")
 
+#initialise l'écran
 def Textinitialisation():
         textCmd(0x01)
         time.sleep(0.001)
@@ -62,6 +41,7 @@ def Textinitialisation():
         time.sleep(0.001)
         textCmd(0x38)
         time.sleep(0.001)
+
 #fonction qui permet d'écrire sur la ligne 1 de l'écran
 #a pour entré un texte qui inférieur ou égal a 16
 def setTextLigne1(texte):
@@ -81,8 +61,7 @@ def setTextLigne2(texte):
                 bus.write_byte_data(DISPLAY_TEXT_ADDR,0x40,ord(texte[i]))
                 i += 1
 
-        
-
+#fonction qui défile un texte sur l'écran
 def setText(texte):
         row = 1
         tab = texte.split("\n")
@@ -94,14 +73,5 @@ def setText(texte):
                 print("Coucou")
                 time.sleep(2)
 
-                
-
-
-
-
 def effacerText():
         textCmd(0x01)
-
-
-                         
-        
