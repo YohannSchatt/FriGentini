@@ -32,25 +32,46 @@ def textCmd(cmd):
 # Completez le code de la fonction permettant d'ecrire le texte recu en parametre
 # Si le texte contient un \n ou plus de 16 caracteres pensez a gerer
 # le retour a la ligne
-def setText(texte):
+
+#initialise l'écran
+def textinitialisation():
         textCmd(0x01)
-        time.sleep(0.00001)
+        time.sleep(0.001)
         textCmd(0x0F)
-        time.sleep(0.00001)
+        time.sleep(0.001)
         textCmd(0x38)
-        time.sleep(0.00001)
-        antislash = False
-        compteur = 0
-        for i in texte :
-                #print(i)
-                if i == "\\" :
-                        antislash = True
-                elif (i == "n" and antislash) or compteur == 16:  # si on rencontre \n ou si on depasse 16 caracteres
-                        textCmd(0xc0) # pour passer a la ligne
-                        compteur = 0
-                        bus.write_byte_data(DISPLAY_TEXT_ADDR,0x40,ord(i))
-                else :
-                        bus.write_byte_data(DISPLAY_TEXT_ADDR,0x40,ord(i))
-                        antislash = False
-                        compteur += 1
-        print ("texte ecrit")
+        time.sleep(0.001)
+
+#fonction qui permet d'écrire sur la ligne 1 de l'écran
+#a pour entré un texte qui inférieur ou égal a 16
+def setTextLigne1(texte):
+        textCmd(0x02)
+        textCmd(0x08 | 0x04)
+        i = 0
+        while i<= 15 and i<len(texte) and texte[i] != "\n":
+                bus.write_byte_data(DISPLAY_TEXT_ADDR,0x40,ord(texte[i]))
+                i += 1
+
+#fonction qui permet d'écrire sur la ligne 2 de l'écran
+#a pour entré un texte qui inférieur ou égal a 16
+def setTextLigne2(texte):
+        textCmd(0xc0) # pour passer a la ligne
+        i = 0
+        while i <= 15 and i < len(texte) and texte[i] != "\n":
+                bus.write_byte_data(DISPLAY_TEXT_ADDR,0x40,ord(texte[i]))
+                i += 1
+
+#fonction qui défile un texte sur l'écran
+def setText(texte):
+        row = 1
+        tab = texte.split("\n")
+        print(tab)
+        for i in range(len(tab)-1):
+                effacerText()
+                setTextLigne1(tab[i])
+                setTextLigne2(tab[i+1])
+                print("Coucou")
+                time.sleep(2)
+
+def effacerText():
+        textCmd(0x01)
