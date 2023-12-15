@@ -62,16 +62,17 @@ def setTextLigne2(texte):
                 i += 1
 
 #fonction qui défile un texte sur l'écran
-def setText(texte):
-        row = 1
+def setText(texte,temps):
         tab = texte.split("\n")
-        print(tab)
-        for i in range(len(tab)-1):
-                effacerText()
-                setTextLigne1(tab[i])
-                setTextLigne2(tab[i+1])
-                print("Coucou")
-                time.sleep(2)
+        if len(texte) == 1:
+                setTextLigne1(tab[0])
+        else : 
+                for i in range(len(tab)-1):
+                        effacerText()
+                        setTextLigne1(tab[i])
+                        setTextLigne2(tab[i+1])
+                        time.sleep(2)
 
+#fonction qui efface le texte a l'écran
 def effacerText():
         textCmd(0x01)

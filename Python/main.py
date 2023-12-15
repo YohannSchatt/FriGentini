@@ -1,13 +1,15 @@
 #Main code of the project, running the fonctionnal part
 # coding: utf-8
 
-from driverI2C import *
+from driverI2C as LCD
 import time
 import DriverThermometre as thermo
 
 
 while True :
-        print(thermo.ReadTemperature())
+    température = thermo.ReadTemperature()
+        print(température)
+        LCD.setTextLigne1(str(température))
 
 
 
