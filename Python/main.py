@@ -1,11 +1,16 @@
+#Main code of the project, running the fonctionnal part
 # coding: utf-8
 
-from driverI2C import *
+import driverI2C as LCD
 import time
-import NFCDriver as carte
+import DriverThermometre as thermo
 
-uid = carte.ReadCard()
-for i in uid : 
-    print(i)
+LCD.effacerText()
+while True :
+    température = thermo.ReadTemperature()
+    print(température)
+    LCD.setTextLigne1(str(round(température,2))+'           ')
+
+
 
 
