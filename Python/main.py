@@ -72,7 +72,7 @@ while True:
         if Bouton == "Plus":
             selectionPage = (selectionPage+1)%5
         if Bouton == "Moins":
-            if selectionPage = 0:
+            if selectionPage == 0:
                 selectionPage = 5
             else :
                 selectionPage = selectionPage - 1
