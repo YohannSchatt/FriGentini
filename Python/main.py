@@ -5,7 +5,7 @@ import driverI2C as LCD
 import time
 import DriverThermometre as thermo
 
-effacerText()
+LCD.effacerText()
 while True :
     température = thermo.ReadTemperature()
     print(température)
