@@ -9,7 +9,7 @@ import DriverThermometre as thermo
 while True :
     température = thermo.ReadTemperature()
     print(température)
-    LCD.setTextLigne1(str(round(température),2))
+    LCD.setTextLigne1(str(round(température,2)))
 
 
 
