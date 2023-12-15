@@ -58,7 +58,7 @@ while True:
             if Bouton == "Ok":
                 pageMenu = 2
         if selectionPage == 3:
-            LCD.setTextLigne2("< afficher data >")
+            LCD.setTextLigne2("< affiche data >")
             if Bouton == "Ok":
                 pageMenu = 3
         if selectionPage == 4:
