@@ -10,7 +10,6 @@ while True :
     température = thermo.ReadTemperature()
     print(température)
     LCD.setTextLigne1(str(round(température,2)))
-    time.sleep(0.1)
     LCD.effacerText()
 
 
