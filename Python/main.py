@@ -8,6 +8,7 @@
 import driverI2C as LCD
 import time
 import DriverThermometre as thermo
+import grovepi 
 
 LCD.effacerText()
 
