@@ -86,9 +86,12 @@ def setTextLigne2(texte):
 def setText(texte):
         row = 1
         tab = texte.split("\n")
+        print(tab)
         for i in range(len(tab)-1):
+                effacerText(0x01)
                 setTextLigne1(tab[i])
                 setTextLigne2(tab[i+1])
+                print("Coucou")
                 time.sleep(2)
 
                 
