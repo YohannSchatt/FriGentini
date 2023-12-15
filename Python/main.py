@@ -77,9 +77,9 @@ while True:
             else :
                 selectionPage = selectionPage - 1
     if pageMenu == 1 :
-        LCD.setTextLigne1(str(round(thermo.ReadTemperature(),2))+' Celsius')
-        LCD.setTextLigne2("retour -> menu")
-        if LectBouton == "Back":
+        LCD.setTextLigne1(str(round(thermo.ReadTemperature(),2))+' Celsius       ')
+        LCD.setTextLigne2("retour -> menu ")
+        if Bouton == "Back":
             pageMenu = 0
 
 
