@@ -89,6 +89,7 @@ def setText(texte):
         for i in range(len(tab)-1):
                 setTextLigne1(tab[i])
                 setTextLigne2(tab[i+1])
+                time.sleep(2)
 
                 
 

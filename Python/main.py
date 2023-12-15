@@ -4,8 +4,7 @@ from driverI2C import *
 import time
 
 Textinitialisation()
-setTextLigne2("je suis la")
-setTextLigne1("Bonjour \n tu vois ce texte")
+setText("bonjour \n au revoir \n bonsoir \n bonne soirée \n mathias \n fukhehf")
 print("texte affiché")
 setRGB(0,128,64)
 
