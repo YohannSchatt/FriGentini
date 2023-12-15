@@ -5,12 +5,11 @@ import driverI2C as LCD
 import time
 import DriverThermometre as thermo
 
-
+effacerText()
 while True :
     température = thermo.ReadTemperature()
     print(température)
-    LCD.setTextLigne1(str(round(température,2)))
-    LCD.effacerText()
+    LCD.setTextLigne1(str(round(température,2))+'           ')
 
 
 
