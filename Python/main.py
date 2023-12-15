@@ -1,9 +1,10 @@
 # coding: utf-8
 
-from LCDdriver import *
+from LdriverI2C import *
 import time
 
-setText("Bonjour \n tu vois ce texte")
+setTextLigne1("Bonjour \n tu vois ce texte")
+setTextLigne2("je suis la")
 print("texte affiché")
 setRGB(0,128,64)
 

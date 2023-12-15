@@ -65,20 +65,22 @@ def Textinitialisation():
 #fonction qui permet d'écrire sur la ligne 1 de l'écran
 #a pour entré un texte qui inférieur ou égal a 16
 def setTextLigne1(texte):
-        textCmd(0x01)
-        if len(texte) <= 16:
-                for elt in texte:
-                        print(elt)
+        textCmd(0x08 | 0x04)e
+        i = 0
+        if len(texte) <=16:
+                while texte[i] != "\n" and i <=15
                         bus.write_byte_data(DISPLAY_TEXT_ADDR,0x40,ord(elt))
+                        i += 1
 
 #fonction qui permet d'écrire sur la ligne 2 de l'écran
 #a pour entré un texte qui inférieur ou égal a 16
 def setTextLigne2(texte):
         textCmd(0xc0) # pour passer a la ligne
+        i = 0
         if len(texte) <=16:
-                for elt in texte:
-                        print(elt)
+                while texte[i] != "\n" and i <=15
                         bus.write_byte_data(DISPLAY_TEXT_ADDR,0x40,ord(elt))
+                        i += 1
 
         
 
