@@ -7,7 +7,7 @@ import DriverThermometre as thermo
 
 LCD.effacerText()
 
-setTextLigne2("    Bienvenue"    )
+LCD.setTextLigne2("    Bienvenue"    )
 time.sleep(2)
 
 while True :
