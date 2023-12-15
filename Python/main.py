@@ -55,8 +55,8 @@ while True:
                 pageMenu = 1
         if selectionPage == 2:
             LCD.setTextLigne2("<  ajout data  >")
-                if Bouton == "Ok":
-                    pageMenu = 2
+            if Bouton == "Ok":
+                pageMenu = 2
         if selectionPage == 3:
             LCD.setTextLigne2("< afficher data >")
             if Bouton == "Ok":
