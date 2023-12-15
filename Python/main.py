@@ -76,7 +76,7 @@ while True:
                 selectionPage = 5
             else :
                 selectionPage = selectionPage - 1
-        time.sleep(0.1)
+        time.sleep(0.5)
     if pageMenu == 1 :
         LCD.setTextLigne1(str(round(thermo.ReadTemperature(),2))+' Celsius       ')
         LCD.setTextLigne2("retour -> menu ")
