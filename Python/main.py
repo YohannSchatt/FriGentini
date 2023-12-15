@@ -10,6 +10,11 @@ import time
 import DriverThermometre as thermo
 import grovepi 
 
+buttonOk = 4
+buttonBack = 7
+buttonplus = 2
+buttonMoins = 3
+
 LCD.effacerText()
 
 LCD.setTextLigne2("    Bienvenue"    )
@@ -29,7 +34,7 @@ grovepi.pinMode(button,"INPUT")
 
 while True:
     try:
-        print(grovepi.digitalRead(button))
+        print(grovepi.digitalRead(buttonplus))
         time.sleep(.5)
 
     except IOError:
