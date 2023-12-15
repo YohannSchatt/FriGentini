@@ -1,7 +1,7 @@
 #Main code of the project, running the fonctionnal part
 # coding: utf-8
 
-from driverI2C as LCD
+import driverI2C as LCD
 import time
 import DriverThermometre as thermo
 
