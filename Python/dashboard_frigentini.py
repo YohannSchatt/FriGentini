@@ -5,7 +5,7 @@ import time # to simulate real time data
 import plotly.express as px # interactive charts
 import matplotlib.pyplot as plt
 
-# streamlit run dashboard_frigentini.py
+#streamlit run dashboard_frigentini.py 
 
 st.set_page_config(
     page_title = 'Your Frigentini Dashboard',  # important pour le référencement sur Google quand on hébergera l'app
