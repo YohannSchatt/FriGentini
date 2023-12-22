@@ -34,7 +34,7 @@ def textCmd(cmd):
 # le retour a la ligne
 
 #initialise l'écran
-def textinitialisation():
+def initialisation():
         textCmd(0x01)
         time.sleep(0.001)
         textCmd(0x0F)

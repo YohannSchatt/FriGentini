@@ -15,7 +15,9 @@ buttonBack = 7
 buttonPlus = 2
 buttonMoins = 3
 
+LCD.initialisation()
 LCD.effacerText()
+LCD.setRGB(255,0,0)
 
 LCD.setTextLigne2("    Bienvenue"    )
 time.sleep(2)
