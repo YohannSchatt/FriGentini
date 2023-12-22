@@ -4,18 +4,23 @@ import pandas as pd
 import time # to simulate real time data
 import plotly.express as px # interactive charts
 import matplotlib.pyplot as plt
+from PIL import Image
 
 #streamlit run dashboard_frigentini.py 
 
+image_directory = '../Image/icons8-frigo-50.png'
+image = Image.open(image_directory)
+
+
 st.set_page_config(
     page_title = 'Your Frigentini Dashboard',  # important pour le référencement sur Google quand on hébergera l'app
-    page_icon = '✅',
+    page_icon = image,
     layout = 'wide'
 )
 
 @st.cache_data
 def get_data() -> pd.DataFrame:
-    return pd.read_csv('../frigo.csv')
+    return pd.read_csv('../CSV/frigo.csv')
 
 df = get_data()
 st.title("Frigentini Dashboard")
