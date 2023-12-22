@@ -9,6 +9,7 @@ import driverI2C as LCD
 import time
 import DriverThermometre as thermo
 import grovepi 
+import pandas as p
 
 buttonOk = 4
 buttonBack = 7
@@ -17,7 +18,7 @@ buttonMoins = 3
 
 LCD.initialisation()
 LCD.effacerText()
-LCD.setRGB(255,0,0)
+LCD.setRGB(0,0,255)
 
 LCD.setTextLigne2("    Bienvenue"    )
 time.sleep(2)
@@ -45,6 +46,10 @@ def LectBouton():
         return "Plus"
     if grovepi.digitalRead(buttonMoins) == 1:
         return "Moins"
+
+
+def Lecturebdd():
+
 pageMenu = 0
 selectionPage = 1
 while True:
