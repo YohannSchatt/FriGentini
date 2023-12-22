@@ -47,9 +47,6 @@ def LectBouton():
     if grovepi.digitalRead(buttonMoins) == 1:
         return "Moins"
 
-
-def Lecturebdd():
-
 pageMenu = 0
 selectionPage = 1
 while True:
