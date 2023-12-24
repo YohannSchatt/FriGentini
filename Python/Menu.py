@@ -26,6 +26,12 @@ def main () :
 
     st.write("Bienvenu sur votre dashboard")
 
+
+    col1, col2, col3 = st.columns(3)
+    col1.metric("Temperature", "3 °C")
+    col2.metric("Aliments", "5")
+    col3.metric("Aliments périmée", "1")
+
 if __name__ == '__main__':
     main()
 
