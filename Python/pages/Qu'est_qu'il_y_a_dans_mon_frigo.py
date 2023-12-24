@@ -18,6 +18,18 @@ def main() :
     image_directory = '../Image/icons8-fromage-50.png'   
     image = Image.open(image_directory)
 
+    st.set_page_config(
+        page_title = 'Frigentini Dashboard', 
+        page_icon = image,
+        layout = 'wide'
+    )
+
+    st.title("Frigentini Storage")
+    st.markdown("## Storage informations")
+
+    st.write("Ici vous pouvez voir la nourriture qui est stockées dans votre refrigérateur")
+    st.write("Activer le bouton pour choisir la durée de date courte adapté et voir rapidement les produits proche d'échéances")
+
     #Bouton toggle
     on = st.toggle('Option date courte')
 
