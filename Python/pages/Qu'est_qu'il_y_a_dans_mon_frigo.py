@@ -3,9 +3,9 @@ import Menu as mn
 import datetime
 from PIL import Image
 
-"""
-Fonction qui permet de savoir si une date du format jour/mois/année est dans moins du nombre de jour
-"""
+
+#Fonction qui permet de savoir si une date du format jour/mois/année est dans moins du nombre de jour
+
 def est_date_courte (date:str,nb_jour:int) -> bool:
     auj = datetime.datetime.today()
     diff =  -(auj - datetime.datetime.strptime(date,'%d/%m/%Y')).days

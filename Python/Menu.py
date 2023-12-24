@@ -5,27 +5,29 @@ from PIL import Image
 
 #streamlit run Menu.py
 #!etre dans le repertoire Python
-
-image_directory = '../Image/icons8-frigo-50.png'
-image = Image.open(image_directory)
-
-
-st.set_page_config(
-    page_title = 'Frigentini Dashboard',  # important pour le référencement sur Google quand on hébergera l'app
-    page_icon = image,
-    layout = 'wide'
-)
-
 @st.cache_data
 def get_data(chemin) -> pd.DataFrame:
     return pd.read_csv(chemin)
 
-st.title("Frigentini Dashboard")
-st.markdown("## Temperature and storage information")
+def main () :
+    image_directory = '../Image/icons8-frigo-50.png'
+    image = Image.open(image_directory)
 
-st.write("Bienvenu sur votre dashboard")
+
+    st.set_page_config(
+        page_title = 'Frigentini Dashboard',  # important pour le référencement sur Google quand on hébergera l'app
+        page_icon = image,
+        layout = 'wide'
+    )
 
 
+    st.title("Frigentini Dashboard")
+    st.markdown("## Temperature and storage information")
+
+    st.write("Bienvenu sur votre dashboard")
+
+if __name__ == '__main__':
+    main()
 
 
 
