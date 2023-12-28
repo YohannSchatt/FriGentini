@@ -1,0 +1,22 @@
+version: '3.8'
+services:
+  mysql:
+    platform: linux/x86_64
+    image: mysql:8.2
+    container_name: BDfrigentini
+    restart : always
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=frigentini
+    volumes :
+      - ./mysql:/var/lib/mysql
+  phpmyadmin:
+    image: phpmyadmin
+    restart: always
+    ports:
+      - 8080:80
+    environment:
+      - PMA_ARBITRARY=1
+

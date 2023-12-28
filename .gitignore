@@ -1,0 +1,9 @@
+# Fichiers temporaires
+*~
+
+# Fichiers de log
+*.log
+
+# Fichiers compilés
+*.class
+*.jar
