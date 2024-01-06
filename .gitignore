@@ -7,3 +7,7 @@
 # Fichiers compilés
 *.class
 *.jar
+
+#Dossier
+
+mysql/
