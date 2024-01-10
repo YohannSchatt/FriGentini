@@ -123,7 +123,7 @@ while True:
             if Bouton == "Ok" : 
                 poscursor = 0
                 pageParamètre = 1 
-        else if pageParamètre == 1 :  #Menu selection
+        elif pageParamètre == 1 :  #Menu selection
             LCD.setTextLigne1("temp : " + str(temp[0]) + cursor[(poscursor+1)%2] + "         ")
             LCD.setTextLigne2("approx : " + str(temp[1]) + cursor[(poscursor+1)%2] + "       ") 
             if Bouton == "Plus":
@@ -133,7 +133,7 @@ while True:
             if Bouton == "Back" or Bouton == "Ok": #permet de faire retour
                 pageParamètre = 0
                 poscursor = 0
-        else if Bouton == "Back": #permet de faire retour
+        elif Bouton == "Back": #permet de faire retour
             pageMenu = 0
             poscursor = 0
 
