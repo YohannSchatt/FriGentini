@@ -63,7 +63,6 @@ def Alarme(temperatureAct,temperature,approximation,Alarme):
 temp = [6,1] #[température défini, approximation défini]
 temperature = 6 #température initial pris par le système
 approximation = 1 #approximation initial pris par le système 
-AlarmeActive
 
 pageMenu = 0 #Int qui permet de changer de Menu
 selectionPage = 1 #Int qui permet de défiler entre les différents page du menu
