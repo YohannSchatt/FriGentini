@@ -21,7 +21,7 @@ diode = 5
 
 LCD.initialisation()
 LCD.effacerText()
-LCD.setRGB(0,0,255)
+LCD.setRGB(127,0,127)
 
 LCD.setTextLigne2("    Bienvenue"    )
 time.sleep(2)
@@ -43,6 +43,7 @@ grovepi.pinMode(diode,"OUTPUT")
 grovepi.pinMode(buzzer,"OUTPUT")
 
 def LectBouton():
+    time.sleep(0.1)
     if grovepi.digitalRead(buttonOk) == 1:
         return "Ok"
     if grovepi.digitalRead(buttonBack) == 1:
@@ -106,7 +107,6 @@ while True:
                 selectionPage = 5
             else :
                 selectionPage = selectionPage - 1
-        time.sleep(0.12)
     if pageMenu == 1 : #Affiche la température
         LCD.setTextLigne1(str(round(températureAct))+' Celsius       ')
         LCD.setTextLigne2("retour -> menu ")
