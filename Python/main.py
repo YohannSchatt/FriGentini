@@ -112,26 +112,30 @@ while True:
         if Bouton == "Back": #permet de faire retour
             pageMenu = 0
     if pageMenu == 6 : #Paramètre
-        if pageParamètre = 0 : # Menu principale des paramètres
+        if Bouton == "Moins" or Bouton == "Plus": # Permet de déplacer le curseur
+            if poscursor == 0:
+                poscursor = 1
+            else :
+                poscursor = 0
+        if pageParamètre == 0 : # Menu principale des paramètres
             LCD.setTextLigne1("temp : " + str(temp[0]) + " ± "+ str(temp[1]) + " " + cursor[poscursor] + "       ")
             LCD.setTextLigne2("Alarme : " + str(Alarme) +  cursor[(poscursor+1)%2] + "       ")
-            if Bouton == "Moins" or Bouton == "Plus": # Permet de déplacer le curseur
-                if SelectionParamètre == 0:
-                    SelectionParamètre = 1
-                else :
-                    SelectionParamètre = 0
-        else if pageParamètre = 1 :  #Menu selection
+            if Bouton == "Ok" : 
+                poscursor = 0
+                pageParamètre = 1 
+        else if pageParamètre == 1 :  #Menu selection
             LCD.setTextLigne1("temp : " + str(temp[0]) + cursor[(poscursor+1)%2] + "         ")
             LCD.setTextLigne2("approx : " + str(temp[1]) + cursor[(poscursor+1)%2] + "       ") 
             if Bouton == "Plus":
-                temp[poscursor] +=0.1
+                temp[poscursor] +=0.1 #augmente la température
             if Bouton == "Moins":
-                temp[poscursor] -=0.1
-
+                temp[poscursor] -=0.1 #augmente l'approximation
             if Bouton == "Back" or Bouton == "Ok": #permet de faire retour
-                pageMenu = 0
+                pageParamètre = 0
+                poscursor = 0
         else if Bouton == "Back": #permet de faire retour
             pageMenu = 0
+            poscursor = 0
 
         
 
