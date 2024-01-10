@@ -39,6 +39,8 @@ grovepi.pinMode(buttonOk,"INPUT")
 grovepi.pinMode(buttonBack,"INPUT")
 grovepi.pinMode(buttonPlus,"INPUT")
 grovepi.pinMode(buttonMoins,"INPUT")
+grovepi.pinMode(led,"OUTPUT")
+grovepi.pinMode(buzzer,"OUTPUT")
 
 def LectBouton():
     if grovepi.digitalRead(buttonOk) == 1:
