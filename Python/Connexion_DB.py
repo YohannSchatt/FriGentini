@@ -7,7 +7,7 @@ db = mysql.connector.connect(
     database = "frigentini"
 )
 
-my_cursor = db.cursor()
+#my_cursor = db.cursor()
 
 #my_cursor.execute("CREATE DATABASE test") #Commande qui permet de créer une base de donnée
 
@@ -29,37 +29,48 @@ my_cursor = db.cursor()
 
 #########################################################################################################################################################################
 
-#!!! Faire gaffe supprime les valeurs enregistrées et declenche une erreur si les tables n'existent pas
 
-try : 
-    my_cursor.execute("DROP TABLE STOCK,TEMPERATURES,PRODUITS")
-
-except mysql.connector.Error as err: 
-    print(f"Erreur d'exécution de la commande SQL : {err}")
-
-# Lire les instructions SQL à partir du fichier
-with open('../SQL/creation_BD.sql', 'r') as file:
-    sql_commands = file.read().split('\n')
-
-# Exécuter chaque instruction SQL du fichier
-for command in sql_commands:
-    try:
-        my_cursor.execute(command)
-    except mysql.connector.Error as err:
+def crea_tables ():
+    my_cursor = db.cursor()
+    try : 
+        my_cursor.execute("DROP TABLE STOCK,TEMPERATURES,PRODUITS")
+    except mysql.connector.Error as err: 
         print(f"Erreur d'exécution de la commande SQL : {err}")
+    # Lire les instructions SQL à partir du fichier
+    with open('../SQL/creation_BD.sql', 'r') as file:
+        sql_commands = file.read().split('\n')
 
-# Lire les instructions SQL à partir du fichier
-with open('../SQL/Donnees.sql', 'r') as file:
-    sql_commands = file.read().split('\n')
+    # Exécuter chaque instruction SQL du fichier, ici création de la BD
+    for command in sql_commands:
+        try:
+            my_cursor.execute(command)
+        except mysql.connector.Error as err:
+            print(f"Erreur d'exécution de la commande SQL : {err}")
 
-# Exécuter chaque instruction SQL du fichier
-for command in sql_commands:
+    # Lire les instructions SQL à partir du fichier, Injection des données de base
+    with open('../SQL/Donnees.sql', 'r') as file:
+        sql_commands = file.read().split('\n')
+
+    # Exécuter chaque instruction SQL du fichier
+    for command in sql_commands:
+        print(command)
+        try:
+            my_cursor.execute(command)
+        except mysql.connector.Error as err:
+            print(f"Erreur d'exécution de la commande SQL : {err}")
+
+    db.commit() #Valider les changements dans la BD
+    my_cursor.close()
+
+def requete_BD(requete) :
+    my_cursor = db.cursor()
     try:
-        my_cursor.execute(command)
+        my_cursor.execute(requete)
+        return my_cursor
     except mysql.connector.Error as err:
-        print(f"Erreur d'exécution de la commande SQL : {err}")
+            print(f"Erreur d'exécution de la commande SQL : {err}")
+    db.commit() #Valider les changements dans la BD
+    my_cursor.close()
 
-db.commit() #Valider les changements dans la BD
-
-my_cursor.close()
-db.close()
+def deconnexion_BD():
+    db.close()
