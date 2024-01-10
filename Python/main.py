@@ -44,14 +44,16 @@ grovepi.pinMode(buzzer,"OUTPUT")
 
 def LectBouton():
     print("je suis dans LectButton")
-    #if grovepi.digitalRead(buttonOk) == 1:
-        #return "Ok"
-    if grovepi.digitalRead(buttonBack) == 1:
+    if grovepi.digitalRead(buttonOk) == 1:
+        return "Ok"
+    elif grovepi.digitalRead(buttonBack) == 1:
         return "Back"
-    if grovepi.digitalRead(buttonPlus) == 1:
+    elif grovepi.digitalRead(buttonPlus) == 1:
         return "Plus"
-    if grovepi.digitalRead(buttonMoins) == 1:
+    elif grovepi.digitalRead(buttonMoins) == 1:
         return "Moins"
+    else :
+        return None
 
 def Alarme(temperatureAct,temperature,approximation,Alarme):
     print("je suis dans Alarme")
