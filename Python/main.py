@@ -44,8 +44,8 @@ grovepi.pinMode(buzzer,"OUTPUT")
 
 def LectBouton():
     print("je suis dans LectButton")
-    if grovepi.digitalRead(buttonOk) == 1:
-        return "Ok"
+    #if grovepi.digitalRead(buttonOk) == 1:
+        #return "Ok"
     if grovepi.digitalRead(buttonBack) == 1:
         return "Back"
     if grovepi.digitalRead(buttonPlus) == 1:
@@ -76,6 +76,7 @@ while True:
     print("while")
     températureAct = thermo.ReadTemperature()
     Bouton = LectBouton()
+    print("j'ai fini LectBouton")
     if pageMenu == 0: #Menu de selection
         LCD.setTextLigne1("    Selection")
         if selectionPage == 1:
