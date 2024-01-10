@@ -43,6 +43,7 @@ grovepi.pinMode(diode,"OUTPUT")
 grovepi.pinMode(buzzer,"OUTPUT")
 
 def LectBouton():
+    print("je suis dans LectButton")
     if grovepi.digitalRead(buttonOk) == 1:
         return "Ok"
     if grovepi.digitalRead(buttonBack) == 1:
@@ -53,13 +54,14 @@ def LectBouton():
         return "Moins"
 
 def Alarme(temperatureAct,temperature,approximation,Alarme):
+    print("je suis dans Alarme")
     if Alarme and (temperatureAct < temperature - approximation or temperatureAct > temperature + approximation):
         led.turnON(buzzer)
         led.turnON(diode)
     else :
         led.turnOFF(buzzer)
         led.turnOFF(buzzer)
-
+print("j'ai dépassé les fonctions")
 temp = [6,1] #[température défini, approximation défini]
 temperature = 6 #température initial pris par le système
 approximation = 1 #approximation initial pris par le système 
@@ -71,6 +73,7 @@ poscursor= 0 #Int qui permet de connaitre ou se situe le curseur dans paramètre
 cursor = ["<-",""] # curseur utilisé dans les différents menu qui se déplace sur les deux lignes
 Alarme = True #variable pour savoir si l'alarme est active ou non
 while True:
+    print("while")
     températureAct = thermo.ReadTemperature()
     Bouton = LectBouton()
     if pageMenu == 0: #Menu de selection
