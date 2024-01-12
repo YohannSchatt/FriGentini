@@ -17,49 +17,12 @@ import threading
 event_Bouton = threading.Event()
 event_Menu = threading.Event()
 
-global buttonOk
-global buttonBack 
-global buttonPlus 
-global buttonMoins 
-global buzzer 
-global diode 
-
 buttonOk = 4
 buttonBack = 7
 buttonPlus = 2
 buttonMoins = 3
 buzzer = 6
 diode = 8
-
-#[température défini, approximation défini
-temo = [6,1]
-#Int qui permet de changer de Menu
-pageMenu = 0
-#Int qui permet de défiler entre les différents page du menu
-selectionPage = 1
-#Int qui permet savoir ou on est dans les paramètres
-pageParamètre = 0
-#Int qui permet de connaitre ou se situe le curseur dans paramètre
-poscursor = 0
-# curseur utilisé dans les différents menu qui se déplace sur les deux lignes
-cursor = ["<-",""]
-#variable pour savoir si l'alarme est active ou non
-Alarme = True
-#variable qui permet de bloquer le curseur
-blocked = False
-#variable qui stocke la valeur du bouton
-Bouton = None
-
-global temp  #[température défini, approximation défini
-global pageMenu  #Int qui permet de changer de Menu
-global selectionPage #Int qui permet de défiler entre les différents page du menu
-global pageParamètre #Int qui permet savoir ou on est dans les paramètres
-global poscursor  #Int qui permet de connaitre ou se situe le curseur dans paramètre
-global cursor  # curseur utilisé dans les différents menu qui se déplace sur les deux lignes
-global Alarme  #variable pour savoir si l'alarme est active ou non
-global blocked  #variable qui permet de bloquer le curseur
-global Bouton  #variable qui permet de conserver la valeur de bouton
-
 
 #[température défini, approximation défini
 temo = [6,1]
