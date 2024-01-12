@@ -60,6 +60,14 @@ def Alarme(temperatureAct,temperature,approximation,Alarme):
         led.turnOFF(buzzer)
         led.turnOFF(buzzer)
 
+        
+def deplacementcursor():
+    if Bouton == "Moins" or Bouton == "Plus": # Permet de déplacer le curseur
+            if poscursor == 0:
+                poscursor = 1
+            else :
+                poscursor = 0
+
 
 temp = [6,1] #[température défini, approximation défini]
 temperature = 6 #température initial pris par le système
@@ -116,17 +124,14 @@ while True:
         if Bouton == "Back": #permet de faire retour
             pageMenu = 0
     if pageMenu == 5 : #Paramètre
-        if Bouton == "Moins" or Bouton == "Plus": # Permet de déplacer le curseur
-            if poscursor == 0:
-                poscursor = 1
-            else :
-                poscursor = 0
         if pageParamètre == 0 : # Menu principale des paramètres
             LCD.setTextLigne1("temp : " + str(temp[0]) + " ± "+ str(temp[1]) + " " + cursor[poscursor] + "       ")
             LCD.setTextLigne2("Alarme : " + str(Alarme) +  cursor[(poscursor+1)%2] + "       ")
-            if Bouton == "Ok" : 
-                poscursor = 0
+            deplacementcursor()
+            if Bouton == "Ok" and poscursor == 0: 
                 pageParamètre = 1 
+            if Bouton == "Ok" and poscursor == 1: 
+                Alarme = not Alarme
         elif pageParamètre == 1 :  #Menu selection
             LCD.setTextLigne1("temp : " + str(temp[0]) + cursor[(poscursor+1)%2] + "         ")
             LCD.setTextLigne2("approx : " + str(temp[1]) + cursor[(poscursor+1)%2] + "       ") 
@@ -140,9 +145,6 @@ while True:
         elif Bouton == "Back": #permet de faire retour
             pageMenu = 0
             poscursor = 0
-
-        
-
 
 
 
