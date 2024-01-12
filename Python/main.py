@@ -132,7 +132,7 @@ while True:
         NFC = 0
         while NFC == 0 and not cancel : 
             NFC = nfc.ReadCard()
-            print(hex(i) for i in NFC)
+            print([hex(i) for i in NFC])
         pageMenu = 0
     if pageMenu == 5 : #Paramètre
         if pageParamètre == 0 : # Menu principale des paramètres
