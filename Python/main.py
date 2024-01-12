@@ -148,8 +148,8 @@ while True:
                     cursor[0] = "<-"
                     blocked = False
                 else :
-                pageParamètre = 0
-                poscursor = 0
+                    pageParamètre = 0
+                    poscursor = 0
                 if Bouton == "Ok":
                     cursor[0] = "X"
                     blocked = True
