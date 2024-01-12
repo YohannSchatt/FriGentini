@@ -110,6 +110,7 @@ def changementtemp():
     return temp
 
 def SelectionPage():
+    event_Bouton.set()
     while True:
         print("SelectionPage")
         températureAct = thermo.ReadTemperature()
