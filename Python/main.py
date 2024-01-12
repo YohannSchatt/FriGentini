@@ -172,14 +172,22 @@ def main():
 
     global temp  #[température défini, approximation défini
     temo = [6,1]
-    global pageMenu = 0 #Int qui permet de changer de Menu
-    global selectionPage = 1 #Int qui permet de défiler entre les différents page du menu
-    global pageParamètre = 0 #Int qui permet savoir ou on est dans les paramètres
-    global poscursor = 0 #Int qui permet de connaitre ou se situe le curseur dans paramètre
-    global cursor = ["<-",""] # curseur utilisé dans les différents menu qui se déplace sur les deux lignes
-    global Alarme = True #variable pour savoir si l'alarme est active ou non
-    global blocked = False #variable qui permet de bloquer le curseur
-    global Bouton = None
+    global pageMenu  #Int qui permet de changer de Menu
+    pageMenu = 0
+    global selectionPage #Int qui permet de défiler entre les différents page du menu
+    selectionPage = 1
+    global pageParamètre #Int qui permet savoir ou on est dans les paramètres
+    pageParamètre = 0
+    global poscursor  #Int qui permet de connaitre ou se situe le curseur dans paramètre
+    poscursor = 0
+    global cursor  # curseur utilisé dans les différents menu qui se déplace sur les deux lignes
+    cursor = ["<-",""]
+    global Alarme  #variable pour savoir si l'alarme est active ou non
+    Alarme = True
+    global blocked  #variable qui permet de bloquer le curseur
+    blocked = False
+    global Bouton 
+    Bouton = None
 
     while True:
         tmenu = threading.Thread(target=SelectionPage()) #tmenu lancera SelectionPage()
