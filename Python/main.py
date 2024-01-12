@@ -222,9 +222,9 @@ def main():
     grovepi.pinMode(diode,"OUTPUT")
     grovepi.pinMode(buzzer,"OUTPUT")
 
-    tmenu = threading.Thread(target=SelectionPage()) #tmenu lancera SelectionPage()
+    tmenu = threading.Thread(target=SelectionPage) #tmenu lancera SelectionPage()
     print("coucou")
-    tbouton = threading.Thread(target=LectBouton()) #tbouton lancera LectBouton() 
+    tbouton = threading.Thread(target=LectBouton) #tbouton lancera LectBouton() 
 
     tbouton.start()
     tmenu.start()       
