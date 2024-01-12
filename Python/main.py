@@ -24,6 +24,13 @@ global buttonMoins
 global buzzer 
 global diode 
 
+buttonOk = 4
+buttonBack = 7
+buttonPlus = 2
+buttonMoins = 3
+buzzer = 6
+diode = 8
+
 global temp  #[température défini, approximation défini
 global pageMenu  #Int qui permet de changer de Menu
 global selectionPage #Int qui permet de défiler entre les différents page du menu
@@ -33,6 +40,26 @@ global cursor  # curseur utilisé dans les différents menu qui se déplace sur 
 global Alarme  #variable pour savoir si l'alarme est active ou non
 global blocked  #variable qui permet de bloquer le curseur
 global Bouton 
+
+
+#[température défini, approximation défini
+temo = [6,1]
+#Int qui permet de changer de Menu
+pageMenu = 0
+#Int qui permet de défiler entre les différents page du menu
+selectionPage = 1
+#Int qui permet savoir ou on est dans les paramètres
+pageParamètre = 0
+#Int qui permet de connaitre ou se situe le curseur dans paramètre
+poscursor = 0
+# curseur utilisé dans les différents menu qui se déplace sur les deux lignes
+cursor = ["<-",""]
+#variable pour savoir si l'alarme est active ou non
+Alarme = True
+#variable qui permet de bloquer le curseur
+blocked = False
+#variable qui stocke la valeur du bouton
+Bouton = None
 
 def LectBouton():
     print("je suis dans bouton")
@@ -163,12 +190,6 @@ def pageMenu5(Bouton):
 
 
 def main():
-    buttonOk = 4
-    buttonBack = 7
-    buttonPlus = 2
-    buttonMoins = 3
-    buzzer = 6
-    diode = 8
 
     LCD.initialisation()
     LCD.effacerText()
@@ -183,25 +204,6 @@ def main():
     grovepi.pinMode(buttonMoins,"INPUT")
     grovepi.pinMode(diode,"OUTPUT")
     grovepi.pinMode(buzzer,"OUTPUT")
-
-  #[température défini, approximation défini
-    temo = [6,1]
-    #Int qui permet de changer de Menu
-    pageMenu = 0
-    #Int qui permet de défiler entre les différents page du menu
-    selectionPage = 1
-    #Int qui permet savoir ou on est dans les paramètres
-    pageParamètre = 0
-    #Int qui permet de connaitre ou se situe le curseur dans paramètre
-    poscursor = 0
-    # curseur utilisé dans les différents menu qui se déplace sur les deux lignes
-    cursor = ["<-",""]
-    #variable pour savoir si l'alarme est active ou non
-    Alarme = True
-    #variable qui permet de bloquer le curseur
-    blocked = False
-    #variable qui stocke la valeur du bouton
-    Bouton = None
 
     while True:
 
