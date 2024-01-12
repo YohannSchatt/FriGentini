@@ -115,7 +115,7 @@ while True:
         LCD.setTextLigne2("retour -> menu ")
         if Bouton == "Back": #permet de faire retour
             pageMenu = 0
-    if pageMenu == 6 : #Paramètre
+    if pageMenu == 5 : #Paramètre
         if Bouton == "Moins" or Bouton == "Plus": # Permet de déplacer le curseur
             if poscursor == 0:
                 poscursor = 1
