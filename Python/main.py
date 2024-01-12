@@ -68,12 +68,14 @@ def deplacementcursor(poscursor):
                 poscursor = 1
             else :
                 poscursor = 0
+    return poscursor
 
-def changementtemp():
+def changementtemp(temp,poscursor):
     if Bouton == "Plus":
             temp[poscursor] +=0.1 #augmente la température
     if Bouton == "Moins":
             temp[poscursor] -=0.1 #augmente l'approximation
+    return temp
     
 
 
@@ -146,8 +148,8 @@ while True:
         pageMenu = 0
     if pageMenu == 5 : #Paramètre
         if pageParamètre == 0 : # Menu principale des paramètres
-            LCD.setTextLigne1("temp : " + str(temp[0]) + " ± "+ str(temp[1]) + " " + cursor[poscursor] + "       ")
-            LCD.setTextLigne2("Alarme : " + str(Alarme) +  cursor[(poscursor+1)%2] + "       ")
+            LCD.setTextLigne1("temp : " + str(temp[0]) + " +- "+ str(temp[1]) + " " + cursor[poscursor] + "        ")
+            LCD.setTextLigne2("Alarme : " + str(Alarme) +  cursor[(poscursor+1)%2] + "       ") #(poscursor+1%2) permet de selectionner l'autre element du tableau
             poscursor = deplacementcursor(poscursor)
             if Bouton == "Ok" and poscursor == 0: 
                 pageParamètre = 1 
@@ -166,6 +168,7 @@ while True:
                 if Bouton == "Ok":
                     cursor[0] = "X"
                     blocked = True
+                temp = changementtemp(temp,cursor)
         elif Bouton == "Back": #permet de faire retour
             pageMenu = 0
             poscursor = 0
