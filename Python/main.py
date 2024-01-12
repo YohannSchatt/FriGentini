@@ -13,53 +13,24 @@ import pandas as p
 import led 
 import threading
 
-buttonOk = 4
-buttonBack = 7
-buttonPlus = 2
-buttonMoins = 3
-buzzer = 6
-diode = 8
-
-LCD.initialisation()
-LCD.effacerText()
-LCD.setRGB(127,0,127)
-
-LCD.setTextLigne2("    Bienvenue"    )
-time.sleep(2)
-
-# while True :
-#     température = thermo.ReadTemperature()
-#     print(température)
-#     LCD.setTextLigne1(str(round(température,2))+' Celsius')
-#     print(grovepi.digitalRead(buttonPlus))
-#Set up of the buttons : ports 7,4,3 and 2 (3 and 2 are tactils ones)
-# Connect the Grove Button to digital port D3
-# SIG,NC,VCC,GND
-
-grovepi.pinMode(buttonOk,"INPUT")
-grovepi.pinMode(buttonBack,"INPUT")
-grovepi.pinMode(buttonPlus,"INPUT")
-grovepi.pinMode(buttonMoins,"INPUT")
-grovepi.pinMode(diode,"OUTPUT")
-grovepi.pinMode(buzzer,"OUTPUT")
-
-event_Bouton = threading.Event()
-event_Menu = threading.Event()
-
 def LectBouton():
+    print("je suis dans bouton")
     if grovepi.digitalRead(buttonOk) == 1:
         Bouton = "Ok"
         event_Menu.set() #Déclenche le Menu (le wait dans selectionPage() est fini)
+        print("j'ai passé la main au menu")
     elif grovepi.digitalRead(buttonBack) == 1:
         Bouton = "Back"
         event_Menu.set() #Déclenche le Menu (le wait dans selectionPage() est fini)
+        print("j'ai passé la main au menu")
     elif grovepi.digitalRead(buttonPlus) == 1:
         Bouton = "Plus"
         event_Menu.set() #Déclenche le Menu (le wait dans selectionPage() est fini)
+        print("j'ai passé la main au menu")
     elif grovepi.digitalRead(buttonMoins) == 1:
         Bouton = "Moins"
         event_Menu.set() #Déclenche le Menu (le wait dans selectionPage() est fini)
-
+        print("j'ai passé la main au menu")
 def Alarme(temperatureAct,temperature,approximation,Alarme):
     if Alarme and (temperatureAct < temperature - approximation or temperatureAct > temperature + approximation):
         led.turnON(buzzer)
@@ -85,6 +56,7 @@ def changementtemp():
     return temp
 
 def SelectionPage():
+    print("SelectionPage")
     event_Menu.wait() # Attend d'avoir reçu le déclenchement dans LectBouton
     températureAct = thermo.ReadTemperature()
     if pageMenu == 0 :
@@ -98,6 +70,7 @@ def SelectionPage():
 
 
 def pageMenu0(Bouton):
+    print("PageMenu0")
     if pageMenu == 0: #Menu de selection
         LCD.setTextLigne1("    Selection")
         if selectionPage == 1:
@@ -169,6 +142,30 @@ def pageMenu5(Bouton):
 
 def main():
 
+    buttonOk = 4
+    buttonBack = 7
+    buttonPlus = 2
+    buttonMoins = 3
+    buzzer = 6
+    diode = 8
+
+    LCD.initialisation()
+    LCD.effacerText()
+    LCD.setRGB(127,0,127)
+
+    LCD.setTextLigne2("    Bienvenue"    )
+    time.sleep(2)
+
+    grovepi.pinMode(buttonOk,"INPUT")
+    grovepi.pinMode(buttonBack,"INPUT")
+    grovepi.pinMode(buttonPlus,"INPUT")
+    grovepi.pinMode(buttonMoins,"INPUT")
+    grovepi.pinMode(diode,"OUTPUT")
+    grovepi.pinMode(buzzer,"OUTPUT")
+
+    event_Bouton = threading.Event()
+    event_Menu = threading.Event()
+
     global temp  #[température défini, approximation défini
     temo = [6,1]
     global pageMenu  #Int qui permet de changer de Menu
@@ -195,7 +192,7 @@ def main():
         tbouton.start()
         tmenu.start()       
         
-        t1.join()
-        t2.join()
+        tbouton.join()
+        tmenu.join()
 
 main()
