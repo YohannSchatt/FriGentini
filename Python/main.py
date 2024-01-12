@@ -127,13 +127,13 @@ while True:
 
     if pageMenu == 2 : 
         LCD.setTextLigne1("Veuillez scanner")
-        LCD.setTextLigne2("votre produit")
+        LCD.setTextLigne2(" votre produit ")
         cancel = False
+        df_produits = p.read_csv('../CSV/liste_produits.csv')
         NFC = 0
         while NFC == 0 and not cancel : 
-            NFC = nfc.ReadCard()
-            print(''.join([hex(i)[-2:] for i in NFC]))
-            print(NFC)
+            NFC = ''.join([hex(i)[-2:] for i in nfc.ReadCard()])
+            print(df_produits.query("Code_barre = 'ca5f4ddb'"))
         pageMenu = 0
     if pageMenu == 5 : #Paramètre
         if pageParamètre == 0 : # Menu principale des paramètres
