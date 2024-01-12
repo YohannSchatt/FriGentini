@@ -133,7 +133,8 @@ while True:
         NFC = 0
         while NFC == 0 and not cancel : 
             NFC = ''.join([hex(i)[-2:] for i in nfc.ReadCard()])
-            print(df_produits.query("Code_barre = 'ca5f4ddb'"))
+            print(NFC)
+            #print(df_produits.query("Code_barre ==" + NFC))
         pageMenu = 0
     if pageMenu == 5 : #Paramètre
         if pageParamètre == 0 : # Menu principale des paramètres
