@@ -69,6 +69,13 @@ def deplacementcursor():
             else :
                 poscursor = 0
 
+def changementtemp():
+    if Bouton == "Plus":
+            temp[poscursor] +=0.1 #augmente la température
+    if Bouton == "Moins":
+            temp[poscursor] -=0.1 #augmente l'approximation
+    
+
 
 temp = [6,1] #[température défini, approximation défini]
 temperature = 6 #température initial pris par le système
@@ -79,8 +86,9 @@ selectionPage = 1 #Int qui permet de défiler entre les différents page du menu
 pageParamètre = 0 #Int qui permet savoir ou on est dans les paramètres
 poscursor= 0 #Int qui permet de connaitre ou se situe le curseur dans paramètre
 cursor = ["<-",""] # curseur utilisé dans les différents menu qui se déplace sur les deux lignes
+selection = ["",""]
 Alarme = True #variable pour savoir si l'alarme est active ou non
-
+blocked = False
 
 
 while True:
@@ -146,19 +154,18 @@ while True:
             if Bouton == "Ok" and poscursor == 1: 
                 Alarme = not Alarme
         elif pageParamètre == 1 :  #Menu selection
-            LCD.setTextLigne1("temp : " + str(temp[0]) + cursor[(poscursor+1)%2] + "         ")
-            LCD.setTextLigne2("approx : " + str(temp[1]) + cursor[(poscursor+1)%2] + "       ") 
-            if Bouton == "Plus":
-                temp[poscursor] +=0.1 #augmente la température
-            if Bouton == "Moins":
-                temp[poscursor] -=0.1 #augmente l'approximation
-            if Bouton == "Back" or Bouton == "Ok": #permet de faire retour
+            LCD.setTextLigne1("temp : " + str(temp[0]) + cursor[(poscursor+1)%2] +"         ")
+            LCD.setTextLigne2("approx : " + str(temp[1]) + cursor[(poscursor+1)%2]  +"       ") 
+            if Bouton == "Back": #permet de faire retour
+                if blocked :
+                    cursor[0] = "<-"
+                    blocked = False
+                else :
                 pageParamètre = 0
                 poscursor = 0
+                if Bouton == "Ok":
+                    cursor[0] = "X"
+                    blocked = True
         elif Bouton == "Back": #permet de faire retour
             pageMenu = 0
             poscursor = 0
-
-
-
-
