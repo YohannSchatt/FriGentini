@@ -67,20 +67,23 @@ def LectBouton():
         if grovepi.digitalRead(buttonOk) == 1:
             Bouton = "Ok"
             event_Menu.set() #Déclenche le Menu (le wait dans selectionPage() est fini)
+            event_Bouton.wait()            
             print("j'ai passé la main au menu")
         elif grovepi.digitalRead(buttonBack) == 1:
             Bouton = "Back"
             event_Menu.set() #Déclenche le Menu (le wait dans selectionPage() est fini)
+            event_Bouton.wait()            
             print("j'ai passé la main au menu")
         elif grovepi.digitalRead(buttonPlus) == 1:
             Bouton = "Plus"
             event_Menu.set() #Déclenche le Menu (le wait dans selectionPage() est fini)
+            event_Bouton.wait()            
             print("j'ai passé la main au menu")
         elif grovepi.digitalRead(buttonMoins) == 1:
             Bouton = "Moins"
             event_Menu.set() #Déclenche le Menu (le wait dans selectionPage() est fini)
+            event_Bouton.wait()
             print("j'ai passé la main au menu")
-        event_Bouton.wait()
 
 def Alarme(temperatureAct,temperature,approximation,Alarme):
     if Alarme and (temperatureAct < temperature - approximation or temperatureAct > temperature + approximation):
