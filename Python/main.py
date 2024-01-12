@@ -123,7 +123,7 @@ def SelectionPage():
 
 
 
-def pageMenu0(Bouton):
+def pageMenu0():
     print("PageMenu0")
     if pageMenu == 0: #Menu de selection
         LCD.setTextLigne1("    Selection")
@@ -159,14 +159,14 @@ def pageMenu0(Bouton):
             else :
                 selectionPage = selectionPage - 1
 
-def pageMenu1(Bouton):
+def pageMenu1():
     if pageMenu == 1 : #Affiche la température
         LCD.setTextLigne1(str(round(températureAct))+' Celsius       ')
         LCD.setTextLigne2("retour -> menu ")
         if Bouton == "Back": #permet de faire retour
             pageMenu = 0
 
-def pageMenu5(Bouton):
+def pageMenu5():
     if pageParamètre == 0 : # Menu principale des paramètres
         LCD.setTextLigne1("temp : " + str(temp[0]) + " +- "+ str(temp[1]) + " " + cursor[poscursor] + "        ")
         LCD.setTextLigne2("Alarme : " + str(Alarme) +  cursor[(poscursor+1)%2] + "       ") #(poscursor+1%2) permet de selectionner l'autre element du tableau
