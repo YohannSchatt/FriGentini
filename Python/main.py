@@ -17,6 +17,10 @@ event_Bouton = threading.Event()
 event_Menu = threading.Event()
 
 def LectBouton():
+    buttonOk = 4
+    buttonBack = 7
+    buttonPlus = 2
+    buttonMoins = 3
     print("je suis dans bouton")
     if grovepi.digitalRead(buttonOk) == 1:
         Bouton = "Ok"
@@ -145,11 +149,6 @@ def pageMenu5(Bouton):
 
 
 def main():
-
-    buttonOk = 4
-    buttonBack = 7
-    buttonPlus = 2
-    buttonMoins = 3
     buzzer = 6
     diode = 8
 
