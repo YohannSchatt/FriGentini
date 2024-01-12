@@ -61,7 +61,7 @@ def Alarme(temperatureAct,temperature,approximation,Alarme):
         led.turnOFF(buzzer)
 
         
-def deplacementcursor():
+def deplacementcursor(poscursor):
     if Bouton == "Moins" or Bouton == "Plus": # Permet de déplacer le curseur
             if poscursor == 0:
                 poscursor = 1
@@ -83,7 +83,7 @@ approximation = 1 #approximation initial pris par le système
 pageMenu = 0 #Int qui permet de changer de Menu
 selectionPage = 1 #Int qui permet de défiler entre les différents page du menu
 pageParamètre = 0 #Int qui permet savoir ou on est dans les paramètres
-poscursor= 0 #Int qui permet de connaitre ou se situe le curseur dans paramètre
+poscursor = 0 #Int qui permet de connaitre ou se situe le curseur dans paramètre
 cursor = ["<-",""] # curseur utilisé dans les différents menu qui se déplace sur les deux lignes
 selection = ["",""]
 Alarme = True #variable pour savoir si l'alarme est active ou non
@@ -135,7 +135,7 @@ while True:
         if pageParamètre == 0 : # Menu principale des paramètres
             LCD.setTextLigne1("temp : " + str(temp[0]) + " ± "+ str(temp[1]) + " " + cursor[poscursor] + "       ")
             LCD.setTextLigne2("Alarme : " + str(Alarme) +  cursor[(poscursor+1)%2] + "       ")
-            deplacementcursor()
+            poscursor = deplacementcursor(poscursor)
             if Bouton == "Ok" and poscursor == 0: 
                 pageParamètre = 1 
             if Bouton == "Ok" and poscursor == 1: 
