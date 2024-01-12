@@ -170,7 +170,8 @@ def pageMenu5(Bouton):
 
 def main():
 
-    global temp = [6,1] #[température défini, approximation défini
+    global temp  #[température défini, approximation défini
+    temo = [6,1]
     global pageMenu = 0 #Int qui permet de changer de Menu
     global selectionPage = 1 #Int qui permet de défiler entre les différents page du menu
     global pageParamètre = 0 #Int qui permet savoir ou on est dans les paramètres
