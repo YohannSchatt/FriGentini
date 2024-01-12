@@ -183,23 +183,23 @@ def main():
     grovepi.pinMode(diode,"OUTPUT")
     grovepi.pinMode(buzzer,"OUTPUT")
 
-    global temp  #[température défini, approximation défini
+  #[température défini, approximation défini
     temo = [6,1]
-    global pageMenu  #Int qui permet de changer de Menu
+    #Int qui permet de changer de Menu
     pageMenu = 0
-    global selectionPage #Int qui permet de défiler entre les différents page du menu
+    #Int qui permet de défiler entre les différents page du menu
     selectionPage = 1
-    global pageParamètre #Int qui permet savoir ou on est dans les paramètres
+    #Int qui permet savoir ou on est dans les paramètres
     pageParamètre = 0
-    global poscursor  #Int qui permet de connaitre ou se situe le curseur dans paramètre
+    #Int qui permet de connaitre ou se situe le curseur dans paramètre
     poscursor = 0
-    global cursor  # curseur utilisé dans les différents menu qui se déplace sur les deux lignes
+    # curseur utilisé dans les différents menu qui se déplace sur les deux lignes
     cursor = ["<-",""]
-    global Alarme  #variable pour savoir si l'alarme est active ou non
+    #variable pour savoir si l'alarme est active ou non
     Alarme = True
-    global blocked  #variable qui permet de bloquer le curseur
+    #variable qui permet de bloquer le curseur
     blocked = False
-    global Bouton 
+    #variable qui stocke la valeur du bouton
     Bouton = None
 
     while True:
