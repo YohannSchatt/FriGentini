@@ -75,7 +75,7 @@ def LectBouton():
             event_Menu.set() #Déclenche le Menu (le wait dans selectionPage() est fini)
             print("j'ai passé la main au menu")
 
-def Alarme(temperatureAct,temperature,approximation,Alarme):
+def Alarme(temperatureAct,temperature,approximation):
     global buzzer 
     global diode
     global Alarme  #variable pour savoir si l'alarme est active ou non 
