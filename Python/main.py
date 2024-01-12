@@ -63,27 +63,24 @@ blocked = False
 Bouton = None
 
 def LectBouton():
+    event_Bouton.wait()
     while True:
         print("je suis dans bouton")
         if grovepi.digitalRead(buttonOk) == 1:
             Bouton = "Ok"
-            event_Menu.set() #Déclenche le Menu (le wait dans selectionPage() est fini)
-            event_Bouton.wait()            
+            event_Menu.set() #Déclenche le Menu (le wait dans selectionPage() est fini)        
             print("j'ai passé la main au menu")
         elif grovepi.digitalRead(buttonBack) == 1:
             Bouton = "Back"
-            event_Menu.set() #Déclenche le Menu (le wait dans selectionPage() est fini)
-            event_Bouton.wait()            
+            event_Menu.set() #Déclenche le Menu (le wait dans selectionPage() est fini) 
             print("j'ai passé la main au menu")
         elif grovepi.digitalRead(buttonPlus) == 1:
             Bouton = "Plus"
             event_Menu.set() #Déclenche le Menu (le wait dans selectionPage() est fini)
-            event_Bouton.wait()            
             print("j'ai passé la main au menu")
         elif grovepi.digitalRead(buttonMoins) == 1:
             Bouton = "Moins"
             event_Menu.set() #Déclenche le Menu (le wait dans selectionPage() est fini)
-            event_Bouton.wait()
             print("j'ai passé la main au menu")
 
 def Alarme(temperatureAct,temperature,approximation,Alarme):
