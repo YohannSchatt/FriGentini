@@ -59,16 +59,16 @@ global Bouton = None
 def LectBouton():
     if grovepi.digitalRead(buttonOk) == 1:
         Bouton = "Ok"
-        event_Menu.set()
+        event_Menu.set() #Déclenche le Menu (le wait dans selectionPage() est fini)
     elif grovepi.digitalRead(buttonBack) == 1:
         Bouton = "Back"
-        event_Menu.set()
+        event_Menu.set() #Déclenche le Menu (le wait dans selectionPage() est fini)
     elif grovepi.digitalRead(buttonPlus) == 1:
         Bouton = "Plus"
-        event_Menu.set()
+        event_Menu.set() #Déclenche le Menu (le wait dans selectionPage() est fini)
     elif grovepi.digitalRead(buttonMoins) == 1:
         Bouton = "Moins"
-        event_Menu.set()
+        event_Menu.set() #Déclenche le Menu (le wait dans selectionPage() est fini)
 
 def Alarme(temperatureAct,temperature,approximation,Alarme):
     if Alarme and (temperatureAct < temperature - approximation or temperatureAct > temperature + approximation):
@@ -95,7 +95,7 @@ def changementtemp():
     return temp
 
 def SelectionPage():
-    event_Menu.wait()
+    event_Menu.wait() # Attend d'avoir reçu le déclenchement dans LectBouton
     températureAct = thermo.ReadTemperature()
         if pageMenu == 0 :
             PageMenu0(Bouton)
@@ -179,8 +179,8 @@ def pageMenu5(Bouton):
 
 def main():
     while True:
-        tmenu = threading.Thread(target=SelectionPage())
-        tbouton = threading.Thread(target=LectBouton())
+        tmenu = threading.Thread(target=SelectionPage()) #tmenu lancera SelectionPage()
+        tbouton = threading.Thread(target=LectBouton()) #tbouton lancera LectBouton()
 
         tbouton.start()
         tmenu.start()       
