@@ -87,39 +87,39 @@ def changementtemp():
 def SelectionPage():
     event_Menu.wait() # Attend d'avoir reçu le déclenchement dans LectBouton
     températureAct = thermo.ReadTemperature()
-        if pageMenu == 0 :
-            PageMenu0(Bouton)
-        if pageMenu == 1 : #Affiche la température
-            pageMenu1(Bouton)
-        if pageMenu == 5 : #Paramètre
-            pageMenu5(Bouton)
+    if pageMenu == 0 :
+        PageMenu0(Bouton)
+    if pageMenu == 1 : #Affiche la température
+        pageMenu1(Bouton)
+    if pageMenu == 5 : #Paramètre
+        pageMenu5(Bouton)
         Bouton = None
 
 
 
 def pageMenu0(Bouton):
     if pageMenu == 0: #Menu de selection
-            LCD.setTextLigne1("    Selection")
-            if selectionPage == 1:
-                LCD.setTextLigne2("< affiche Temp >")
-                if Bouton == "Ok":
-                    pageMenu = 1
-            if selectionPage == 2:
-                LCD.setTextLigne2("<  ajout data  >")
-                if Bouton == "Ok":
-                    pageMenu = 2
-            if selectionPage == 3:
-                LCD.setTextLigne2("< affiche data >")
-                if Bouton == "Ok":
-                    pageMenu = 3
-            if selectionPage == 4:
-                LCD.setTextLigne2("<  suppr data  >")
-                if Bouton == "Ok":
-                    pageMenu = 4
-            if selectionPage == 5: #Paramètres
-                LCD.setTextLigne2("<  Parametres  >")
-                if Bouton == "Ok":
-                    pageMenu = 5
+        LCD.setTextLigne1("    Selection")
+        if selectionPage == 1:
+            LCD.setTextLigne2("< affiche Temp >")
+            if Bouton == "Ok":
+                pageMenu = 1
+        if selectionPage == 2:
+            LCD.setTextLigne2("<  ajout data  >")
+            if Bouton == "Ok":
+                pageMenu = 2
+        if selectionPage == 3:
+            LCD.setTextLigne2("< affiche data >")
+            if Bouton == "Ok":
+                pageMenu = 3
+        if selectionPage == 4:
+            LCD.setTextLigne2("<  suppr data  >")
+            if Bouton == "Ok":
+                pageMenu = 4
+        if selectionPage == 5: #Paramètres
+            LCD.setTextLigne2("<  Parametres  >")
+            if Bouton == "Ok":
+                pageMenu = 5
         if selectionPage == 6: #Stoppe le programme
             LCD.setTextLigne2("<   Eteindre   >")
             if Bouton == "Ok":
