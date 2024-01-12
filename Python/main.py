@@ -17,7 +17,8 @@ import threading
 event_Bouton = threading.Event()
 event_Menu = threading.Event()
 
-global buttonOk 
+global buttonOk
+buttonOk = 4
 global buttonBack 
 global buttonPlus 
 global buttonMoins 
