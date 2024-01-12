@@ -47,16 +47,6 @@ grovepi.pinMode(buzzer,"OUTPUT")
 event_Bouton = threading.Event()
 event_Menu = threading.Event()
 
-global temp = [6,1] #[température défini, approximation défini
-global pageMenu = 0 #Int qui permet de changer de Menu
-global selectionPage = 1 #Int qui permet de défiler entre les différents page du menu
-global pageParamètre = 0 #Int qui permet savoir ou on est dans les paramètres
-global poscursor = 0 #Int qui permet de connaitre ou se situe le curseur dans paramètre
-global cursor = ["<-",""] # curseur utilisé dans les différents menu qui se déplace sur les deux lignes
-global Alarme = True #variable pour savoir si l'alarme est active ou non
-global blocked = False #variable qui permet de bloquer le curseur
-global Bouton = None
-
 def LectBouton():
     if grovepi.digitalRead(buttonOk) == 1:
         Bouton = "Ok"
@@ -179,6 +169,17 @@ def pageMenu5(Bouton):
 
 
 def main():
+
+    global temp = [6,1] #[température défini, approximation défini
+    global pageMenu = 0 #Int qui permet de changer de Menu
+    global selectionPage = 1 #Int qui permet de défiler entre les différents page du menu
+    global pageParamètre = 0 #Int qui permet savoir ou on est dans les paramètres
+    global poscursor = 0 #Int qui permet de connaitre ou se situe le curseur dans paramètre
+    global cursor = ["<-",""] # curseur utilisé dans les différents menu qui se déplace sur les deux lignes
+    global Alarme = True #variable pour savoir si l'alarme est active ou non
+    global blocked = False #variable qui permet de bloquer le curseur
+    global Bouton = None
+
     while True:
         tmenu = threading.Thread(target=SelectionPage()) #tmenu lancera SelectionPage()
         tbouton = threading.Thread(target=LectBouton()) #tbouton lancera LectBouton()
