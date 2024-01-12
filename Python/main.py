@@ -17,6 +17,23 @@ import threading
 event_Bouton = threading.Event()
 event_Menu = threading.Event()
 
+global buttonOk 
+global buttonBack 
+global buttonPlus 
+global buttonMoins 
+global buzzer 
+global diode 
+
+global temp  #[température défini, approximation défini
+global pageMenu  #Int qui permet de changer de Menu
+global selectionPage #Int qui permet de défiler entre les différents page du menu
+global pageParamètre #Int qui permet savoir ou on est dans les paramètres
+global poscursor  #Int qui permet de connaitre ou se situe le curseur dans paramètre
+global cursor  # curseur utilisé dans les différents menu qui se déplace sur les deux lignes
+global Alarme  #variable pour savoir si l'alarme est active ou non
+global blocked  #variable qui permet de bloquer le curseur
+global Bouton 
+
 def LectBouton():
     print("je suis dans bouton")
     if grovepi.digitalRead(buttonOk) == 1:
