@@ -223,6 +223,7 @@ def main():
     grovepi.pinMode(buzzer,"OUTPUT")
 
     tmenu = threading.Thread(target=SelectionPage()) #tmenu lancera SelectionPage()
+    print("coucou")
     tbouton = threading.Thread(target=LectBouton()) #tbouton lancera LectBouton() 
 
     tbouton.start()
