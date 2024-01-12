@@ -1,6 +1,4 @@
 # GrovePi LED Blink example
-
-import time
 from grovepi import *
 
 def TurnOn(LB):

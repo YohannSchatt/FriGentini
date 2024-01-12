@@ -17,7 +17,7 @@ buttonBack = 7
 buttonPlus = 2
 buttonMoins = 3
 buzzer = 6
-diode = 5 
+diode = 8
 
 LCD.initialisation()
 LCD.effacerText()
@@ -43,32 +43,24 @@ grovepi.pinMode(diode,"OUTPUT")
 grovepi.pinMode(buzzer,"OUTPUT")
 
 def LectBouton():
-    print("je suis dans LectButton")
     if grovepi.digitalRead(buttonOk) == 1:
-        print("Ok")
         return "Ok"
     elif grovepi.digitalRead(buttonBack) == 1:
-        print("Back")
         return "Back"
     elif grovepi.digitalRead(buttonPlus) == 1:
-        print("Plus")
         return "Plus"
     elif grovepi.digitalRead(buttonMoins) == 1:
-        print("Moins")
         return "Moins"
-    else :
-        print("aucun")
-        return None
 
 def Alarme(temperatureAct,temperature,approximation,Alarme):
-    print("je suis dans Alarme")
     if Alarme and (temperatureAct < temperature - approximation or temperatureAct > temperature + approximation):
         led.turnON(buzzer)
         led.turnON(diode)
     else :
         led.turnOFF(buzzer)
         led.turnOFF(buzzer)
-print("j'ai dépassé les fonctions")
+
+
 temp = [6,1] #[température défini, approximation défini]
 temperature = 6 #température initial pris par le système
 approximation = 1 #approximation initial pris par le système 
@@ -79,11 +71,12 @@ pageParamètre = 0 #Int qui permet savoir ou on est dans les paramètres
 poscursor= 0 #Int qui permet de connaitre ou se situe le curseur dans paramètre
 cursor = ["<-",""] # curseur utilisé dans les différents menu qui se déplace sur les deux lignes
 Alarme = True #variable pour savoir si l'alarme est active ou non
+
+
+
 while True:
-    print("while")
     températureAct = thermo.ReadTemperature()
     Bouton = LectBouton()
-    print("j'ai fini LectBouton")
     if pageMenu == 0: #Menu de selection
         LCD.setTextLigne1("    Selection")
         if selectionPage == 1:
@@ -111,10 +104,10 @@ while True:
             if Bouton == "Ok":
                 pageMenu = 6
         if Bouton == "Plus":
-            selectionPage = (selectionPage+1)%5
+            selectionPage = (selectionPage+1)%6
         if Bouton == "Moins":
             if selectionPage == 0:
-                selectionPage = 5
+                selectionPage = 6
             else :
                 selectionPage = selectionPage - 1
     if pageMenu == 1 : #Affiche la température
