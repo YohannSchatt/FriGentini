@@ -63,9 +63,9 @@ blocked = False
 Bouton = None
 
 def LectBouton():
-    event_Bouton.wait()
     while True:
         print("je suis dans bouton")
+        event_Bouton.wait()
         if grovepi.digitalRead(buttonOk) == 1:
             Bouton = "Ok"
             event_Menu.set() #Déclenche le Menu (le wait dans selectionPage() est fini)        
