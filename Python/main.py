@@ -14,6 +14,9 @@ import pandas as p
 import led 
 import threading
 
+event_Bouton = threading.Event()
+event_Menu = threading.Event()
+
 def LectBouton():
     print("je suis dans bouton")
     if grovepi.digitalRead(buttonOk) == 1:
@@ -32,6 +35,7 @@ def LectBouton():
         Bouton = "Moins"
         event_Menu.set() #Déclenche le Menu (le wait dans selectionPage() est fini)
         print("j'ai passé la main au menu")
+
 def Alarme(temperatureAct,temperature,approximation,Alarme):
     if Alarme and (temperatureAct < temperature - approximation or temperatureAct > temperature + approximation):
         led.turnON(buzzer)
@@ -163,9 +167,6 @@ def main():
     grovepi.pinMode(buttonMoins,"INPUT")
     grovepi.pinMode(diode,"OUTPUT")
     grovepi.pinMode(buzzer,"OUTPUT")
-
-    event_Bouton = threading.Event()
-    event_Menu = threading.Event()
 
     global temp  #[température défini, approximation défini
     temo = [6,1]
