@@ -8,6 +8,7 @@
 import driverI2C as LCD
 import time
 import DriverThermometre as thermo
+import NFCDriver as nfc
 import grovepi 
 import pandas as p
 import led 
@@ -123,6 +124,16 @@ while True:
         LCD.setTextLigne2("retour -> menu ")
         if Bouton == "Back": #permet de faire retour
             pageMenu = 0
+
+    if pageMenu == 2 : 
+        LCD.setTextLigne1("Veuillez scanner")
+        LCD.setTextLigne2("votre produit")
+        cancel = False
+        NFC = 0
+        while NFC == 0 and not cancel : 
+            NFC = nfc.ReadCard()
+            print(NFC)
+        pageMenu = 0
     if pageMenu == 5 : #Paramètre
         if pageParamètre == 0 : # Menu principale des paramètres
             LCD.setTextLigne1("temp : " + str(temp[0]) + " ± "+ str(temp[1]) + " " + cursor[poscursor] + "       ")
