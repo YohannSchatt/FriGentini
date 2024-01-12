@@ -11,6 +11,7 @@ import DriverThermometre as thermo
 import grovepi 
 import pandas as p
 import led 
+import threading
 
 buttonOk = 4
 buttonBack = 7
@@ -42,15 +43,32 @@ grovepi.pinMode(buttonMoins,"INPUT")
 grovepi.pinMode(diode,"OUTPUT")
 grovepi.pinMode(buzzer,"OUTPUT")
 
+event_Bouton = threading.Event()
+event_Menu = threading.Event()
+
+global temp = [6,1] #[température défini, approximation défini
+global pageMenu = 0 #Int qui permet de changer de Menu
+global selectionPage = 1 #Int qui permet de défiler entre les différents page du menu
+global pageParamètre = 0 #Int qui permet savoir ou on est dans les paramètres
+global poscursor = 0 #Int qui permet de connaitre ou se situe le curseur dans paramètre
+global cursor = ["<-",""] # curseur utilisé dans les différents menu qui se déplace sur les deux lignes
+global Alarme = True #variable pour savoir si l'alarme est active ou non
+global blocked = False #variable qui permet de bloquer le curseur
+global Bouton = None
+
 def LectBouton():
     if grovepi.digitalRead(buttonOk) == 1:
-        return "Ok"
+        Bouton = "Ok"
+        event_Menu.set()
     elif grovepi.digitalRead(buttonBack) == 1:
-        return "Back"
+        Bouton = "Back"
+        event_Menu.set()
     elif grovepi.digitalRead(buttonPlus) == 1:
-        return "Plus"
+        Bouton = "Plus"
+        event_Menu.set()
     elif grovepi.digitalRead(buttonMoins) == 1:
-        return "Moins"
+        Bouton = "Moins"
+        event_Menu.set()
 
 def Alarme(temperatureAct,temperature,approximation,Alarme):
     if Alarme and (temperatureAct < temperature - approximation or temperatureAct > temperature + approximation):
@@ -61,7 +79,7 @@ def Alarme(temperatureAct,temperature,approximation,Alarme):
         led.turnOFF(buzzer)
 
         
-def deplacementcursor(poscursor):
+def deplacementcursor():
     if Bouton == "Moins" or Bouton == "Plus": # Permet de déplacer le curseur
             if poscursor == 0:
                 poscursor = 1
@@ -69,54 +87,49 @@ def deplacementcursor(poscursor):
                 poscursor = 0
     return poscursor
 
-def changementtemp(temp,poscursor):
+def changementtemp():
     if Bouton == "Plus":
             temp[poscursor] +=0.1 #augmente la température
     if Bouton == "Moins":
             temp[poscursor] -=0.1 #augmente l'approximation
     return temp
-    
 
-
-temp = [6,1] #[température défini, approximation défini]
-temperature = 6 #température initial pris par le système
-approximation = 1 #approximation initial pris par le système 
-
-pageMenu = 0 #Int qui permet de changer de Menu
-selectionPage = 1 #Int qui permet de défiler entre les différents page du menu
-pageParamètre = 0 #Int qui permet savoir ou on est dans les paramètres
-poscursor = 0 #Int qui permet de connaitre ou se situe le curseur dans paramètre
-cursor = ["<-",""] # curseur utilisé dans les différents menu qui se déplace sur les deux lignes
-selection = ["",""]
-Alarme = True #variable pour savoir si l'alarme est active ou non
-blocked = False
-
-
-while True:
+def SelectionPage():
+    event_Menu.wait()
     températureAct = thermo.ReadTemperature()
-    Bouton = LectBouton()
+        if pageMenu == 0 :
+            PageMenu0(Bouton)
+        if pageMenu == 1 : #Affiche la température
+            pageMenu1(Bouton)
+        if pageMenu == 5 : #Paramètre
+            pageMenu5(Bouton)
+        Bouton = None
+
+
+
+def pageMenu0(Bouton):
     if pageMenu == 0: #Menu de selection
-        LCD.setTextLigne1("    Selection")
-        if selectionPage == 1:
-            LCD.setTextLigne2("< affiche Temp >")
-            if Bouton == "Ok":
-                pageMenu = 1
-        if selectionPage == 2:
-            LCD.setTextLigne2("<  ajout data  >")
-            if Bouton == "Ok":
-                pageMenu = 2
-        if selectionPage == 3:
-            LCD.setTextLigne2("< affiche data >")
-            if Bouton == "Ok":
-                pageMenu = 3
-        if selectionPage == 4:
-            LCD.setTextLigne2("<  suppr data  >")
-            if Bouton == "Ok":
-                pageMenu = 4
-        if selectionPage == 5: #Paramètres
-            LCD.setTextLigne2("<  Parametres  >")
-            if Bouton == "Ok":
-                pageMenu = 5
+            LCD.setTextLigne1("    Selection")
+            if selectionPage == 1:
+                LCD.setTextLigne2("< affiche Temp >")
+                if Bouton == "Ok":
+                    pageMenu = 1
+            if selectionPage == 2:
+                LCD.setTextLigne2("<  ajout data  >")
+                if Bouton == "Ok":
+                    pageMenu = 2
+            if selectionPage == 3:
+                LCD.setTextLigne2("< affiche data >")
+                if Bouton == "Ok":
+                    pageMenu = 3
+            if selectionPage == 4:
+                LCD.setTextLigne2("<  suppr data  >")
+                if Bouton == "Ok":
+                    pageMenu = 4
+            if selectionPage == 5: #Paramètres
+                LCD.setTextLigne2("<  Parametres  >")
+                if Bouton == "Ok":
+                    pageMenu = 5
         if selectionPage == 6: #Stoppe le programme
             LCD.setTextLigne2("<   Eteindre   >")
             if Bouton == "Ok":
@@ -128,34 +141,49 @@ while True:
                 selectionPage = 6
             else :
                 selectionPage = selectionPage - 1
+
+def pageMenu1(Bouton):
     if pageMenu == 1 : #Affiche la température
         LCD.setTextLigne1(str(round(températureAct))+' Celsius       ')
         LCD.setTextLigne2("retour -> menu ")
         if Bouton == "Back": #permet de faire retour
             pageMenu = 0
-    if pageMenu == 5 : #Paramètre
-        if pageParamètre == 0 : # Menu principale des paramètres
-            LCD.setTextLigne1("temp : " + str(temp[0]) + " +- "+ str(temp[1]) + " " + cursor[poscursor] + "        ")
-            LCD.setTextLigne2("Alarme : " + str(Alarme) +  cursor[(poscursor+1)%2] + "       ") #(poscursor+1%2) permet de selectionner l'autre element du tableau
-            poscursor = deplacementcursor(poscursor)
-            if Bouton == "Ok" and poscursor == 0: 
-                pageParamètre = 1 
-            if Bouton == "Ok" and poscursor == 1: 
-                Alarme = not Alarme
-        elif pageParamètre == 1 :  #Menu selection
-            LCD.setTextLigne1("temp : " + str(temp[0]) + cursor[(poscursor+1)%2] +"         ")
-            LCD.setTextLigne2("approx : " + str(temp[1]) + cursor[(poscursor+1)%2]  +"       ") 
-            if Bouton == "Back": #permet de faire retour
-                if blocked :
-                    cursor[0] = "<-"
-                    blocked = False
-                else :
-                    pageParamètre = 0
-                    poscursor = 0
-                if Bouton == "Ok":
-                    cursor[0] = "X"
-                    blocked = True
+
+def pageMenu5(Bouton):
+    if pageParamètre == 0 : # Menu principale des paramètres
+        LCD.setTextLigne1("temp : " + str(temp[0]) + " +- "+ str(temp[1]) + " " + cursor[poscursor] + "        ")
+        LCD.setTextLigne2("Alarme : " + str(Alarme) +  cursor[(poscursor+1)%2] + "       ") #(poscursor+1%2) permet de selectionner l'autre element du tableau
+        poscursor = deplacementcursor(poscursor)
+        if Bouton == "Ok" and poscursor == 0: 
+            pageParamètre = 1 
+        if Bouton == "Ok" and poscursor == 1: 
+            Alarme = not Alarme
+    elif pageParamètre == 1 :  #Menu selection
+        LCD.setTextLigne1("temp : " + str(temp[0]) + cursor[(poscursor+1)%2] +"         ")
+        LCD.setTextLigne2("approx : " + str(temp[1]) + cursor[(poscursor+1)%2]  +"       ") 
+        if Bouton == "Back": #permet de faire retour
+            if blocked :
+                cursor[0] = "<-"
+                blocked = False
+            else :
+                pageParamètre = 0
+                poscursor = 0
+            if Bouton == "Ok":
+                cursor[0] = "X"
+                blocked = True
                 temp = changementtemp(temp,cursor)
-        elif Bouton == "Back": #permet de faire retour
-            pageMenu = 0
-            poscursor = 0
+    elif Bouton == "Back": #permet de faire retour
+        pageMenu = 0
+        poscursor = 0
+
+
+def main():
+    while True:
+        tmenu = threading.Thread(target=SelectionPage())
+        tbouton = threading.Thread(target=LectBouton())
+
+        tbouton.start()
+        tmenu.start()       
+        
+        t1.join()
+        t2.join()
