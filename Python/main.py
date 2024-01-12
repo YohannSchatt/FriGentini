@@ -31,6 +31,25 @@ buttonMoins = 3
 buzzer = 6
 diode = 8
 
+#[température défini, approximation défini
+temo = [6,1]
+#Int qui permet de changer de Menu
+pageMenu = 0
+#Int qui permet de défiler entre les différents page du menu
+selectionPage = 1
+#Int qui permet savoir ou on est dans les paramètres
+pageParamètre = 0
+#Int qui permet de connaitre ou se situe le curseur dans paramètre
+poscursor = 0
+# curseur utilisé dans les différents menu qui se déplace sur les deux lignes
+cursor = ["<-",""]
+#variable pour savoir si l'alarme est active ou non
+Alarme = True
+#variable qui permet de bloquer le curseur
+blocked = False
+#variable qui stocke la valeur du bouton
+Bouton = None
+
 global temp  #[température défini, approximation défini
 global pageMenu  #Int qui permet de changer de Menu
 global selectionPage #Int qui permet de défiler entre les différents page du menu
@@ -39,7 +58,7 @@ global poscursor  #Int qui permet de connaitre ou se situe le curseur dans param
 global cursor  # curseur utilisé dans les différents menu qui se déplace sur les deux lignes
 global Alarme  #variable pour savoir si l'alarme est active ou non
 global blocked  #variable qui permet de bloquer le curseur
-global Bouton 
+global Bouton  #variable qui permet de conserver la valeur de bouton
 
 
 #[température défini, approximation défini
@@ -66,8 +85,6 @@ def LectBouton():
     global buttonBack 
     global buttonPlus 
     global buttonMoins 
-    global buzzer 
-    global diode 
 
     buttonOk = 4
     buttonBack = 7
@@ -97,6 +114,9 @@ def LectBouton():
             print("j'ai passé la main au menu")
 
 def Alarme(temperatureAct,temperature,approximation,Alarme):
+    global buzzer 
+    global diode
+    global Alarme  #variable pour savoir si l'alarme est active ou non 
     if Alarme and (temperatureAct < temperature - approximation or temperatureAct > temperature + approximation):
         led.turnON(buzzer)
         led.turnON(diode)
@@ -106,6 +126,8 @@ def Alarme(temperatureAct,temperature,approximation,Alarme):
 
         
 def deplacementcursor():
+    global Bouton  #variable qui permet de conserver la valeur de bouton
+    global poscursor  #Int qui permet de connaitre ou se situe le curseur dans paramètre
     if Bouton == "Moins" or Bouton == "Plus": # Permet de déplacer le curseur
             if poscursor == 0:
                 poscursor = 1
@@ -114,6 +136,8 @@ def deplacementcursor():
     return poscursor
 
 def changementtemp():
+    global Bouton  #variable qui permet de conserver la valeur de bouton
+    global poscursor  #Int qui permet de connaitre ou se situe le curseur dans paramètre
     if Bouton == "Plus":
             temp[poscursor] +=0.1 #augmente la température
     if Bouton == "Moins":
@@ -122,37 +146,8 @@ def changementtemp():
 
 def SelectionPage():
     event_Bouton.set()
-
-    global temp  #[température défini, approximation défini
     global pageMenu  #Int qui permet de changer de Menu
-    global selectionPage #Int qui permet de défiler entre les différents page du menu
-    global pageParamètre #Int qui permet savoir ou on est dans les paramètres
-    global poscursor  #Int qui permet de connaitre ou se situe le curseur dans paramètre
-    global cursor  # curseur utilisé dans les différents menu qui se déplace sur les deux lignes
-    global Alarme  #variable pour savoir si l'alarme est active ou non
-    global blocked  #variable qui permet de bloquer le curseur
     global Bouton 
-
-
-    #[température défini, approximation défini
-    temo = [6,1]
-    #Int qui permet de changer de Menu
-    pageMenu = 0
-    #Int qui permet de défiler entre les différents page du menu
-    selectionPage = 1
-    #Int qui permet savoir ou on est dans les paramètres
-    pageParamètre = 0
-    #Int qui permet de connaitre ou se situe le curseur dans paramètre
-    poscursor = 0
-    # curseur utilisé dans les différents menu qui se déplace sur les deux lignes
-    cursor = ["<-",""]
-    #variable pour savoir si l'alarme est active ou non
-    Alarme = True
-    #variable qui permet de bloquer le curseur
-    blocked = False
-    #variable qui stocke la valeur du bouton
-    Bouton = None
-
     while True:
         print("SelectionPage")
         températureAct = thermo.ReadTemperature()
@@ -169,42 +164,45 @@ def SelectionPage():
 
 
 def pageMenu0():
+    global Bouton  #variable qui permet de conserver la valeur de bouton
+    global selectionPage #Int qui permet de défiler entre les différents page du menu
     print("PageMenu0")
-    if pageMenu == 0: #Menu de selection
-        LCD.setTextLigne1("    Selection")
-        if selectionPage == 1:
-            LCD.setTextLigne2("< affiche Temp >")
-            if Bouton == "Ok":
-                pageMenu = 1
-        if selectionPage == 2:
-            LCD.setTextLigne2("<  ajout data  >")
-            if Bouton == "Ok":
-                pageMenu = 2
-        if selectionPage == 3:
-            LCD.setTextLigne2("< affiche data >")
-            if Bouton == "Ok":
-                pageMenu = 3
-        if selectionPage == 4:
-            LCD.setTextLigne2("<  suppr data  >")
-            if Bouton == "Ok":
-                pageMenu = 4
-        if selectionPage == 5: #Paramètres
-            LCD.setTextLigne2("<  Parametres  >")
-            if Bouton == "Ok":
-                pageMenu = 5
-        if selectionPage == 6: #Stoppe le programme
-            LCD.setTextLigne2("<   Eteindre   >")
-            if Bouton == "Ok":
-                pageMenu = 6
-        if Bouton == "Plus":
-            selectionPage = (selectionPage+1)%6
-        if Bouton == "Moins":
-            if selectionPage == 0:
-                selectionPage = 6
-            else :
-                selectionPage = selectionPage - 1
+    LCD.setTextLigne1("    Selection")
+    if selectionPage == 1:
+        LCD.setTextLigne2("< affiche Temp >")
+        if Bouton == "Ok":
+            pageMenu = 1
+    if selectionPage == 2:
+        LCD.setTextLigne2("<  ajout data  >")
+        if Bouton == "Ok":
+            pageMenu = 2
+    if selectionPage == 3:
+        LCD.setTextLigne2("< affiche data >")
+        if Bouton == "Ok":
+            pageMenu = 3
+    if selectionPage == 4:
+        LCD.setTextLigne2("<  suppr data  >")
+        if Bouton == "Ok":
+            pageMenu = 4
+    if selectionPage == 5: #Paramètres
+        LCD.setTextLigne2("<  Parametres  >")
+        if Bouton == "Ok":
+            pageMenu = 5
+    if selectionPage == 6: #Stoppe le programme
+        LCD.setTextLigne2("<   Eteindre   >")
+        if Bouton == "Ok":
+           pageMenu = 6
+    if Bouton == "Plus":
+       selectionPage = (selectionPage+1)%6
+    if Bouton == "Moins":
+        if selectionPage == 0:
+            selectionPage = 6
+        else :
+            selectionPage = selectionPage - 1
 
 def pageMenu1():
+    global Bouton  #variable qui permet de conserver la valeur de bouton
+
     if pageMenu == 1 : #Affiche la température
         LCD.setTextLigne1(str(round(températureAct))+' Celsius       ')
         LCD.setTextLigne2("retour -> menu ")
@@ -212,6 +210,12 @@ def pageMenu1():
             pageMenu = 0
 
 def pageMenu5():
+    global pageParamètre #Int qui permet savoir ou on est dans les paramètres
+    global Alarme  #variable pour savoir si l'alarme est active ou non
+    global Bouton  #variable qui permet de conserver la valeur de bouton
+    global blocked  #variable qui permet de bloquer le curseur
+    global cursor  # curseur utilisé dans les différents menu qui se déplace sur les deux lignes
+    global poscursor  #Int qui permet de connaitre ou se situe le curseur dans paramètre
     if pageParamètre == 0 : # Menu principale des paramètres
         LCD.setTextLigne1("temp : " + str(temp[0]) + " +- "+ str(temp[1]) + " " + cursor[poscursor] + "        ")
         LCD.setTextLigne2("Alarme : " + str(Alarme) +  cursor[(poscursor+1)%2] + "       ") #(poscursor+1%2) permet de selectionner l'autre element du tableau
