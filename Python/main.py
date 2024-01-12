@@ -110,7 +110,6 @@ def changementtemp():
 def SelectionPage():
     while True:
         print("SelectionPage")
-        event_Menu.wait() # Attend d'avoir reçu le déclenchement dans LectBouton
         températureAct = thermo.ReadTemperature()
         if pageMenu == 0 :
             PageMenu0(Bouton)
@@ -119,7 +118,8 @@ def SelectionPage():
         if pageMenu == 5 : #Paramètre
             pageMenu5(Bouton)
             Bouton = None
-        event_Bouton.wait()
+        event_Bouton.set()
+        event_Menu.wait()
 
 
 
