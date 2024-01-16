@@ -218,8 +218,9 @@ def pageMenu2():
         while NFC == 0 and not cancel : 
             NFC = ''.join([hex(i)[-2:] for i in nfc.ReadCard()])
             print(NFC)
-            code_produit = df_produits.query("Code_barre == " + NFC)
-            print(code_produit)
+        df_produits = p.read_csv('../CSV/liste_produits.csv') #On récupère le csv des produits
+        code_produit = df_produits.query("Code_barre == " + NFC)
+        print(code_produit)
         pageMenu = 0
 
 
@@ -239,8 +240,8 @@ def pageMenu5():
         if menu.Bouton == "Ok" and menu.poscursor == 1: 
             menu.Alarme = not menu.Alarme
     elif menu.pageParamètre == 1 :  #Menu selection
-        LCD.setTextLigne1("temp : " + str(temp[0]) + cursor[(poscursor+1)%2] +"         ")
-        LCD.setTextLigne2("approx : " + str(temp[1]) + cursor[(poscursor+1)%2]  +"       ") 
+        LCD.setTextLigne1("temp : " + str(menu.temp[0]) + cursor[(poscursor+1)%2] +"         ")
+        LCD.setTextLigne2("approx : " + str(menu.temp[1]) + cursor[(poscursor+1)%2]  +"       ") 
         if menu.Bouton == "Back": #permet de faire retour
             if menu.blocked :
                 menu.cursor[0] = "<-"
@@ -252,7 +253,7 @@ def pageMenu5():
             menu.cursor[0] = "X"
             menu.blocked = True
         elif blocked:
-            menu.temp = changementtemp(temp,cursor)
+            menu.temp = menu.changementtemp(menu.temp,cursor)
         
 
 
