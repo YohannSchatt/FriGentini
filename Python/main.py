@@ -32,6 +32,7 @@ class Menu:
         self.date = dt.date.today() #On set la date d'achat a aujourd'hui
         self.date_peremption = self.date #On initialise la date de péremption a aujourd'hui
         self.delta = dt.timedelta(days = 1) #On définit notre incrément a 1 jour
+        self.NFC = ''
 
     def deplacementcursor(self):
         if self.Bouton == "Moins" or self.Bouton == "Plus": # Permet de déplacer le curseur
@@ -180,9 +181,9 @@ def pageMenu2():
         LCD.setTextLigne1("Veuillez scanner")
         LCD.setTextLigne2("votre produit")
         cancel = False
-        NFC = 0
-        while NFC == 0 and not cancel : 
-            NFC = ''.join([hex(i)[-2:] for i in nfc.ReadCard()])
+        menu.NFC = 0
+        while menu.NFC == 0 and not cancel : 
+            menu.NFC = ''.join([hex(i)[-2:] for i in nfc.ReadCard()])
             #print(NFC)
         menu.pageAjout = 1
         menu.Bouton = None
@@ -190,7 +191,7 @@ def pageMenu2():
         print("Je rentre dans pageAjout 1 et le bouton vaut ", menu.Bouton)
         print("La date sélectionné est : " + str(menu.date_peremption))
         LCD.setTextLigne1("Date peremption")
-        LCD.setTextLigne2(str(menu.date_peremption))
+        LCD.setTextLigne2(str(menu.date_peremption[0:8]))
 
         if menu.Bouton == "Plus" :
             menu.date_peremption = menu.date_peremption + menu.delta
@@ -200,7 +201,7 @@ def pageMenu2():
             df_frigo = p.read_csv('../CSV/frigo.csv') #On récupère les CSV des produits dans le stock
             menu.pageAjout = 0
             menu.pageMenu = 0
-            df_frigo.loc[len(df_frigo.index)] = [len(df_frigo)+1,NFC,menu.date_peremption.strftime('%d/%m/%Y'),menu.date.strftime('%d/%m/%Y')] #Ajout d'une ligne dans le csv de la liste des produits dans le stock
+            df_frigo.loc[len(df_frigo.index)] = [len(df_frigo)+1,menu.NFC,menu.date_peremption.strftime('%d/%m/%Y'),menu.date.strftime('%d/%m/%Y')] #Ajout d'une ligne dans le csv de la liste des produits dans le stock
             LCD.effacerText()
             LCD.setTextLigne1("Produit ajouté")
             print(df_frigo)
