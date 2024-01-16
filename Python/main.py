@@ -46,6 +46,13 @@ def LectBouton():
     Bouton = None
     buzzer = 6
     diode = 8
+
+    grovepi.pinMode(buttonOk,"INPUT")
+    grovepi.pinMode(buttonBack,"INPUT")
+    grovepi.pinMode(buttonPlus,"INPUT")
+    grovepi.pinMode(buttonMoins,"INPUT")
+    grovepi.pinMode(diode,"OUTPUT")
+    grovepi.pinMode(buzzer,"OUTPUT")
     
     while True:
         print("je suis dans bouton")
@@ -218,13 +225,6 @@ def main():
 
     LCD.setTextLigne2("    Bienvenue"    )
     time.sleep(2)
-
-    grovepi.pinMode(buttonOk,"INPUT")
-    grovepi.pinMode(buttonBack,"INPUT")
-    grovepi.pinMode(buttonPlus,"INPUT")
-    grovepi.pinMode(buttonMoins,"INPUT")
-    grovepi.pinMode(diode,"OUTPUT")
-    grovepi.pinMode(buzzer,"OUTPUT")
 
     tmenu = threading.Thread(target=SelectionPage) #tmenu lancera SelectionPage()
     print("coucou")
