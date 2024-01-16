@@ -29,6 +29,8 @@ def setRGB(rouge,vert,bleu):
 def textCmd(cmd):
         try :
                 bus.write_byte_data(DISPLAY_TEXT_ADDR,0x80,cmd)
+        except:
+                print("Fatalerror")
 
 # Completez le code de la fonction permettant d'ecrire le texte recu en parametre
 # Si le texte contient un \n ou plus de 16 caracteres pensez a gerer
