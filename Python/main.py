@@ -236,6 +236,7 @@ def pageMenu4():
         LCD.effacerText()
         LCD.setTextLigne1("Nom : " + nom_produit.values[0])
         LCD.setTextLigne2("Prtp " + produit["date_péremption"].values[0])
+        time.sleep(0.2)
         if menu.Bouton == "Plus" : 
             if menu.index_menu4 == len(liste_index) - 1:
                 menu.index_menu4 = 0
