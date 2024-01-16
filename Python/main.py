@@ -29,7 +29,7 @@ class Menu:
 
     def deplacementcursor(self):
         if self.Bouton == "Moins" or self.Bouton == "Plus": # Permet de déplacer le curseur
-            if poscursor == 0:
+            if self.poscursor == 0:
                 self.poscursor = 1
             else :
                 self.poscursor = 0
@@ -137,8 +137,8 @@ def SelectionPage():
             if menu.pageMenu == 5 : #Paramètre
                 pageMenu5()
                 menu.Bouton = None
-        time.sleep(0.2)
         event_Bouton.set()
+        time.sleep(0.2)
         event_Menu.wait()
 
 
