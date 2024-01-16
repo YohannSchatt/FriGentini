@@ -166,7 +166,7 @@ def pageMenu0():
            pageMenu = 6
     if Bouton == "Plus":
         print("coucou")
-       selectionPage = (selectionPage+1)%7
+        selectionPage = (selectionPage+1)%7
     if Bouton == "Moins":
         print("coucou2")
         if selectionPage == 0:
