@@ -16,8 +16,7 @@ import threading
 event_Bouton = threading.Event()
 event_Menu = threading.Event()
 verrou = threading.Lock()
-buzzer = 6
-diode = 8
+menu = Menu()
 
 class Menu:
     def __init__(self):
@@ -233,8 +232,6 @@ def main():
 
     LCD.setTextLigne2("    Bienvenue"    )
     time.sleep(2)
-
-    menu = Menu()
 
     tmenu = threading.Thread(target=SelectionPage) #tmenu lancera SelectionPage()
     print("coucou")
