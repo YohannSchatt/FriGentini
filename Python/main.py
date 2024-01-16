@@ -129,10 +129,13 @@ def SelectionPage():
             menu.températureAct = thermo.ReadTemperature()
             if menu.pageMenu == 0 :
                 pageMenu0()
+                menu.Bouton = None
             if menu.pageMenu == 1 : #Affiche la température
                 pageMenu1()
+                menu.Bouton = None
             if menu.pageMenu == 5 : #Paramètre
                 pageMenu5()
+                menu.Bouton = None
         event_Bouton.set()
         event_Menu.wait()
 
@@ -161,7 +164,7 @@ def pageMenu0():
             menu.pageMenu = 4
     if menu.selectionPage == 4: #Paramètres
         LCD.setTextLigne2("<  Parametres  >")
-        if Bouton == "Ok":
+        if menu.Bouton == "Ok":
             menu.pageMenu = 5
     if menu.selectionPage == 5: #Stoppe le programme
         LCD.setTextLigne2("<   Eteindre   >")
