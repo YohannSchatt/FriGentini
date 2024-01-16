@@ -89,7 +89,7 @@ def LectBouton():
         grovepi.pinMode(diode,"OUTPUT")
         grovepi.pinMode(buzzer,"OUTPUT")
     while True:
-        print("je suis dans bouton")
+        #print("je suis dans bouton")
         event_Bouton.wait()
         with verrou:
             if grovepi.digitalRead(buttonOk) == 1:
@@ -219,7 +219,7 @@ def pageMenu2():
             NFC = ''.join([hex(i)[-2:] for i in nfc.ReadCard()])
             print(NFC)
         df_produits = p.read_csv('../CSV/liste_produits.csv') #On récupère le csv des produits
-        code_produit = df_produits.query("Code_barre == " + NFC)
+        code_produit = df_produits.query("Code_barre == '" + NFC + "'")
         print(code_produit)
         pageMenu = 0
 
