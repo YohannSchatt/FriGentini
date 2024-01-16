@@ -205,6 +205,8 @@ def pageMenu5():
             menu.blocked = True
         elif menu.blocked:
             menu.changementtemp()
+        else:
+            menu.deplacementcursor()
     elif menu.Bouton == "Back": #permet de faire retour
         pageMenu = 0
         poscursor = 0
