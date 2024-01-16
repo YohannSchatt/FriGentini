@@ -15,7 +15,7 @@ import threading
 
 class Menu:
     def __init__(self):
-        self.temp = [6,1]
+        self.temp = [24,2]
         self.pageMenu = 0
         self.selectionPage = 0
         self.pageParamètre = 0
@@ -70,8 +70,6 @@ def LectBouton():
         buttonBack = 7
         buttonPlus = 2
         buttonMoins = 3
-        buzzer = 6
-        diode = 8
 
         grovepi.pinMode(buttonOk,"INPUT")
         grovepi.pinMode(buttonBack,"INPUT")
@@ -81,6 +79,7 @@ def LectBouton():
         grovepi.pinMode(buzzer,"OUTPUT")
 
     while True:
+        menu.températureAct = thermo.ReadTemperature()
         print("je suis dans bouton")
         event_Bouton.wait()
         with verrou:
@@ -98,6 +97,7 @@ def LectBouton():
                 event_Menu.set() #Déclenche le Menu (le wait dans selectionPage() est fini)                
             else:
                 menu.Bouton = None
+            Alarme()
 
 def Alarme():
     buzzer = 6
@@ -113,7 +113,6 @@ def Alarme():
 def SelectionPage():
     while True:
         with verrou:
-            menu.températureAct = thermo.ReadTemperature()
             if menu.pageMenu == 0 :
                 pageMenu0()
             if menu.pageMenu == 1 : #Affiche la température
