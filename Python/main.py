@@ -83,7 +83,6 @@ def LectBouton():
 
     while True:
         menu.températureAct = thermo.ReadTemperature()
-        print("je suis dans bouton")
         event_Bouton.wait()
         with verrou:
             if grovepi.digitalRead(buttonOk) == 1:
@@ -123,6 +122,7 @@ def SelectionPage():
             if menu.pageMenu == 5 : #Paramètre
                 pageMenu5()
         event_Bouton.set()
+        time.sleep(0.1)
         event_Menu.wait()
 
 
