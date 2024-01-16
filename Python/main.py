@@ -189,7 +189,7 @@ def pageMenu2():
 
     if menu.pageAjout == 1:
         menu.Bouton = None
-        print("Je rentre dans pageAjout 1 et le bouton vaut " + menu.Bouton)
+        print("Je rentre dans pageAjout 1 et le bouton vaut ", menu.Bouton)
         print("La date sélectionné est : " + str(date_peremption))
         LCD.setTextLigne1("Date peremption")
         LCD.setTextLigne2(str(date_peremption))
