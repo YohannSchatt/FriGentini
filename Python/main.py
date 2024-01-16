@@ -190,8 +190,8 @@ def pageMenu5():
             pageMenu = 0
             poscursor = 0
     elif menu.pageParamètre == 1 :  #Menu selection
-        LCD.setTextLigne1("temp : " + str(round(menu.temp[0],1)) + " " +str(round(menu.cursor[menu.poscursor],1)) +"         ")
-        LCD.setTextLigne2("approx : " + str(round(menu.temp[1],1)) + " " +str(round(menu.cursor[(menu.poscursor+1)%2]),1)  +"       ") 
+        LCD.setTextLigne1("temp : " + str(float(round(menu.temp[0],1))) + " " +str(float(round(menu.cursor[menu.poscursor],1))) +"         ")
+        LCD.setTextLigne2("approx : " + str(float(round(menu.temp[1],1))) + " " +str(float(round(menu.cursor[(menu.poscursor+1)%2])),1)  +"       ") 
         if menu.Bouton == "Back": #permet de faire retour
             if menu.blocked :
                 menu.cursor[0] = "<-"
