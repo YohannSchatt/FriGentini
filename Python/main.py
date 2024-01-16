@@ -200,7 +200,7 @@ def pageMenu2():
             df_frigo = p.read_csv('../CSV/frigo.csv') #On récupère les CSV des produits dans le stock
             menu.pageAjout = 0
             menu.pageMenu = 0
-            df_frigo.loc[len(df_frigo.index)] = [len(df_frigo)+1,'5dc2f869',menu.date_peremption.strftime('%d/%m/%Y'),menu.date.strftime('%d/%m/%Y')] #Ajout d'une ligne dans le csv de la liste des produits dans le stock
+            df_frigo.loc[len(df_frigo.index)] = [len(df_frigo)+1,NFC,menu.date_peremption.strftime('%d/%m/%Y'),menu.date.strftime('%d/%m/%Y')] #Ajout d'une ligne dans le csv de la liste des produits dans le stock
             LCD.effacerText()
             LCD.setTextLigne1("Produit ajouté")
             print(df_frigo)
