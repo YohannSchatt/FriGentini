@@ -93,7 +93,7 @@ def LectBouton():
         grovepi.pinMode(buzzer,"OUTPUT")
 
     while True:
-        #print("je suis dans bouton")
+        print("je suis dans bouton")
         event_Bouton.wait()
         with verrou:
             if grovepi.digitalRead(buttonOk) == 1:
