@@ -14,6 +14,8 @@ import led
 import threading
 import datetime as dt
 import NFCDriver as nfc
+import os
+
 class Menu:
     def __init__(self):
         self.temp = [6,1]
@@ -176,7 +178,7 @@ def pageMenu2():
     while NFC == 0 and not cancel : 
         NFC = ''.join([hex(i)[-2:] for i in nfc.ReadCard()])
          #print(NFC)
-    
+    print(os.getcwd())
     df_produits = p.read_csv('../CSV/liste_produits.csv') #On récupère le csv des produits
     df_frigo = p.read_csv('../CSV/frigo.csv') #On récupère les CSV des produits dans le stock
     produit = df_produits.query("Code_barre == '" + NFC + "'")
