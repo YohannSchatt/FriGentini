@@ -105,7 +105,7 @@ def LectBouton():
 def Alarme():
     buzzer = 6
     diode = 8
-    if menu.Alarme and (menu.temperatureAct < menu.temp[0] - menu.temp[1] or menu.temperatureAct > menu.temp[0] + menu.temp[1]):
+    if menu.Alarme and (menu.températureAct < menu.temp[0] - menu.temp[1] or menu.températureAct > menu.temp[0] + menu.temp[1]):
         led.turnON(buzzer)
         led.turnON(diode)
     else :
