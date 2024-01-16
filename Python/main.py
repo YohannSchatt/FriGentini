@@ -24,7 +24,7 @@ temo = [6,1]
 #Int qui permet de changer de Menu
 pageMenu = 0
 #Int qui permet de défiler entre les différents page du menu
-selectionPage = 1
+selectionPage = 0
 #Int qui permet savoir ou on est dans les paramètres
 pageParamètre = 0
 #Int qui permet de connaitre ou se situe le curseur dans paramètre
@@ -60,24 +60,24 @@ def LectBouton():
         with verrou:
             if grovepi.digitalRead(buttonOk) == 1:
                 Bouton = "Ok"
+                print("Ok")
                 event_Menu.set() #Déclenche le Menu (le wait dans selectionPage() est fini)        
                 event_Bouton.wait()            
-                print("j'ai passé la main au menu")
             elif grovepi.digitalRead(buttonBack) == 1:
                 Bouton = "Back"
+                print("back")
                 event_Menu.set() #Déclenche le Menu (le wait dans selectionPage() est fini)
                 event_Bouton.wait()
-                print("j'ai passé la main au menu")
             elif grovepi.digitalRead(buttonPlus) == 1:
                 Bouton = "Plus"
+                print("plus")
                 event_Menu.set() #Déclenche le Menu (le wait dans selectionPage() est fini)
                 event_Bouton.wait()
-                print("j'ai passé la main au menu")
             elif grovepi.digitalRead(buttonMoins) == 1:
                 Bouton = "Moins"
-                event_Menu.set() #Déclenche le Menu (le wait dans selectionPage() est fini)
+                print("moins")
+                event_Menu.set() #Déclenche le Menu (le wait dans selectionPage() est fini)                
                 event_Bouton.wait()
-                print("j'ai passé la main au menu")
             else:
                 Bouton = None
 
@@ -139,6 +139,7 @@ def pageMenu0():
     global pageMenu
     print("PageMenu0")
     print("selectionPage :", selectionPage)
+    print("Bouton :", Bouton)
     LCD.setTextLigne1("    Selection     ")
     if selectionPage == 0:
         LCD.setTextLigne2("< affiche Temp >")
