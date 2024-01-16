@@ -13,7 +13,7 @@ import pandas as p
 import led 
 import threading
 import datetime as dt
-
+import NFCDriver as nfc
 class Menu:
     def __init__(self):
         self.temp = [6,1]
