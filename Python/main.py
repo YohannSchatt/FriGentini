@@ -113,7 +113,7 @@ def SelectionPage():
     global Bouton 
     while True:
         print("SelectionPage")
-        #températureAct = thermo.ReadTemperature()
+        températureAct = thermo.ReadTemperature()
         if pageMenu == 0 :
             pageMenu0()
         if pageMenu == 1 : #Affiche la température
