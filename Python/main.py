@@ -137,7 +137,9 @@ def SelectionPage():
 def pageMenu0():
     global Bouton  #variable qui permet de conserver la valeur de bouton
     global selectionPage #Int qui permet de défiler entre les différents page du menu
+    global pageMenu
     print("PageMenu0")
+    print("selectionPage :", selectionPage)
     LCD.setTextLigne1("    Selection     ")
     if selectionPage == 1:
         LCD.setTextLigne2("< affiche Temp >")
@@ -164,7 +166,7 @@ def pageMenu0():
         if Bouton == "Ok":
            pageMenu = 6
     if Bouton == "Plus":
-       selectionPage = (selectionPage+1)%6
+       selectionPage = (selectionPage+1)%7
     if Bouton == "Moins":
         if selectionPage == 0:
             selectionPage = 6
