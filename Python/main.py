@@ -138,7 +138,7 @@ def SelectionPage():
                 pageMenu5()
                 menu.Bouton = None
         event_Bouton.set()
-        time.sleep(0.2)
+        time.sleep(0.05)
         event_Menu.wait()
 
 
