@@ -35,9 +35,9 @@ class Menu:
 
     def changementtemp(self):
         if self.Bouton == "Plus":
-            self.temp[poscursor] +=0.1 #augmente la température
+            self.temp[self.poscursor] +=0.1 #augmente la température
         elif self.Bouton == "Moins":
-            self.temp[poscursor] -=0.1 #augmente l'approximation
+            self.temp[self.poscursor] -=0.1 #augmente l'approximation
 
 #[température défini, approximation défini
 #temp = [6,1]
@@ -204,7 +204,7 @@ def pageMenu5():
             menu.cursor[0] = "X"
             menu.blocked = True
         elif menu.blocked:
-            menu.temp = menu.changementtemp()
+            menu.changementtemp()
     elif menu.Bouton == "Back": #permet de faire retour
         pageMenu = 0
         poscursor = 0
