@@ -27,7 +27,7 @@ class Menu:
         self.selectionPage = 0
         self.pageParamètre = 0
         self.poscursor = 0
-        self.cursor = [<-,""]
+        self.cursor = ["<-",""]
         self.Alarme = True
         self.blocked = False
         self.Bouton = None
