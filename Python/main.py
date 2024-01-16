@@ -187,8 +187,8 @@ def pageMenu5():
         elif menu.Bouton == "Ok" and menu.poscursor == 1: 
             menu.Alarme = not menu.Alarme
         elif menu.Bouton == "Back": #permet de faire retour
-            pageMenu = 0
-            poscursor = 0
+            menu.pageMenu = 0
+            menu.poscursor = 0
     elif menu.pageParamètre == 1 :  #Menu selection
         LCD.setTextLigne1("temp : " + str(menu.temp[0]) + " " +str(menu.cursor[menu.poscursor]) +"         ")
         LCD.setTextLigne2("approx : " + str(menu.temp[1]) + " " +str(menu.cursor[(menu.poscursor+1)%2])  +"       ") 
