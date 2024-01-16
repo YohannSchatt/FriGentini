@@ -109,8 +109,8 @@ def Alarme():
         led.turnON(buzzer)
         led.turnON(diode)
     else :
-        led.turnOFF(buzzer)
-        led.turnOFF(buzzer)
+        led.TurnOFF(buzzer)
+        led.TurnOFF(buzzer)
 
 
 def SelectionPage():
