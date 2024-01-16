@@ -185,12 +185,13 @@ def pageMenu2():
             NFC = ''.join([hex(i)[-2:] for i in nfc.ReadCard()])
             #print(NFC)
         menu.pageAjout = 1
-    if menu.pageAjout == 1:
         menu.Bouton = None
+    if menu.pageAjout == 1:
         print("Je rentre dans pageAjout 1 et le bouton vaut ", menu.Bouton)
         print("La date sélectionné est : " + str(menu.date_peremption))
         LCD.setTextLigne1("Date peremption")
         LCD.setTextLigne2(str(menu.date_peremption))
+
         if menu.Bouton == "Plus" :
             menu.date_peremption = menu.date_peremption + menu.delta
         elif menu.Bouton == "Moins" : 
