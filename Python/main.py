@@ -229,7 +229,7 @@ def pageMenu4():
         LCD.setTextLigne2("celui a retire")
         menu.page_menu_4 = 1
     if menu.page_menu_4 == 1 :
-        liste_index = df_frigo.index
+        liste_index = menu.df_frigo.index
         produit = menu.df_frigo.iloc[[liste_index[menu.index_menu4]]]
         nom_produit = menu.df_produits.query("Code_barre == '" + produit["Type_Produit"][0] +"'")['nom']
         print("Vous avez choisi le produit " + nom_produit.values[0] + " qui périme le " + produit["date_péremption"][0])
