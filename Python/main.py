@@ -61,18 +61,22 @@ def LectBouton():
         if grovepi.digitalRead(buttonOk) == 1:
             Bouton = "Ok"
             event_Menu.set() #Déclenche le Menu (le wait dans selectionPage() est fini)        
+            event_Bouton.wait()            
             print("j'ai passé la main au menu")
         elif grovepi.digitalRead(buttonBack) == 1:
             Bouton = "Back"
-            event_Menu.set() #Déclenche le Menu (le wait dans selectionPage() est fini) 
+            event_Menu.set() #Déclenche le Menu (le wait dans selectionPage() est fini)
+            event_Bouton.wait()
             print("j'ai passé la main au menu")
         elif grovepi.digitalRead(buttonPlus) == 1:
             Bouton = "Plus"
             event_Menu.set() #Déclenche le Menu (le wait dans selectionPage() est fini)
+            event_Bouton.wait()
             print("j'ai passé la main au menu")
         elif grovepi.digitalRead(buttonMoins) == 1:
             Bouton = "Moins"
             event_Menu.set() #Déclenche le Menu (le wait dans selectionPage() est fini)
+            event_Bouton.wait()
             print("j'ai passé la main au menu")
 
 def Alarme(temperatureAct,temperature,approximation):
@@ -107,7 +111,6 @@ def changementtemp():
     return temp
 
 def SelectionPage():
-    time.sleep(3)
     global pageMenu  #Int qui permet de changer de Menu
     global Bouton 
     while True:
@@ -129,7 +132,7 @@ def pageMenu0():
     global Bouton  #variable qui permet de conserver la valeur de bouton
     global selectionPage #Int qui permet de défiler entre les différents page du menu
     print("PageMenu0")
-    LCD.setTextLigne1("      Selection          ")
+    LCD.setTextLigne1("    Selection     ")
     if selectionPage == 1:
         LCD.setTextLigne2("< affiche Temp >")
         if Bouton == "Ok":
