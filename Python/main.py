@@ -182,7 +182,7 @@ def pageMenu2():
     df_produits = p.read_csv('../CSV/liste_produits.csv') #On récupère le csv des produits
     df_frigo = p.read_csv('../CSV/frigo.csv') #On récupère les CSV des produits dans le stock
     produit = df_produits.query("Code_barre == '" + NFC + "'")
-    print(produit["nom"][0])
+    print(produit["nom"])
 
     date = dt.date.today() #On set la date d'achat a aujourd'hui
     date_peremption = date #On initialise la date de péremption a aujourd'hui
