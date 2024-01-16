@@ -24,7 +24,7 @@ class Menu:
         self.cursor = ["<-",""]
         self.Alarme = True
         self.blocked = False
-        self.Bouton = "Plus"
+        self.Bouton = None
         self.températureAct = thermo.ReadTemperature()
 
     def deplacementcursor(self):
