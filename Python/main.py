@@ -119,6 +119,8 @@ def SelectionPage():
                 pageMenu0()
             if menu.pageMenu == 1 : #Affiche la température
                 pageMenu1()
+            if menu.pageMenu == 2:
+                pageMenu2()
             if menu.pageMenu == 5 : #Paramètre
                 pageMenu5()
         event_Bouton.set()
