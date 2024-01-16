@@ -14,7 +14,9 @@ import pandas as p
 import led 
 import threading
 
+#Instance du menu 
 class Menu:
+    #Initialiation du menu avec les variables de départ
     def __init__(self):
         self.temp = [6,1]
         self.pageMenu = 0
@@ -27,13 +29,14 @@ class Menu:
         self.Bouton = None
         self.températureAct = thermo.ReadTemperature()
 
+    #Méthode 
     def deplacementcursor(self):
         if self.Bouton == "Moins" or self.Bouton == "Plus": # Permet de déplacer le curseur
             if self.poscursor == 0:
                 self.poscursor = 1
             else :
                 self.poscursor = 0
-
+    #Méthode
     def changementtemp(self):
         if self.Bouton == "Plus":
             menu.temp[poscursor] +=0.1 #augmente la température
@@ -64,6 +67,11 @@ event_Menu = threading.Event()
 verrou = threading.Lock()
 menu = Menu()
 
+"""
+Fonction qui gère la lecture des boutons de la carte, il y a 4 boutons sur la carte, 2 tactiles et 2 classiques. On utilise les tactiles pour faire
+les défilements, ils sont plus sensibles et les boutons normaux pour faire des validations.
+Elle est associé à un thread et met a jour les valeurs de Bouton dans l'instance de menu
+"""
 
 def LectBouton():
     with verrou:
@@ -107,6 +115,11 @@ def LectBouton():
             else:
                 menu.Bouton = None
 
+
+"""
+Fonction qui s'occuppe de gérer l'alarme, vérifie si la température < seuil, si non active le buzzer, et si trop long supprime les objets impropre 
+a la consommation
+"""
 def Alarme():
     buzzer = 6
     diode = 8
@@ -118,6 +131,10 @@ def Alarme():
         led.turnOFF(buzzer)
 
 
+"""
+Fonction qui s'occuper de basculer sur les différentes pages du menu principales en lisant la valeur de bouton, appel la fonction associé a la page 
+demandée
+"""
 def SelectionPage():
     while True:
         with verrou:
@@ -128,6 +145,8 @@ def SelectionPage():
                 menu.Bouton = None
             if menu.pageMenu == 1 : #Affiche la température
                 pageMenu1()
+            if menu.pageMenu == 2 :
+                pageMenu2()
                 menu.Bouton = None
             if menu.pageMenu == 5 : #Paramètre
                 pageMenu5()
@@ -137,7 +156,9 @@ def SelectionPage():
         event_Menu.wait()
 
 
-
+"""
+Fonction qui gère le menu principal, on navigue avec les boutons tactiles et on valide avec les boutons poussoirs
+"""
 def pageMenu0():
     print("PageMenu0")
     print("selectionPage :", menu.selectionPage)
@@ -177,44 +198,67 @@ def pageMenu0():
         else :
             menu.selectionPage = menu.selectionPage - 1
 
+"""
+Page qui affiche la température en direct
+"""
 def pageMenu1():
     if menu.pageMenu == 1 : #Affiche la température
         LCD.setTextLigne1(str(round(menu.températureAct))+' Celsius       ')
         LCD.setTextLigne2("retour -> menu ")
         if Bouton == "Back": #permet de faire retour
             pageMenu = 0
-
-    if pageMenu == 2 : 
+    
+"""Page permettant d'ajouter en produits en scannant son code NFC"""
+def pageMenu2():
+    if menu.pageMenu == 2 :
         LCD.setTextLigne1("Veuillez scanner")
         LCD.setTextLigne2("votre produit")
         cancel = False
         NFC = 0
         while NFC == 0 and not cancel : 
-            NFC = nfc.ReadCard()
-            print(hex(i) for i in NFC)
+            NFC = ''.join([hex(i)[-2:] for i in nfc.ReadCard()])
+            print(NFC)
+            code_produit = df_produits.query("Code_barre == " + NFC)
+            print(code_produit)
         pageMenu = 0
-    if pageMenu == 5 : #Paramètre
-        if pageParamètre == 0 : # Menu principale des paramètres
-            LCD.setTextLigne1("temp : " + str(temp[0]) + " ± "+ str(temp[1]) + " " + cursor[poscursor] + "       ")
-            LCD.setTextLigne2("Alarme : " + str(Alarme) +  cursor[(poscursor+1)%2] + "       ")
-            deplacementcursor()
-            if Bouton == "Ok" and poscursor == 0: 
-                pageParamètre = 1 
-            if Bouton == "Ok" and poscursor == 1: 
-                Alarme = not Alarme
-        elif pageParamètre == 1 :  #Menu selection
-            LCD.setTextLigne1("temp : " + str(temp[0]) + cursor[(poscursor+1)%2] + "         ")
-            LCD.setTextLigne2("approx : " + str(temp[1]) + cursor[(poscursor+1)%2] + "       ") 
-            if Bouton == "Plus":
-                temp[poscursor] +=0.1 #augmente la température
-            if Bouton == "Moins":
-                temp[poscursor] -=0.1 #augmente l'approximation
-            if Bouton == "Back" or Bouton == "Ok": #permet de faire retour
-                pageParamètre = 0
-                poscursor = 0
-        elif Bouton == "Back": #permet de faire retour
-            pageMenu = 0
-            poscursor = 0
+
+
+def pageMenu5():
+    global pageParamètre #Int qui permet savoir ou on est dans les paramètres
+    global Alarme  #variable pour savoir si l'alarme est active ou non
+    global Bouton  #variable qui permet de conserver la valeur de bouton
+    global blocked  #variable qui permet de bloquer le curseur
+    global cursor  # curseur utilisé dans les différents menu qui se déplace sur les deux lignes
+    global poscursor  #Int qui permet de connaitre ou se situe le curseur dans paramètre
+    if menu.pageParamètre == 0 : # Menu principale des paramètres
+        LCD.setTextLigne1("temp : " + str(menu.temp[0]) + " +- "+ str(menu.temp[1]) + " " + menu.cursor[menu.poscursor] + "        ")
+        LCD.setTextLigne2("Alarme : " + str(menu.Alarme) +  menu.cursor[(menu.poscursor+1)%2] + "       ") #(poscursor+1%2) permet de selectionner l'autre element du tableau
+        menu.deplacementcursor()
+        if menu.Bouton == "Ok" and menu.poscursor == 0: 
+            menu.pageParamètre = 1 
+        if menu.Bouton == "Ok" and menu.poscursor == 1: 
+            menu.Alarme = not menu.Alarme
+    elif menu.pageParamètre == 1 :  #Menu selection
+        LCD.setTextLigne1("temp : " + str(temp[0]) + cursor[(poscursor+1)%2] +"         ")
+        LCD.setTextLigne2("approx : " + str(temp[1]) + cursor[(poscursor+1)%2]  +"       ") 
+        if menu.Bouton == "Back": #permet de faire retour
+            if menu.blocked :
+                menu.cursor[0] = "<-"
+                menu.blocked = False
+            else :
+                menu.pageParamètre = 0
+                menu.poscursor = 0
+        elif Bouton == "Ok":
+            menu.cursor[0] = "X"
+            menu.blocked = True
+        elif blocked:
+            menu.temp = changementtemp(temp,cursor)
+        
+
+
+    elif Bouton == "Back": #permet de faire retour
+        pageMenu = 0
+        poscursor = 0
 
 
 def main():
