@@ -233,7 +233,6 @@ def pageMenu4():
         liste_index = menu.df_frigo.index
         produit = menu.df_frigo.iloc[[liste_index[menu.index_menu4]]]
         nom_produit = menu.df_produits.query("Code_barre == '" + produit["Type_Produit"].values[0] + "'")['nom']
-        print("Vous avez choisi le produit " + nom_produit.values[0] + " qui périme le " + produit["date_péremption"][0])
         LCD.effacerText()
         LCD.setTextLigne1("Nom : " + nom_produit.values[0])
         LCD.setTextLigne2("Prtp " + produit["date_péremption"][0])
