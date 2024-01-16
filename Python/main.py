@@ -40,9 +40,9 @@ class Menu:
     #Méthode
     def changementtemp(self):
         if self.Bouton == "Plus":
-            menu.temp[poscursor] +=0.1 #augmente la température
+            self.temp[poscursor] +=0.1 #augmente la température
         elif self.Bouton == "Moins":
-            menu.temp[poscursor] -=0.1 #augmente l'approximation
+            self.temp[poscursor] -=0.1 #augmente l'approximation
 
 #[température défini, approximation défini
 #temp = [6,1]
@@ -211,42 +211,43 @@ def pageMenu1():
     
 """Page permettant d'ajouter en produits en scannant son code NFC"""
 def pageMenu2():
-    if menu.pageMenu == 2 :
-        LCD.setTextLigne1("Veuillez scanner")
-        LCD.setTextLigne2("votre produit")
-        cancel = False
-        NFC = 0
-        while NFC == 0 and not cancel : 
-            NFC = ''.join([hex(i)[-2:] for i in nfc.ReadCard()])
-            print(NFC)
-        
-        df_produits = p.read_csv('../CSV/liste_produits.csv') #On récupère le csv des produits
-        df_frigo = p.read_csv('../CSV/frigo.csv') #On récupère les CSV des produits dans le stock
-        code_produit = df_produits.query("Code_barre == '" + NFC + "'")
-        print(code_produit)
+    LCD.setTextLigne1("Veuillez scanner")
+    LCD.setTextLigne2("votre produit")
+    cancel = False
+    NFC = 0
+    while NFC == 0 and not cancel : 
+        NFC = ''.join([hex(i)[-2:] for i in nfc.ReadCard()])
+         #print(NFC)
+    
+    df_produits = p.read_csv('../CSV/liste_produits.csv') #On récupère le csv des produits
+    df_frigo = p.read_csv('../CSV/frigo.csv') #On récupère les CSV des produits dans le stock
+    code_produit = df_produits.query("Code_barre == '" + NFC + "'")["Code_barre"]
+    print(code_produit)
 
-        date = dt.date.today() #On set la date d'achat a aujourd'hui
-        date_peremption = date #On initialise la date de péremption a aujourd'hui
-        delta = dt.timedelta(days = 1) #On définit notre incrément a 1 jour
-        sortie = False
-        while not sortie : 
-            print("La date sélectionné est : " + str(date_peremption))
-            LCD.setTextLigne1("Date peremption")
-            LCD.setTextLigne2(str(date_peremption))
-            clavier = input("Ecriver 1 pour 1 jour de +, 2 pour un jour en arriere et 0 pour valider \n")
-            if int(clavier) == 1 :
-                date_peremption = date_peremption + delta
-            elif int(clavier) == 2 : 
-                date_peremption = date_peremption - delta
-            elif int(clavier) == 0 :
-                sortie = True
-            else : 
-                print("mauvaise commande")
+    date = dt.date.today() #On set la date d'achat a aujourd'hui
+    date_peremption = date #On initialise la date de péremption a aujourd'hui
+    delta = dt.timedelta(days = 1) #On définit notre incrément a 1 jour
+    sortie = False
+    while not sortie : 
+        print("La date sélectionné est : " + str(date_peremption))
+        LCD.setTextLigne1("Date peremption")
+        LCD.setTextLigne2(str(date_peremption))
+        clavier = input("Ecriver 1 pour 1 jour de +, 2 pour un jour en arriere et 0 pour valider \n")
+        if menu.Bouton == "Plus" :
+            date_peremption = date_peremption + delta
+        elif menu.Bouton == "Moins" : 
+            date_peremption = date_peremption - delta
+        elif menu.Bouton == "Ok" :
+            sortie = True
+        else : 
+            print("mauvaise commande")
 
-        df_frigo.loc[len(df_frigo.index)] = [len(df_frigo)+1,'5dc2f869',date_peremption.strftime('%d/%m/%Y'),date.strftime('%d/%m/%Y')] #Ajout d'une ligne dans le csv de la liste des produits dans le stock
-        print(df_frigo)
-
-        menu.pageMenu = 0
+    df_frigo.loc[len(df_frigo.index)] = [len(df_frigo)+1,'5dc2f869',date_peremption.strftime('%d/%m/%Y'),date.strftime('%d/%m/%Y')] #Ajout d'une ligne dans le csv de la liste des produits dans le stock
+    print(df_frigo)
+    menu.pageMenu = 0
+    LCD.effacerText()
+    LCD.setTextLigne1("Produit ajouté")
+    time.sleep(1)
 
 
 def pageMenu5():
