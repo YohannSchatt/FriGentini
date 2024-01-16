@@ -16,6 +16,7 @@ import threading
 
 event_Bouton = threading.Event()
 event_Menu = threading.Event()
+verrou = threading.Lock()
 
 buttonOk = 4
 buttonBack = 7
@@ -228,8 +229,6 @@ def main():
     grovepi.pinMode(buttonMoins,"INPUT")
     grovepi.pinMode(diode,"OUTPUT")
     grovepi.pinMode(buzzer,"OUTPUT")
-
-    verrou = threading.Lock()
 
     tmenu = threading.Thread(target=SelectionPage) #tmenu lancera SelectionPage()
     print("coucou")
