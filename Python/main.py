@@ -39,21 +39,21 @@ blocked = False
 #Bouton = None
 
 def LectBouton():
-    buttonOk = 4
-    buttonBack = 7
-    buttonPlus = 2
-    buttonMoins = 3
-    Bouton = None
-    buzzer = 6
-    diode = 8
+    with verrou:
+        buttonOk = 4
+        buttonBack = 7
+        buttonPlus = 2
+        buttonMoins = 3
+        Bouton = None
+        buzzer = 6
+        diode = 8
 
-    grovepi.pinMode(buttonOk,"INPUT")
-    grovepi.pinMode(buttonBack,"INPUT")
-    grovepi.pinMode(buttonPlus,"INPUT")
-    grovepi.pinMode(buttonMoins,"INPUT")
-    grovepi.pinMode(diode,"OUTPUT")
-    grovepi.pinMode(buzzer,"OUTPUT")
-    
+        grovepi.pinMode(buttonOk,"INPUT")
+        grovepi.pinMode(buttonBack,"INPUT")
+        grovepi.pinMode(buttonPlus,"INPUT")
+        grovepi.pinMode(buttonMoins,"INPUT")
+        grovepi.pinMode(diode,"OUTPUT")
+        grovepi.pinMode(buzzer,"OUTPUT")
     while True:
         print("je suis dans bouton")
         event_Bouton.wait()
