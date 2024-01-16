@@ -130,6 +130,8 @@ def SelectionPage():
                 pageMenu2()
             if menu.pageMenu == 5 : #Paramètre
                 pageMenu5()
+            if menu.pageMenu == 6:
+                pageMenu6
         event_Bouton.set()
         event_Menu.wait()
 
@@ -241,6 +243,8 @@ def pageMenu5():
         else:
             menu.deplacementcursor()
 
+def pageMenu6():
+    quit()
 
 def main():
 
