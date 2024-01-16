@@ -125,13 +125,10 @@ def SelectionPage():
             menu.températureAct = thermo.ReadTemperature()
             if menu.pageMenu == 0 :
                 pageMenu0()
-                menu.Bouton = None
             if menu.pageMenu == 1 : #Affiche la température
                 pageMenu1()
-                menu.Bouton = None
             if menu.pageMenu == 5 : #Paramètre
                 pageMenu5()
-                menu.Bouton = None
         event_Bouton.set()
         event_Menu.wait()
 
@@ -187,8 +184,11 @@ def pageMenu5():
         menu.deplacementcursor()
         if menu.Bouton == "Ok" and menu.poscursor == 0: 
             menu.pageParamètre = 1 
-        if menu.Bouton == "Ok" and menu.poscursor == 1: 
+        elif menu.Bouton == "Ok" and menu.poscursor == 1: 
             menu.Alarme = not menu.Alarme
+        elif menu.Bouton == "Back": #permet de faire retour
+            pageMenu = 0
+            poscursor = 0
     elif menu.pageParamètre == 1 :  #Menu selection
         LCD.setTextLigne1("temp : " + round(str(menu.temp[0]),1) + " " +str(round(menu.cursor[menu.poscursor]),1) +"         ")
         LCD.setTextLigne2("approx : " + round(str(menu.temp[1]),1) + " " +str(round(menu.cursor[(menu.poscursor+1)%2]),1)  +"       ") 
@@ -206,9 +206,6 @@ def pageMenu5():
             menu.changementtemp()
         else:
             menu.deplacementcursor()
-    elif menu.Bouton == "Back": #permet de faire retour
-        pageMenu = 0
-        poscursor = 0
 
 
 def main():
