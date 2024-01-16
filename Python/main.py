@@ -65,9 +65,7 @@ def LectBouton():
         elif grovepi.digitalRead(buttonBack) == 1:
             Bouton = "Back"
             event_Menu.set() #Déclenche le Menu (le wait dans selectionPage() est fini) 
-            print("j'ai passé la main au menu")
-        elif grovepi.digitalRead(buttonPlus) == 1:
-            Bouton = "Plus"
+            print("j'ai passé la        event_Bouton.wait()
             event_Menu.set() #Déclenche le Menu (le wait dans selectionPage() est fini)
             print("j'ai passé la main au menu")
         elif grovepi.digitalRead(buttonMoins) == 1:
@@ -107,6 +105,7 @@ def changementtemp():
     return temp
 
 def SelectionPage():
+    time.sleep(3)
     event_Bouton.set()
     global pageMenu  #Int qui permet de changer de Menu
     global Bouton 
