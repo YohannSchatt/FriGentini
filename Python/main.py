@@ -109,7 +109,6 @@ def changementtemp():
 
 def SelectionPage():
     time.sleep(3)
-    event_Bouton.set()
     global pageMenu  #Int qui permet de changer de Menu
     global Bouton 
     while True:
