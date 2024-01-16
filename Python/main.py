@@ -227,6 +227,7 @@ def pageMenu4():
         LCD.effacerText()
         LCD.setTextLigne1("Selectionné")
         LCD.setTextLigne2("celui a retire")
+        menu.page_menu_4 = 1
     if menu.page_menu_4 == 1 :
         liste_index = df_frigo.index
         produit = menu.df_frigo.iloc[[liste_index[menu.index_menu4]]]
