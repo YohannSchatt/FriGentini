@@ -33,6 +33,10 @@ class Menu:
         self.date_peremption = self.date #On initialise la date de péremption a aujourd'hui
         self.delta = dt.timedelta(days = 1) #On définit notre incrément a 1 jour
         self.NFC = ''
+        self.index_menu4 = 0
+        self.df_frigo = p.read_csv('../CSV/frigo.csv') #On récupère les CSV des produits dans le stock
+        self.df_produits = p.read_csv('../CSV/liste_produits.csv') #On récupère le csv des produits
+        self.page_menu_4 = 0
 
     def deplacementcursor(self):
         if self.Bouton == "Moins" or self.Bouton == "Plus": # Permet de déplacer le curseur
@@ -211,6 +215,39 @@ def pageMenu2():
             time.sleep(1)
         else : 
             print("mauvaise commande")
+
+def pageMenu4():
+    if menu.page_menu_4 == 0:
+        menu.df_frigo = p.read_csv('../CSV/frigo.csv') #On récupère les CSV des produits dans le stock
+        menu.df_produits = p.read_csv('../CSV/liste_produits.csv') #On récupère le csv des produits
+
+        print("Veuillez parcourir la liste des produits du frigo et selectionne celui a supprimé")
+        LCD.effacerText()
+        LCD.setTextLigne1("Selectionné")
+        LCD.setTextLigne2("celui a retire")
+    if menu.page_menu_4 == 1 :
+        liste_index = df_frigo.index
+        produit = menu.df_frigo.iloc[[liste_index[menu.index_menu4]]]
+        nom_produit = menu.df_produits.query("Code_barre == '" + produit["Type_Produit"][0] +"'")['nom']
+        print("Vous avez choisi le produit " + nom_produit.values[0] + " qui périme le " + produit["date_péremption"][0])
+        LCD.effacerText()
+        LCD.setTextLigne1("Nom : " + nom_produit.values[0])
+        LCD.setTextLigne2("Prtp " + produit["date_péremption"][0])
+        if menu.Bouton == "Plus" : 
+            if menu.index_menu4 == len(liste_index) - 1:
+                menu.index_menu4 = 0
+            else : 
+                menu.index_menu4 += 1 
+        if menu.Bouton == "Moins" :
+            if menu.index_menu4 == 0:
+                menu.index_menu4 = len(liste_index) - 1
+            else :
+                menu.index_menu4 -= 1
+        if menu.Bouton == "Ok":
+            df_frigo = df_frigo.drop(liste_index[menu.index_menu4])
+            menu.pageMenu = 0
+            menu.page_menu_4 = 0
+            print(df_frigo)
 
 
 def pageMenu5():
