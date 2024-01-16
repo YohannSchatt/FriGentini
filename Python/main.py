@@ -70,6 +70,9 @@ def LectBouton():
         buttonBack = 7
         buttonPlus = 2
         buttonMoins = 3
+        buzzer = 6
+        diode = 8
+
 
         grovepi.pinMode(buttonOk,"INPUT")
         grovepi.pinMode(buttonBack,"INPUT")
