@@ -137,6 +137,7 @@ def SelectionPage():
             if menu.pageMenu == 5 : #Paramètre
                 pageMenu5()
                 menu.Bouton = None
+        time.sleep(0.2)
         event_Bouton.set()
         event_Menu.wait()
 
@@ -197,7 +198,7 @@ def pageMenu5():
     global poscursor  #Int qui permet de connaitre ou se situe le curseur dans paramètre
     if menu.pageParamètre == 0 : # Menu principale des paramètres
         LCD.setTextLigne1("temp : " + str(menu.temp[0]) + " +- "+ str(menu.temp[1]) + " " + menu.cursor[menu.poscursor] + "        ")
-        LCD.setTextLigne2("Alarme : " + str(menu.Alarme) +  cursor[(menu.poscursor+1)%2] + "       ") #(poscursor+1%2) permet de selectionner l'autre element du tableau
+        LCD.setTextLigne2("Alarme : " + str(menu.Alarme) +  menu.cursor[(menu.poscursor+1)%2] + "       ") #(poscursor+1%2) permet de selectionner l'autre element du tableau
         menu.deplacementcursor()
         if menu.Bouton == "Ok" and menu.poscursor == 0: 
             menu.pageParamètre = 1 
