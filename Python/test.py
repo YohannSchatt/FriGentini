@@ -1,5 +1,6 @@
 import pandas as p
 import datetime as dt
+
 #Partie du code permettant l'ajout d'une ligne dans le tableau des produits
 #######################################################################################################################################################
 
@@ -26,13 +27,11 @@ while not sortie :
         print("mauvaise commande")
 
 df_frigo.loc[len(df_frigo.index)] = [len(df_frigo)+1,'5dc2f869',date_peremption.strftime('%d/%m/%Y'),date.strftime('%d/%m/%Y')] #Ajout d'une ligne dans le csv de la liste des produits dans le stock
-#print(df_frigo)
+print(df_frigo)
 
 
 #######################################################################################################################################################
 #https://www.delftstack.com/fr/howto/python-pandas/drop-row-pandas/
-
-#print(df_frigo.iloc[[0]])
 
 print("Veuillez parcourir la liste des produits du frigo et selectionne celui a supprimé")
 valide = False
@@ -40,7 +39,8 @@ liste_index = df_frigo.index
 i = 0
 while not valide : 
     produit = df_frigo.iloc[[liste_index[i]]]
-    print("Vous avez choisi le produit " + produit['Type_Produit'][0])
+    nom_produit = df_produits.query("Code_barre == '" + produit["Type_Produit"][0] +"'")['nom']
+    print("Vous avez choisi le produit " + nom_produit.values[0])
     clavier = input("Appuyer sur 1 pour le suivant, 0 pour valider \n")
     if int(clavier) == 1 : 
         if i == len(liste_index) - 1:
