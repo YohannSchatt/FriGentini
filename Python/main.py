@@ -58,26 +58,29 @@ def LectBouton():
     while True:
         print("je suis dans bouton")
         event_Bouton.wait()
-        if grovepi.digitalRead(buttonOk) == 1:
-            Bouton = "Ok"
-            event_Menu.set() #Déclenche le Menu (le wait dans selectionPage() est fini)        
-            event_Bouton.wait()            
-            print("j'ai passé la main au menu")
-        elif grovepi.digitalRead(buttonBack) == 1:
-            Bouton = "Back"
-            event_Menu.set() #Déclenche le Menu (le wait dans selectionPage() est fini)
-            event_Bouton.wait()
-            print("j'ai passé la main au menu")
-        elif grovepi.digitalRead(buttonPlus) == 1:
-            Bouton = "Plus"
-            event_Menu.set() #Déclenche le Menu (le wait dans selectionPage() est fini)
-            event_Bouton.wait()
-            print("j'ai passé la main au menu")
-        elif grovepi.digitalRead(buttonMoins) == 1:
-            Bouton = "Moins"
-            event_Menu.set() #Déclenche le Menu (le wait dans selectionPage() est fini)
-            event_Bouton.wait()
-            print("j'ai passé la main au menu")
+        with verrou:
+            if grovepi.digitalRead(buttonOk) == 1:
+                Bouton = "Ok"
+                event_Menu.set() #Déclenche le Menu (le wait dans selectionPage() est fini)        
+                event_Bouton.wait()            
+                print("j'ai passé la main au menu")
+            elif grovepi.digitalRead(buttonBack) == 1:
+                Bouton = "Back"
+                event_Menu.set() #Déclenche le Menu (le wait dans selectionPage() est fini)
+                event_Bouton.wait()
+                print("j'ai passé la main au menu")
+            elif grovepi.digitalRead(buttonPlus) == 1:
+                Bouton = "Plus"
+                event_Menu.set() #Déclenche le Menu (le wait dans selectionPage() est fini)
+                event_Bouton.wait()
+                print("j'ai passé la main au menu")
+            elif grovepi.digitalRead(buttonMoins) == 1:
+                Bouton = "Moins"
+                event_Menu.set() #Déclenche le Menu (le wait dans selectionPage() est fini)
+                event_Bouton.wait()
+                print("j'ai passé la main au menu")
+            else:
+                bouton = None
 
 def Alarme(temperatureAct,temperature,approximation):
     global buzzer 
@@ -114,16 +117,17 @@ def SelectionPage():
     global pageMenu  #Int qui permet de changer de Menu
     global Bouton 
     while True:
-        print("SelectionPage")
-        températureAct = thermo.ReadTemperature()
-        if pageMenu == 0 :
-            pageMenu0()
-        if pageMenu == 1 : #Affiche la température
-            pageMenu1()
-        if pageMenu == 5 : #Paramètre
-            pageMenu5()
-            Bouton = None
-        event_Bouton.set()
+        with verrou:
+            print("SelectionPage")
+            températureAct = thermo.ReadTemperature()
+            if pageMenu == 0 :
+                pageMenu0()
+            if pageMenu == 1 : #Affiche la température
+                pageMenu1()
+            if pageMenu == 5 : #Paramètre
+                pageMenu5()
+                Bouton = None
+            event_Bouton.set()
         event_Menu.wait()
 
 
@@ -223,6 +227,8 @@ def main():
     grovepi.pinMode(buttonMoins,"INPUT")
     grovepi.pinMode(diode,"OUTPUT")
     grovepi.pinMode(buzzer,"OUTPUT")
+
+    verrou = threading.Lock()
 
     tmenu = threading.Thread(target=SelectionPage) #tmenu lancera SelectionPage()
     print("coucou")
