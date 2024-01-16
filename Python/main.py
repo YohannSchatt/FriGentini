@@ -228,6 +228,7 @@ def pageMenu4():
         LCD.setTextLigne1("Selectionné")
         LCD.setTextLigne2("celui a retire")
         menu.page_menu_4 = 1
+        menu.Bouton = None
     if menu.page_menu_4 == 1 :
         liste_index = menu.df_frigo.index
         produit = menu.df_frigo.iloc[[liste_index[menu.index_menu4]]]
@@ -247,10 +248,10 @@ def pageMenu4():
             else :
                 menu.index_menu4 -= 1
         if menu.Bouton == "Ok":
-            df_frigo = df_frigo.drop(liste_index[menu.index_menu4])
+            menu.df_frigo = menu.df_frigo.drop(liste_index[menu.index_menu4])
             menu.pageMenu = 0
             menu.page_menu_4 = 0
-            print(df_frigo)
+            print(menu.df_frigo)
 
 
 def pageMenu5():
