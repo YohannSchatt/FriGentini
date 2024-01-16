@@ -24,7 +24,7 @@ class Menu:
         self.cursor = ["<-",""]
         self.Alarme = True
         self.blocked = False
-        self.Bouton = None
+        self.Bouton = "Plus"
         self.températureAct = thermo.ReadTemperature()
 
     def deplacementcursor(self):
@@ -90,7 +90,7 @@ def LectBouton():
                 event_Menu.set() #Déclenche le Menu (le wait dans selectionPage() est fini)        
                 event_Bouton.wait()            
             elif grovepi.digitalRead(buttonBack) == 1:
-                menuBouton = "Back"
+                menu.Bouton = "Back"
                 print("back")
                 event_Menu.set() #Déclenche le Menu (le wait dans selectionPage() est fini)
                 event_Bouton.wait()
@@ -129,13 +129,10 @@ def SelectionPage():
             print("SelectionPage")
             menu.températureAct = thermo.ReadTemperature()
             if menu.pageMenu == 0 :
-                menu.Bouton = None
                 pageMenu0()
             if menu.pageMenu == 1 : #Affiche la température
-                menu.Bouton = None
                 pageMenu1()
             if menu.pageMenu == 5 : #Paramètre
-                menu.Bouton = None
                 pageMenu5()
         event_Bouton.set()
         event_Menu.wait()
