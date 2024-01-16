@@ -236,8 +236,6 @@ def pageMenu5():
         else:
             menu.deplacementcursor()
 
-def page_date_peremption() :
-
 
 def main():
 
