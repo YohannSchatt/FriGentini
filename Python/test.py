@@ -40,7 +40,7 @@ i = 0
 while not valide : 
     produit = df_frigo.iloc[[liste_index[i]]]
     nom_produit = df_produits.query("Code_barre == '" + produit["Type_Produit"][0] +"'")['nom']
-    print("Vous avez choisi le produit " + nom_produit.values[0])
+    print("Vous avez choisi le produit " + nom_produit.values[0] + " qui périme le " + produit["date_péremption"][0])
     clavier = input("Appuyer sur 1 pour le suivant, 0 pour valider \n")
     if int(clavier) == 1 : 
         if i == len(liste_index) - 1:
@@ -53,4 +53,13 @@ df_frigo = df_frigo.drop(liste_index[i])
 print(df_frigo)
 
 ######################################################################################################################################################
-#Partie affichage des data, probablement un parcours avec des sleep et hop 
+#Partie affichage des data, probablement un parcours avec des sleep et hop
+
+
+######################################################################################################################################################
+#Partie pour l'extinction de la machine
+
+while True :
+    entree = input("Press 1 to stop the program \n")
+    if int(entree)  == 1 :
+        quit()
