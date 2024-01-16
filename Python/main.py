@@ -36,7 +36,7 @@ Alarme = True
 #variable qui permet de bloquer le curseur
 blocked = False
 #variable qui stocke la valeur du bouton
-#Bouton = None
+Bouton = None
 
 def LectBouton():
     with verrou:
@@ -44,9 +44,9 @@ def LectBouton():
         buttonBack = 7
         buttonPlus = 2
         buttonMoins = 3
-        Bouton = None
         buzzer = 6
         diode = 8
+        global Bouton
 
         grovepi.pinMode(buttonOk,"INPUT")
         grovepi.pinMode(buttonBack,"INPUT")
@@ -140,33 +140,33 @@ def pageMenu0():
     print("PageMenu0")
     print("selectionPage :", selectionPage)
     LCD.setTextLigne1("    Selection     ")
-    if selectionPage == 1:
+    if selectionPage == 0:
         LCD.setTextLigne2("< affiche Temp >")
         if Bouton == "Ok":
             pageMenu = 1
-    if selectionPage == 2:
+    if selectionPage == 1:
         LCD.setTextLigne2("<  ajout data  >")
         if Bouton == "Ok":
             pageMenu = 2
-    if selectionPage == 3:
+    if selectionPage == 2:
         LCD.setTextLigne2("< affiche data >")
         if Bouton == "Ok":
             pageMenu = 3
-    if selectionPage == 4:
+    if selectionPage == 3:
         LCD.setTextLigne2("<  suppr data  >")
         if Bouton == "Ok":
             pageMenu = 4
-    if selectionPage == 5: #Paramètres
+    if selectionPage == 4: #Paramètres
         LCD.setTextLigne2("<  Parametres  >")
         if Bouton == "Ok":
             pageMenu = 5
-    if selectionPage == 6: #Stoppe le programme
+    if selectionPage == 5: #Stoppe le programme
         LCD.setTextLigne2("<   Eteindre   >")
         if Bouton == "Ok":
            pageMenu = 6
     if Bouton == "Plus":
         print("coucou")
-        selectionPage = (selectionPage+1)%7
+        selectionPage = (selectionPage+1)%6
     if Bouton == "Moins":
         print("coucou2")
         if selectionPage == 0:
