@@ -79,7 +79,7 @@ def LectBouton():
                 event_Bouton.wait()
                 print("j'ai passé la main au menu")
             else:
-                bouton = None
+                Bouton = None
 
 def Alarme(temperatureAct,temperature,approximation):
     global buzzer 
