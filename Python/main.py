@@ -14,11 +14,6 @@ import pandas as p
 import led 
 import threading
 
-event_Bouton = threading.Event()
-event_Menu = threading.Event()
-verrou = threading.Lock()
-menu = Menu()
-
 class Menu:
     def __init__(self):
         self.temp = [6,1]
@@ -63,6 +58,12 @@ class Menu:
 #blocked = False
 #variable qui stocke la valeur du bouton
 #Bouton = None
+
+event_Bouton = threading.Event()
+event_Menu = threading.Event()
+verrou = threading.Lock()
+menu = Menu()
+
 
 def LectBouton():
     with verrou:
