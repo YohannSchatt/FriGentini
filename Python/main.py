@@ -212,13 +212,13 @@ def pageMenu5():
             else :
                 menu.pageParamètre = 0
                 menu.poscursor = 0
-        if Bouton == "Ok":
+        elif Bouton == "Ok":
             menu.cursor[0] = "X"
             menu.blocked = True
-        else:
-            if blocked:
-                menu.temp = changementtemp(temp,cursor)
-            else:
+        elif blocked:
+            menu.temp = changementtemp(temp,cursor)
+        
+
 
     elif Bouton == "Back": #permet de faire retour
         pageMenu = 0
