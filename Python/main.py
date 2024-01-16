@@ -132,6 +132,8 @@ def SelectionPage():
                 pageMenu1()
             if menu.pageMenu == 2:
                 pageMenu2()
+            if menu.pageMenu == 4:
+                pageMenu4()
             if menu.pageMenu == 5 : #Paramètre
                 pageMenu5()
             if menu.pageMenu == 6:
