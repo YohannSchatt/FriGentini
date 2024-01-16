@@ -37,7 +37,7 @@ class Menu:
         if self.Bouton == "Plus":
             self.temp[self.poscursor] = round(self.temp[self.poscursor] + 0.1,1) #augmente la température
         elif self.Bouton == "Moins":
-            self.temp[self.poscursor] -= round(self.temp[self.poscursor] - 0.1,1) #augmente l'approximation
+            self.temp[self.poscursor] = round(self.temp[self.poscursor] - 0.1,1) #augmente l'approximation
 
 #[température défini, approximation défini
 #temp = [6,1]
@@ -86,22 +86,18 @@ def LectBouton():
         with verrou:
             if grovepi.digitalRead(buttonOk) == 1:
                 menu.Bouton = "Ok"
-                print("Ok")
                 event_Menu.set() #Déclenche le Menu (le wait dans selectionPage() est fini)        
                 event_Bouton.wait()            
             elif grovepi.digitalRead(buttonBack) == 1:
                 menu.Bouton = "Back"
-                print("back")
                 event_Menu.set() #Déclenche le Menu (le wait dans selectionPage() est fini)
                 event_Bouton.wait()
             elif grovepi.digitalRead(buttonPlus) == 1:
                 menu.Bouton = "Plus"
-                print("plus")
                 event_Menu.set() #Déclenche le Menu (le wait dans selectionPage() est fini)
                 event_Bouton.wait()
             elif grovepi.digitalRead(buttonMoins) == 1:
                 menu.Bouton = "Moins"
-                print("moins")
                 event_Menu.set() #Déclenche le Menu (le wait dans selectionPage() est fini)                
                 event_Bouton.wait()
             else:
@@ -121,7 +117,6 @@ def Alarme():
 def SelectionPage():
     while True:
         with verrou:
-            print("SelectionPage")
             menu.températureAct = thermo.ReadTemperature()
             if menu.pageMenu == 0 :
                 pageMenu0()
@@ -135,9 +130,6 @@ def SelectionPage():
 
 
 def pageMenu0():
-    print("PageMenu0")
-    print("selectionPage :", menu.selectionPage)
-    print("Bouton :", menu.Bouton)
     LCD.setTextLigne1("    Selection     ")
     if menu.selectionPage == 0:
         LCD.setTextLigne2("< affiche Temp >")
@@ -172,7 +164,7 @@ def pageMenu0():
             menu.selectionPage = menu.selectionPage - 1
 
 def pageMenu1():
-    LCD.setTextLigne1(str(round(menu.températureAct))+' Celsius       ')
+    LCD.setTextLigne1(str(round(menu.températureAct,1))+' Celsius       ')
     LCD.setTextLigne2("retour -> menu ")
     if menu.Bouton == "Back": #permet de faire retour
         menu.pageMenu = 0
@@ -218,7 +210,6 @@ def main():
     time.sleep(2)
 
     tmenu = threading.Thread(target=SelectionPage) #tmenu lancera SelectionPage()
-    print("coucou")
     tbouton = threading.Thread(target=LectBouton) #tbouton lancera LectBouton() 
 
     tbouton.start()
