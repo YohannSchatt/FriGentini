@@ -35,9 +35,9 @@ class Menu:
 
     def changementtemp(self):
         if self.Bouton == "Plus":
-            self.temp[self.poscursor] +=0.1 #augmente la température
+            self.temp[self.poscursor] = round(self.temp[self.poscursor] + 0.1,1) #augmente la température
         elif self.Bouton == "Moins":
-            self.temp[self.poscursor] -=0.1 #augmente l'approximation
+            self.temp[self.poscursor] -= round(self.temp[self.poscursor] - 0.1,1) #augmente l'approximation
 
 #[température défini, approximation défini
 #temp = [6,1]
@@ -190,8 +190,8 @@ def pageMenu5():
             pageMenu = 0
             poscursor = 0
     elif menu.pageParamètre == 1 :  #Menu selection
-        LCD.setTextLigne1("temp : " + str(float(round(menu.temp[0],1))) + " " +str(float(round(menu.cursor[menu.poscursor],1))) +"         ")
-        LCD.setTextLigne2("approx : " + str(float(round(menu.temp[1],1))) + " " +str(float(round(menu.cursor[(menu.poscursor+1)%2])),1)  +"       ") 
+        LCD.setTextLigne1("temp : " + str(menu.temp[0]) + " " +str(menu.cursor[menu.poscursor]) +"         ")
+        LCD.setTextLigne2("approx : " + str(menu.temp[1]) + " " +str(menu.cursor[(menu.poscursor+1)%2])  +"       ") 
         if menu.Bouton == "Back": #permet de faire retour
             if menu.blocked :
                 menu.cursor[0] = "<-"
