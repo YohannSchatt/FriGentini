@@ -122,7 +122,7 @@ def SelectionPage():
             if menu.pageMenu == 5 : #Paramètre
                 pageMenu5()
         event_Bouton.set()
-        time.sleep(0.1)
+        time.sleep(0.2)
         event_Menu.wait()
 
 
