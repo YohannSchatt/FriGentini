@@ -86,20 +86,16 @@ def LectBouton():
         with verrou:
             if grovepi.digitalRead(buttonOk) == 1:
                 menu.Bouton = "Ok"
-                event_Menu.set() #Déclenche le Menu (le wait dans selectionPage() est fini)        
-                event_Bouton.wait()            
+                event_Menu.set() #Déclenche le Menu (le wait dans selectionPage() est fini)                 
             elif grovepi.digitalRead(buttonBack) == 1:
                 menu.Bouton = "Back"
                 event_Menu.set() #Déclenche le Menu (le wait dans selectionPage() est fini)
-                event_Bouton.wait()
             elif grovepi.digitalRead(buttonPlus) == 1:
                 menu.Bouton = "Plus"
                 event_Menu.set() #Déclenche le Menu (le wait dans selectionPage() est fini)
-                event_Bouton.wait()
             elif grovepi.digitalRead(buttonMoins) == 1:
                 menu.Bouton = "Moins"
                 event_Menu.set() #Déclenche le Menu (le wait dans selectionPage() est fini)                
-                event_Bouton.wait()
             else:
                 menu.Bouton = None
 
