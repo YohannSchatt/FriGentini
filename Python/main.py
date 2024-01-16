@@ -33,7 +33,7 @@ class Menu:
         self.températureAct = thermo.ReadTemperature()
 
     def deplacementcursor(self):
-    if self.Bouton == "Moins" or self.Bouton == "Plus": # Permet de déplacer le curseur
+        if self.Bouton == "Moins" or self.Bouton == "Plus": # Permet de déplacer le curseur
             if poscursor == 0:
                 self.poscursor = 1
             else :
