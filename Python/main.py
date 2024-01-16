@@ -188,6 +188,7 @@ def pageMenu2():
     date_peremption = date #On initialise la date de péremption a aujourd'hui
     delta = dt.timedelta(days = 1) #On définit notre incrément a 1 jour
     sortie = False
+    menu.Bouton = None
     while not sortie : 
         print("La date sélectionné est : " + str(date_peremption))
         LCD.setTextLigne1("Date peremption")
