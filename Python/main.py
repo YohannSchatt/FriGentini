@@ -143,8 +143,8 @@ def SelectionPage():
 
 def pageMenu0():
     print("PageMenu0")
-    print("selectionPage :", selectionPage)
-    print("Bouton :", Bouton)
+    print("selectionPage :", menu.selectionPage)
+    print("Bouton :", menu.Bouton)
     LCD.setTextLigne1("    Selection     ")
     if menu.selectionPage == 0:
         LCD.setTextLigne2("< affiche Temp >")
