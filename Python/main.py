@@ -207,7 +207,7 @@ def pageMenu1():
         LCD.setTextLigne1(str(round(menu.températureAct))+' Celsius       ')
         LCD.setTextLigne2("retour -> menu ")
         if Bouton == "Back": #permet de faire retour
-            pageMenu = 0
+            menu.pageMenu = 0
     
 """Page permettant d'ajouter en produits en scannant son code NFC"""
 def pageMenu2():
@@ -221,8 +221,8 @@ def pageMenu2():
     
     df_produits = p.read_csv('../CSV/liste_produits.csv') #On récupère le csv des produits
     df_frigo = p.read_csv('../CSV/frigo.csv') #On récupère les CSV des produits dans le stock
-    code_produit = df_produits.query("Code_barre == '" + NFC + "'")["Code_barre"]
-    print(code_produit)
+    produit = df_produits.query("Code_barre == '" + NFC + "'")
+    print(produit["nom"][0])
 
     date = dt.date.today() #On set la date d'achat a aujourd'hui
     date_peremption = date #On initialise la date de péremption a aujourd'hui
@@ -232,7 +232,6 @@ def pageMenu2():
         print("La date sélectionné est : " + str(date_peremption))
         LCD.setTextLigne1("Date peremption")
         LCD.setTextLigne2(str(date_peremption))
-        clavier = input("Ecriver 1 pour 1 jour de +, 2 pour un jour en arriere et 0 pour valider \n")
         if menu.Bouton == "Plus" :
             date_peremption = date_peremption + delta
         elif menu.Bouton == "Moins" : 
