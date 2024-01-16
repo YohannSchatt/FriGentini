@@ -79,6 +79,7 @@ def LectBouton():
         grovepi.pinMode(buttonMoins,"INPUT")
         grovepi.pinMode(diode,"OUTPUT")
         grovepi.pinMode(buzzer,"OUTPUT")
+
     while True:
         print("je suis dans bouton")
         event_Bouton.wait()
@@ -166,10 +167,8 @@ def pageMenu0():
         if menu.Bouton == "Ok":
            menu.pageMenu = 6
     if menu.Bouton == "Plus":
-        print("coucou")
         menu.selectionPage = (menu.selectionPage+1)%6
     if menu.Bouton == "Moins":
-        print("coucou2")
         if menu.selectionPage == 0:
             menu.selectionPage = 6
         else :
@@ -191,8 +190,8 @@ def pageMenu5():
         if menu.Bouton == "Ok" and menu.poscursor == 1: 
             menu.Alarme = not menu.Alarme
     elif menu.pageParamètre == 1 :  #Menu selection
-        LCD.setTextLigne1("temp : " + str(menu.temp[0]) + menu.cursor[menu.poscursor] +"         ")
-        LCD.setTextLigne2("approx : " + str(menu.temp[1]) + menu.cursor[(menu.poscursor+1)%2]  +"       ") 
+        LCD.setTextLigne1("temp : " + round(str(menu.temp[0]),1) + " " +str(round(menu.cursor[menu.poscursor]),1) +"         ")
+        LCD.setTextLigne2("approx : " + round(str(menu.temp[1]),1) + " " +str(round(menu.cursor[(menu.poscursor+1)%2]),1)  +"       ") 
         if menu.Bouton == "Back": #permet de faire retour
             if menu.blocked :
                 menu.cursor[0] = "<-"
