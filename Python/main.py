@@ -16,11 +16,6 @@ import threading
 event_Bouton = threading.Event()
 event_Menu = threading.Event()
 verrou = threading.Lock()
-
-buttonOk = 4
-buttonBack = 7
-buttonPlus = 2
-buttonMoins = 3
 buzzer = 6
 diode = 8
 
@@ -41,18 +36,14 @@ Alarme = True
 #variable qui permet de bloquer le curseur
 blocked = False
 #variable qui stocke la valeur du bouton
-Bouton = None
+#Bouton = None
 
 def LectBouton():
-    global buttonOk
-    global buttonBack 
-    global buttonPlus 
-    global buttonMoins 
-
     buttonOk = 4
     buttonBack = 7
     buttonPlus = 2
     buttonMoins = 3
+    Bouton = None
     buzzer = 6
     diode = 8
     
