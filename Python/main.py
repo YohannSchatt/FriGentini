@@ -33,11 +33,11 @@ class Menu:
             else :
                 self.poscursor = 0
 
-    def changementtemp():
+    def changementtemp(self):
         if self.Bouton == "Plus":
-            menu.temp[poscursor] +=0.1 #augmente la température
+            self.temp[poscursor] +=0.1 #augmente la température
         elif self.Bouton == "Moins":
-            menu.temp[poscursor] -=0.1 #augmente l'approximation
+            self.temp[poscursor] -=0.1 #augmente l'approximation
 
 #[température défini, approximation défini
 #temp = [6,1]
@@ -116,11 +116,6 @@ def Alarme():
         led.turnOFF(buzzer)
         led.turnOFF(buzzer)
 
-def changementtemp():
-    if Bouton == "Plus":
-            menu.temp[poscursor] +=0.1 #augmente la température
-    elif Bouton == "Moins":
-            menu.temp[poscursor] -=0.1 #augmente l'approximation
 
 def SelectionPage():
     while True:
@@ -182,19 +177,12 @@ def pageMenu0():
             menu.selectionPage = menu.selectionPage - 1
 
 def pageMenu1():
-    if menu.pageMenu == 1 : #Affiche la température
-        LCD.setTextLigne1(str(round(menu.températureAct))+' Celsius       ')
-        LCD.setTextLigne2("retour -> menu ")
-        if menu.Bouton == "Back": #permet de faire retour
-            menu.pageMenu = 0
+    LCD.setTextLigne1(str(round(menu.températureAct))+' Celsius       ')
+    LCD.setTextLigne2("retour -> menu ")
+    if menu.Bouton == "Back": #permet de faire retour
+        menu.pageMenu = 0
 
 def pageMenu5():
-    global pageParamètre #Int qui permet savoir ou on est dans les paramètres
-    global Alarme  #variable pour savoir si l'alarme est active ou non
-    global Bouton  #variable qui permet de conserver la valeur de bouton
-    global blocked  #variable qui permet de bloquer le curseur
-    global cursor  # curseur utilisé dans les différents menu qui se déplace sur les deux lignes
-    global poscursor  #Int qui permet de connaitre ou se situe le curseur dans paramètre
     if menu.pageParamètre == 0 : # Menu principale des paramètres
         LCD.setTextLigne1("temp : " + str(menu.temp[0]) + " +- "+ str(menu.temp[1]) + " " + menu.cursor[menu.poscursor] + "        ")
         LCD.setTextLigne2("Alarme : " + str(menu.Alarme) +  menu.cursor[(menu.poscursor+1)%2] + "       ") #(poscursor+1%2) permet de selectionner l'autre element du tableau
@@ -204,8 +192,8 @@ def pageMenu5():
         if menu.Bouton == "Ok" and menu.poscursor == 1: 
             menu.Alarme = not menu.Alarme
     elif menu.pageParamètre == 1 :  #Menu selection
-        LCD.setTextLigne1("temp : " + str(temp[0]) + cursor[(poscursor+1)%2] +"         ")
-        LCD.setTextLigne2("approx : " + str(temp[1]) + cursor[(poscursor+1)%2]  +"       ") 
+        LCD.setTextLigne1("temp : " + str(menu.temp[0]) + menu.cursor[(menu.poscursor+1)%2] +"         ")
+        LCD.setTextLigne2("approx : " + str(menu.temp[1]) + menu.cursor[(menu.poscursor+1)%2]  +"       ") 
         if menu.Bouton == "Back": #permet de faire retour
             if menu.blocked :
                 menu.cursor[0] = "<-"
@@ -213,11 +201,11 @@ def pageMenu5():
             else :
                 menu.pageParamètre = 0
                 menu.poscursor = 0
-        elif Bouton == "Ok":
+        elif menu.Bouton == "Ok":
             menu.cursor[0] = "X"
             menu.blocked = True
-        elif blocked:
-            menu.temp = changementtemp(temp,cursor)
+        elif menu.blocked:
+            menu.temp = menu.changementtemp()
         
 
 
