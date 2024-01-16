@@ -93,7 +93,7 @@ def LectBouton():
         grovepi.pinMode(buzzer,"OUTPUT")
 
     while True:
-        print("je suis dans bouton")
+        #print("je suis dans bouton")
         event_Bouton.wait()
         with verrou:
             if grovepi.digitalRead(buttonOk) == 1:
@@ -232,7 +232,8 @@ def pageMenu4():
     if menu.page_menu_4 == 1 :
         liste_index = menu.df_frigo.index
         produit = menu.df_frigo.iloc[[liste_index[menu.index_menu4]]]
-        nom_produit = menu.df_produits.query("Code_barre == '",produit["Type_Produit"],"'")['nom']
+        print(produit["Type_Produit"])
+        nom_produit = menu.df_produits.query("Code_barre == '" + produit["Type_Produit"] + "'")['nom']
         print("Vous avez choisi le produit " + nom_produit.values[0] + " qui périme le " + produit["date_péremption"][0])
         LCD.effacerText()
         LCD.setTextLigne1("Nom : " + nom_produit.values[0])
