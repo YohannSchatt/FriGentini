@@ -28,7 +28,10 @@ class Menu:
         self.blocked = False
         self.Bouton = None
         self.températureAct = thermo.ReadTemperature()
-        self.pageAjout = 0
+        self.pageAjout = 0 
+        self.date = dt.date.today() #On set la date d'achat a aujourd'hui
+        self.date_peremption = self.date #On initialise la date de péremption a aujourd'hui
+        self.delta = dt.timedelta(days = 1) #On définit notre incrément a 1 jour
 
     def deplacementcursor(self):
         if self.Bouton == "Moins" or self.Bouton == "Plus": # Permet de déplacer le curseur
@@ -172,6 +175,7 @@ def pageMenu1():
         menu.pageMenu = 0
 
 def pageMenu2():
+    #df_produits = p.read_csv('../CSV/liste_produits.csv') #On récupère le csv des produits
     if menu.pageAjout == 0:
         LCD.setTextLigne1("Veuillez scanner")
         LCD.setTextLigne2("votre produit")
@@ -180,13 +184,7 @@ def pageMenu2():
         while NFC == 0 and not cancel : 
             NFC = ''.join([hex(i)[-2:] for i in nfc.ReadCard()])
             #print(NFC)
-        df_produits = p.read_csv('../CSV/liste_produits.csv') #On récupère le csv des produits
-        df_frigo = p.read_csv('../CSV/frigo.csv') #On récupère les CSV des produits dans le stock
-        date = dt.date.today() #On set la date d'achat a aujourd'hui
-        date_peremption = date #On initialise la date de péremption a aujourd'hui
-        delta = dt.timedelta(days = 1) #On définit notre incrément a 1 jour
         menu.pageAjout = 1
-
     if menu.pageAjout == 1:
         menu.Bouton = None
         print("Je rentre dans pageAjout 1 et le bouton vaut ", menu.Bouton)
@@ -194,10 +192,11 @@ def pageMenu2():
         LCD.setTextLigne1("Date peremption")
         LCD.setTextLigne2(str(date_peremption))
         if menu.Bouton == "Plus" :
-            date_peremption = date_peremption + delta
+            menu.date_peremption = menu.date_peremption + menu.delta
         elif menu.Bouton == "Moins" : 
-            date_peremption = date_peremption - delta
+            menu.date_peremption = menu.date_peremption - menu.delta
         elif menu.Bouton == "Ok" :
+            df_frigo = p.read_csv('../CSV/frigo.csv') #On récupère les CSV des produits dans le stock
             menu.pageAjout = 0
             menu.pageMenu = 0
             df_frigo.loc[len(df_frigo.index)] = [len(df_frigo)+1,'5dc2f869',date_peremption.strftime('%d/%m/%Y'),date.strftime('%d/%m/%Y')] #Ajout d'une ligne dans le csv de la liste des produits dans le stock
