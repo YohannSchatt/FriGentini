@@ -230,6 +230,7 @@ def pageMenu4():
         LCD.setTextLigne1("Selectionné")
         LCD.setTextLigne2("celui a retire")
         menu.page_menu_4 = 1
+        menu.index_menu4 = 0
         menu.Bouton = None
     if menu.page_menu_4 == 1 :
         liste_index = menu.df_frigo.index
