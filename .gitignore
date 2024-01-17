@@ -1,0 +1,13 @@
+# Fichiers temporaires
+*~
+
+# Fichiers de log
+*.log
+
+# Fichiers compilés
+*.class
+*.jar
+
+#Dossier
+mysql/
+Python/__pycache__/
