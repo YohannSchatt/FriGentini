@@ -216,6 +216,7 @@ def pageMenu2():
             menu.df_frigo.to_csv('../CSV/frigo.csv',index=False)
             LCD.effacerText()
             LCD.setTextLigne1("Produit ajouté")
+            menu.date_peremption = menu.date
             time.sleep(1)
         else : 
             print("mauvaise commande")
@@ -230,7 +231,6 @@ def pageMenu4():
         LCD.setTextLigne1("Selectionné")
         LCD.setTextLigne2("celui a retire")
         menu.page_menu_4 = 1
-        menu.index_menu4 = 0
         menu.Bouton = None
     if menu.page_menu_4 == 1 :
         liste_index = menu.df_frigo.index
@@ -255,6 +255,7 @@ def pageMenu4():
             menu.df_frigo.to_csv('../CSV/frigo.csv',index=False)
             menu.pageMenu = 0
             menu.page_menu_4 = 0
+            menu.index_menu4 = 0
             print(menu.df_frigo)
 
 
