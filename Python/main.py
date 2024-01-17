@@ -12,6 +12,9 @@ import grovepi
 import pandas as p
 import led 
 import threading
+import datetime as dt
+import NFCDriver as nfc
+import os
 
 class Menu:
     def __init__(self):
@@ -25,6 +28,15 @@ class Menu:
         self.blocked = False
         self.Bouton = None
         self.températureAct = thermo.ReadTemperature()
+        self.pageAjout = 0 
+        self.date = dt.date.today() #On set la date d'achat a aujourd'hui
+        self.date_peremption = self.date #On initialise la date de péremption a aujourd'hui
+        self.delta = dt.timedelta(days = 1) #On définit notre incrément a 1 jour
+        self.NFC = ''
+        self.index_menu4 = 0
+        self.df_frigo = p.read_csv('../CSV/frigo.csv') #On récupère les CSV des produits dans le stock
+        self.df_produits = p.read_csv('../CSV/liste_produits.csv') #On récupère le csv des produits
+        self.page_menu_4 = 0
 
     def deplacementcursor(self):
         if self.Bouton == "Moins" or self.Bouton == "Plus": # Permet de déplacer le curseur
@@ -119,8 +131,14 @@ def SelectionPage():
                 pageMenu0()
             if menu.pageMenu == 1 : #Affiche la température
                 pageMenu1()
+            if menu.pageMenu == 2:
+                pageMenu2()
+            if menu.pageMenu == 4:
+                pageMenu4()
             if menu.pageMenu == 5 : #Paramètre
                 pageMenu5()
+            if menu.pageMenu == 6:
+                pageMenu6
         event_Bouton.set()
         time.sleep(0.2)
         event_Menu.wait()
@@ -167,6 +185,78 @@ def pageMenu1():
     if menu.Bouton == "Back": #permet de faire retour
         menu.pageMenu = 0
 
+def pageMenu2():
+    #df_produits = p.read_csv('../CSV/liste_produits.csv') #On récupère le csv des produits
+    if menu.pageAjout == 0:
+        LCD.setTextLigne1("Veuillez scanner")
+        LCD.setTextLigne2("votre produit")
+        cancel = False
+        menu.NFC = 0
+        while menu.NFC == 0 and not cancel : 
+            menu.NFC = ''.join([hex(i)[-2:] for i in nfc.ReadCard()])
+            #print(NFC)
+        menu.pageAjout = 1
+        menu.Bouton = None
+    if menu.pageAjout == 1:
+        print("Je rentre dans pageAjout 1 et le bouton vaut ", menu.Bouton)
+        print("La date sélectionné est : " + str(menu.date_peremption))
+        LCD.effacerText()
+        LCD.setTextLigne1("Date peremption")
+        LCD.setTextLigne2(str(menu.date_peremption)[0:10])
+
+        if menu.Bouton == "Plus" :
+            menu.date_peremption = menu.date_peremption + menu.delta
+        elif menu.Bouton == "Moins" : 
+            menu.date_peremption = menu.date_peremption - menu.delta
+        elif menu.Bouton == "Ok" :
+            menu.df_frigo = p.read_csv('../CSV/frigo.csv') #On récupère les CSV des produits dans le stock
+            menu.pageAjout = 0
+            menu.pageMenu = 0
+            menu.df_frigo.loc[len(df_frigo.index)] = [len(df_frigo)+1,menu.NFC,menu.date_peremption.strftime('%d/%m/%Y'),menu.date.strftime('%d/%m/%Y')] #Ajout d'une ligne dans le csv de la liste des produits dans le stock
+            menu.df_frigo.to_csv('../CSV/frigo.csv',index=False)
+            LCD.effacerText()
+            LCD.setTextLigne1("Produit ajouté")
+            time.sleep(1)
+        else : 
+            print("mauvaise commande")
+
+def pageMenu4():
+    if menu.page_menu_4 == 0:
+        menu.df_frigo = p.read_csv('../CSV/frigo.csv') #On récupère les CSV des produits dans le stock
+        menu.df_produits = p.read_csv('../CSV/liste_produits.csv') #On récupère le csv des produits
+
+        print("Veuillez parcourir la liste des produits du frigo et selectionne celui a supprimé")
+        LCD.effacerText()
+        LCD.setTextLigne1("Selectionné")
+        LCD.setTextLigne2("celui a retire")
+        menu.page_menu_4 = 1
+        menu.Bouton = None
+    if menu.page_menu_4 == 1 :
+        liste_index = menu.df_frigo.index
+        produit = menu.df_frigo.iloc[[liste_index[menu.index_menu4]]]
+        nom_produit = menu.df_produits.query("Code_barre == '" + produit["Type_Produit"].values[0] + "'")['nom']
+        LCD.effacerText()
+        LCD.setTextLigne1("Nom : " + nom_produit.values[0])
+        LCD.setTextLigne2("Prtp " + produit["date_péremption"].values[0])
+        time.sleep(0.2)
+        if menu.Bouton == "Plus" : 
+            if menu.index_menu4 == len(liste_index) - 1:
+                menu.index_menu4 = 0
+            else : 
+                menu.index_menu4 += 1 
+        if menu.Bouton == "Moins" :
+            if menu.index_menu4 == 0:
+                menu.index_menu4 = len(liste_index) - 1
+            else :
+                menu.index_menu4 -= 1
+        if menu.Bouton == "Ok":
+            menu.df_frigo = menu.df_frigo.drop(liste_index[menu.index_menu4])
+            menu.df_frigo.to_csv('../CSV/frigo.csv',index=False)
+            menu.pageMenu = 0
+            menu.page_menu_4 = 0
+            print(menu.df_frigo)
+
+
 def pageMenu5():
     if menu.pageParamètre == 0 : # Menu principale des paramètres
         LCD.setTextLigne1("temp : " + str(menu.temp[0]) + " +- "+ str(menu.temp[1]) + " " + menu.cursor[menu.poscursor] + "        ")
@@ -197,6 +287,8 @@ def pageMenu5():
         else:
             menu.deplacementcursor()
 
+def pageMenu6():
+    quit()
 
 def main():
 
