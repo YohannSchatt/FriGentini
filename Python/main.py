@@ -138,7 +138,7 @@ def SelectionPage():
             if menu.pageMenu == 5 : #Paramètre
                 pageMenu5()
             if menu.pageMenu == 6:
-                pageMenu6
+                pageMenu6()
         event_Bouton.set()
         time.sleep(0.2)
         event_Menu.wait()
@@ -290,6 +290,16 @@ def pageMenu5():
             menu.deplacementcursor()
 
 def pageMenu6():
+    LCD.setTextLigne1("Fin")
+    time.sleep(0.2)
+    text = "          "
+    LCD.setTextLigne2("[" + text + "]")
+    for i in range(10):
+        text[i] = "#"
+        LCD.setTextLigne2("[" + text + "]")
+        time.sleep(0.2)
+    tbouton.join()
+    tmenu.join()
     quit()
 
 def main():
@@ -306,7 +316,8 @@ def main():
 
     tbouton.start()
     tmenu.start()       
-        
+
+            
     tbouton.join()
     tmenu.join()
 
