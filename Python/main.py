@@ -114,6 +114,8 @@ def LectBouton():
             else:
                 menu.Bouton = None
             Alarme()
+            if eteindre:
+                quit()
 
 def Alarme():
     buzzer = 6
@@ -305,8 +307,9 @@ def pageMenu6():
         LCD.setTextLigne2("  [" + text + "]     ")
         time.sleep(0.2)
     menu.eteindre = True
-    menu.tbouton.join()
-    menu.tmenu.join()
+    event_Bouton.set()
+    LCD.effacerText()
+    LCD.setRGB(0,0,0)
     quit()
 
 def main():
@@ -321,5 +324,8 @@ def main():
     menu.tbouton = threading.Thread(target=LectBouton) #tbouton lancera LectBouton() 
 
     menu.tbouton.start()
-    menu.tmenu.start()       
+    menu.tmenu.start()  
+
+    menu.tbouton.join()
+    menu.tmenu.join()     
 main()
