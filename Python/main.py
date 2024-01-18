@@ -133,6 +133,8 @@ def SelectionPage():
                 pageMenu1()
             if menu.pageMenu == 2:
                 pageMenu2()
+            if menu.pageMenu == 3:
+                pageMenu3()
             if menu.pageMenu == 4:
                 pageMenu4()
             if menu.pageMenu == 5 : #Paramètre
@@ -220,6 +222,29 @@ def pageMenu2():
             time.sleep(1)
         else : 
             print("mauvaise commande")
+
+def pageMenu3() :
+    menu.df_frigo = p.read_csv('../CSV/frigo.csv') #On récupère les CSV des produits dans le stock
+    menu.df_produits = p.read_csv('../CSV/liste_produits.csv') #On récupère le csv des produits
+
+    print("Parcours des data")
+    LCD.effacerText()
+    LCD.setTextLigne1("Affichage")
+    LCD.setTextLigne2("du stock")
+    time.sleep(0.3)
+
+    liste_index = menu.df_frigo.index
+
+    for i in range(len(liste_index)):
+        produit = menu.df_frigo.iloc[[liste_index[i]]]
+        nom_produit = menu.df_produits.query("Code_barre == '" + produit["Type_Produit"].values[0] + "'")['nom']
+        LCD.effacerText()
+        LCD.setTextLigne1("Nom : " + nom_produit.values[0])
+        LCD.setTextLigne2("Prtp " + produit["date_péremption"].values[0])
+        time.sleep(0.2)
+    
+
+
 
 def pageMenu4():
     if menu.page_menu_4 == 0:
