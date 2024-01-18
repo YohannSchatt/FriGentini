@@ -125,7 +125,7 @@ def Alarme():
         led.TurnOn(diode)
     else :
         led.TurnOff(buzzer)
-        led.TurnOff(buzzer)
+        led.TurnOff(diode)
 
 
 def SelectionPage():
@@ -308,6 +308,8 @@ def pageMenu6():
         time.sleep(0.2)
     menu.eteindre = True
     event_Bouton.set()
+    led.TurnOff(buzzer)
+    led.TurnOff(diode)
     LCD.effacerText()
     LCD.setRGB(0,0,0)
     quit()
