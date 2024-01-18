@@ -306,6 +306,7 @@ def pageMenu6():
         time.sleep(0.2)
     menu.eteindre = True
     menu.tbouton.join()
+    menu.tmenu.join()
     quit()
 
 def main():
