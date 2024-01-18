@@ -290,13 +290,13 @@ def pageMenu5():
             menu.deplacementcursor()
 
 def pageMenu6():
-    LCD.setTextLigne1("Fin")
+    LCD.setTextLigne1("      Fin      ")
     time.sleep(0.2)
     text = "          "
-    LCD.setTextLigne2("[" + text + "]")
+    LCD.setTextLigne2("  [" + text + "]    ")
     for i in range(10):
-        text[i] = "#"
-        LCD.setTextLigne2("[" + text + "]")
+        text[i] = '#'
+        LCD.setTextLigne2("  [" + text + "]     ")
         time.sleep(0.2)
     tbouton.join()
     tmenu.join()
