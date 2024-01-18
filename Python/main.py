@@ -37,6 +37,8 @@ class Menu:
         self.df_frigo = p.read_csv('../CSV/frigo.csv') #On récupère les CSV des produits dans le stock
         self.df_produits = p.read_csv('../CSV/liste_produits.csv') #On récupère le csv des produits
         self.page_menu_4 = 0
+        self.tmenu = -1
+        self.tbouton = -1
 
     def deplacementcursor(self):
         if self.Bouton == "Moins" or self.Bouton == "Plus": # Permet de déplacer le curseur
@@ -302,12 +304,11 @@ def pageMenu6():
             text = text + tabtext[j]
         LCD.setTextLigne2("  [" + text + "]     ")
         time.sleep(0.2)
-    tbouton.join()
-    tmenu.join()
+    menu.tbouton.join()
+    menu.tmenu.join()
     quit()
 
 def main():
-
     LCD.initialisation()
     LCD.effacerText()
     LCD.setRGB(127,0,127)
@@ -315,14 +316,9 @@ def main():
     LCD.setTextLigne2("    Bienvenue"    )
     time.sleep(2)
 
-    tmenu = threading.Thread(target=SelectionPage) #tmenu lancera SelectionPage()
-    tbouton = threading.Thread(target=LectBouton) #tbouton lancera LectBouton() 
+    menu.tmenu = threading.Thread(target=SelectionPage) #tmenu lancera SelectionPage()
+    menu.tbouton = threading.Thread(target=LectBouton) #tbouton lancera LectBouton() 
 
-    tbouton.start()
-    tmenu.start()       
-
-            
-    tbouton.join()
-    tmenu.join()
-
+    menu.tbouton.start()
+    menu.tmenu.start()       
 main()
