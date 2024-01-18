@@ -114,7 +114,7 @@ def LectBouton():
             else:
                 menu.Bouton = None
             Alarme()
-            if eteindre:
+            if menu.eteindre:
                 quit()
 
 def Alarme():
