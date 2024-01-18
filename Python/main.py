@@ -37,6 +37,8 @@ class Menu:
         self.df_frigo = p.read_csv('../CSV/frigo.csv') #On récupère les CSV des produits dans le stock
         self.df_produits = p.read_csv('../CSV/liste_produits.csv') #On récupère le csv des produits
         self.page_menu_4 = 0
+        self.tmenu = -1
+        self.tbouton = -1
         self.eteindre = False
     def deplacementcursor(self):
         if self.Bouton == "Moins" or self.Bouton == "Plus": # Permet de déplacer le curseur
@@ -302,6 +304,9 @@ def pageMenu6():
             text = text + tabtext[j]
         LCD.setTextLigne2("  [" + text + "]     ")
         time.sleep(0.2)
+    menu.eteindre = True
+    menu.tmenu.join()
+    menu.tbouton.join()
     quit()
 
 def main():
