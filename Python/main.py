@@ -231,7 +231,7 @@ def pageMenu3() :
     LCD.effacerText()
     LCD.setTextLigne1("Affichage")
     LCD.setTextLigne2("du stock")
-    time.sleep(0.3)
+    time.sleep(0.5)
 
     liste_index = menu.df_frigo.index
 
@@ -241,8 +241,8 @@ def pageMenu3() :
         LCD.effacerText()
         LCD.setTextLigne1("Nom : " + nom_produit.values[0])
         LCD.setTextLigne2("Prtp " + produit["date_péremption"].values[0])
-        time.sleep(0.2)
-    
+        time.sleep(0.5)
+    menu.pageMenu = 0
 
 
 
