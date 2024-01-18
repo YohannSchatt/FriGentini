@@ -94,9 +94,9 @@ def LectBouton():
         grovepi.pinMode(buzzer,"OUTPUT")
 
     while True:
+        menu.températureAct = thermo.ReadTemperature()
         event_Bouton.wait()
         with verrou:
-            menu.températureAct = thermo.ReadTemperature()
             if grovepi.digitalRead(buttonOk) == 1:
                 menu.Bouton = "Ok"
                 event_Menu.set() #Déclenche le Menu (le wait dans selectionPage() est fini)                 
