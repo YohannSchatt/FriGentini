@@ -305,7 +305,6 @@ def pageMenu6():
         LCD.setTextLigne2("  [" + text + "]     ")
         time.sleep(0.2)
     menu.eteindre = True
-    menu.tmenu.join()
     menu.tbouton.join()
     quit()
 
