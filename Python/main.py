@@ -308,8 +308,8 @@ def pageMenu6():
         time.sleep(0.2)
     menu.eteindre = True
     event_Bouton.set()
-    led.TurnOff(buzzer)
-    led.TurnOff(diode)
+    led.TurnOff(6)
+    led.TurnOff(8)
     LCD.effacerText()
     LCD.setRGB(0,0,0)
     quit()
