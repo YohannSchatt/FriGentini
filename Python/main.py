@@ -292,11 +292,15 @@ def pageMenu5():
 def pageMenu6():
     LCD.setTextLigne1("      Fin      ")
     time.sleep(0.2)
-    text = [" "," "," "," "," "," "," "," "," "," "]
-    LCD.setTextLigne2("  [" + text.join("") + "]    ")
+    tabtext = [" "," "," "," "," "," "," "," "," "," "]
+
+    LCD.setTextLigne2("  [" + tabtext + "]    ")
     for i in range(10):
-        text[i] = "#"
-        LCD.setTextLigne2("  [" + text.join("") + "]     ")
+        text = ""
+        tabtext[i] = "#"
+        for j in range(10):
+            text = text + tabtext[j]
+        LCD.setTextLigne2("  [" + tabtext + "]     ")
         time.sleep(0.2)
     tbouton.join()
     tmenu.join()
