@@ -294,13 +294,13 @@ def pageMenu6():
     time.sleep(0.2)
     tabtext = [" "," "," "," "," "," "," "," "," "," "]
 
-    LCD.setTextLigne2("  [" + tabtext + "]    ")
+    LCD.setTextLigne2("  [" + text + "]    ")
     for i in range(10):
         text = ""
         tabtext[i] = "#"
         for j in range(10):
             text = text + tabtext[j]
-        LCD.setTextLigne2("  [" + tabtext + "]     ")
+        LCD.setTextLigne2("  [" + text + "]     ")
         time.sleep(0.2)
     tbouton.join()
     tmenu.join()
