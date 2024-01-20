@@ -37,7 +37,9 @@ class Menu:
         self.df_frigo = p.read_csv('../CSV/frigo.csv') #On récupère les CSV des produits dans le stock
         self.df_produits = p.read_csv('../CSV/liste_produits.csv') #On récupère le csv des produits
         self.page_menu_4 = 0
-
+        self.tmenu = -1
+        self.tbouton = -1
+        self.eteindre = False
     def deplacementcursor(self):
         if self.Bouton == "Moins" or self.Bouton == "Plus": # Permet de déplacer le curseur
             if self.poscursor == 0:
@@ -112,6 +114,8 @@ def LectBouton():
             else:
                 menu.Bouton = None
             Alarme()
+            if menu.eteindre:
+                quit()
 
 def Alarme():
     buzzer = 6
@@ -121,7 +125,7 @@ def Alarme():
         led.TurnOn(diode)
     else :
         led.TurnOff(buzzer)
-        led.TurnOff(buzzer)
+        led.TurnOff(diode)
 
 
 def SelectionPage():
@@ -140,7 +144,7 @@ def SelectionPage():
             if menu.pageMenu == 5 : #Paramètre
                 pageMenu5()
             if menu.pageMenu == 6:
-                pageMenu6
+                pageMenu6()
         event_Bouton.set()
         time.sleep(0.2)
         event_Menu.wait()
@@ -315,10 +319,27 @@ def pageMenu5():
             menu.deplacementcursor()
 
 def pageMenu6():
+    LCD.setTextLigne1("      Fin      ")
+    time.sleep(0.2)
+    tabtext = [" "," "," "," "," "," "," "," "," "," "]
+    text = "          "
+    LCD.setTextLigne2("  [" + text + "]    ")
+    for i in range(10):
+        text = ""
+        tabtext[i] = "#"
+        for j in range(10):
+            text = text + tabtext[j]
+        LCD.setTextLigne2("  [" + text + "]     ")
+        time.sleep(0.2)
+    menu.eteindre = True
+    event_Bouton.set()
+    led.TurnOff(6)
+    led.TurnOff(8)
+    LCD.effacerText()
+    LCD.setRGB(0,0,0)
     quit()
 
 def main():
-
     LCD.initialisation()
     LCD.effacerText()
     LCD.setRGB(127,0,127)
@@ -326,13 +347,12 @@ def main():
     LCD.setTextLigne2("    Bienvenue"    )
     time.sleep(2)
 
-    tmenu = threading.Thread(target=SelectionPage) #tmenu lancera SelectionPage()
-    tbouton = threading.Thread(target=LectBouton) #tbouton lancera LectBouton() 
+    menu.tmenu = threading.Thread(target=SelectionPage) #tmenu lancera SelectionPage()
+    menu.tbouton = threading.Thread(target=LectBouton) #tbouton lancera LectBouton() 
 
-    tbouton.start()
-    tmenu.start()       
-        
-    tbouton.join()
-    tmenu.join()
+    menu.tbouton.start()
+    menu.tmenu.start()  
 
+    menu.tbouton.join()
+    menu.tmenu.join()     
 main()
