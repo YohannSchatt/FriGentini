@@ -27,14 +27,14 @@ def setRGB(rouge,vert,bleu):
 # l'utilisez dans la fonction suivante, sinon donnez 2000€
 # a la banque et allez dictement en prison :)
 def textCmd(cmd):
-    bus.write_byte_data(DISPLAY_TEXT_ADDR,0x80,cmd)
+        bus.write_byte_data(DISPLAY_TEXT_ADDR,0x80,cmd)
 
 # Completez le code de la fonction permettant d'ecrire le texte recu en parametre
 # Si le texte contient un \n ou plus de 16 caracteres pensez a gerer
 # le retour a la ligne
 
 #initialise l'écran
-def textinitialisation():
+def initialisation():
         textCmd(0x01)
         time.sleep(0.001)
         textCmd(0x0F)
