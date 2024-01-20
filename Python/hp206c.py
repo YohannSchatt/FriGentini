@@ -102,6 +102,4 @@ if __name__ == "__main__":
 	h= hp206c()
 
 	temp=h.ReadTemperature()
-	pressure=h.ReadPressure()
-	altitude=h.ReadAltitude()
 	print(temp,pressure,altitude)
