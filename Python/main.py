@@ -14,7 +14,6 @@ import led
 import threading
 import datetime as dt
 import NFCDriver as nfc
-import os
 
 class Menu:
     def __init__(self):
@@ -250,6 +249,7 @@ def pageMenu3() :
 
 
 
+#Menu de suppression d'un produit
 def pageMenu4():
     if menu.page_menu_4 == 0:
         menu.df_frigo = p.read_csv('../CSV/frigo.csv') #On récupère les CSV des produits dans le stock
@@ -259,6 +259,7 @@ def pageMenu4():
         LCD.effacerText()
         LCD.setTextLigne1("Selectionné")
         LCD.setTextLigne2("celui a retire")
+        time.sleep(1)
         menu.page_menu_4 = 1
         menu.Bouton = None
     if menu.page_menu_4 == 1 :
@@ -286,6 +287,9 @@ def pageMenu4():
             menu.page_menu_4 = 0
             menu.index_menu4 = 0
             print(menu.df_frigo)
+            LCD.effacerText()
+            LCD.setTextLigne1("Produit retiré")
+            time.sleep(1)
 
 
 def pageMenu5():
