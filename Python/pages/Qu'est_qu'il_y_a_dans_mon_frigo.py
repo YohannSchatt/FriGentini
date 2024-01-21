@@ -2,6 +2,7 @@ import streamlit as st
 import Menu as mn
 import datetime
 from PIL import Image
+import pandas as pd
 
 
 #Fonction qui permet de savoir si une date du format jour/mois/année est dans moins du nombre de jour
@@ -51,7 +52,9 @@ def main() :
     if not on :
         #On récupère le CSV
         df = mn.get_data('../CSV/frigo.csv')
-        st.dataframe(df) 
+        df1 = mn.get_data('../liste_produits.csv')
+        df2 = pd.merge(df,df1,['Type_Produit','Code_barre'])
+        st.dataframe(df2) 
 
 
 if __name__ == '__main__':
