@@ -92,10 +92,10 @@ def LectBouton():
         grovepi.pinMode(buzzer,"OUTPUT")
 
     while True:
+        event_Bouton.wait()
         menu.températureAct = thermo.ReadTemperature()
         rt.releve_temp(menu.températureAct)
         print("execution de la verif releve")
-        event_Bouton.wait()
         with verrou:
             if grovepi.digitalRead(buttonOk) == 1:
                 menu.Bouton = "Ok"
