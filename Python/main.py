@@ -127,6 +127,7 @@ def Alarme():
 def SelectionPage():
     while True:
         rt.releve_temp(menu.températureAct)
+        print("execution de la verif releve")
         with verrou:
             if menu.pageMenu == 0 :
                 pageMenu0()
