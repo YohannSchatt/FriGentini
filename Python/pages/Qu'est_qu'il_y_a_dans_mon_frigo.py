@@ -52,7 +52,7 @@ def main() :
     if not on :
         #On récupère le CSV
         df = mn.get_data('../CSV/frigo.csv')
-        df1 = mn.get_data('../liste_produits.csv')
+        df1 = mn.get_data('../CSV/liste_produits.csv')
         df2 = pd.merge(df,df1,['Type_Produit','Code_barre'])
         st.dataframe(df2) 
 
