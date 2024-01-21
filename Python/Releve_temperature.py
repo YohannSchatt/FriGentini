@@ -19,9 +19,11 @@ def releve_temp(temperature):
     if diff.days >= 1 :
         df_temperature.loc[len(df_temperature.index)] = [len(df_temperature),date_jour.strftime('%d/%m/%Y'),date_jour.hour,temperature] #Ajout d'une ligne dans le csv de la liste des produits dans le stock
         df_temperature.to_csv('../CSV/temperature.csv',index=False)
-        print("Relevé effectué")
+        with open("../log.txt", "w") as fichier:
+            fichier.write("Relevé effectué")
     elif diff.seconds/3600 >= 1:
         df_temperature.loc[len(df_temperature.index)] = [len(df_temperature),date_jour.strftime('%d/%m/%Y'),date_jour.hour,temperature] #Ajout d'une ligne dans le csv de la liste des produits dans le stock
         df_temperature.to_csv('../CSV/temperature.csv',index=False)
-        print("Relevé effectué")
+        with open("../log.txt", "w") as fichier:
+            fichier.write("Relevé effectué")
 
