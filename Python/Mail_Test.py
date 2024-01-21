@@ -1,3 +1,4 @@
+#https://datascientest.com/comment-envoyer-un-e-mail-avec-python
 import smtplib, ssl
 
 # on rentre les renseignements pris sur le site du fournisseur
