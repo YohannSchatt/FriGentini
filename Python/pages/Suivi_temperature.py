@@ -17,7 +17,7 @@ def isWeek(date) :
 
 def main () :
     #On récupère l'image de thermomètre pour l'icone de l'onglet
-    image_directory = '../Image/icons8-thermomètre-50.png'   
+    image_directory = '../Image/image_thermo.png'   
     image = Image.open(image_directory)
 
     #configuration de la page
