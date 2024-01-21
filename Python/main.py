@@ -341,6 +341,11 @@ def pageMenu6():
     LCD.setRGB(0,0,0)
     quit()
 
+
+
+
+
+
 def main():
     LCD.initialisation()
     LCD.effacerText()
