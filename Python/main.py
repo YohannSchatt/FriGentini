@@ -186,6 +186,8 @@ def pageMenu1():
     LCD.setTextLigne1(str(round(menu.températureAct,1))+' Celsius       ')
     LCD.setTextLigne2("retour -> menu ")
     if menu.Bouton == "Back": #permet de faire retour
+        with open("../log.txt", "w") as fichier:
+            fichier.write("Suppression d'un produit \n")
         menu.pageMenu = 0
 
 def pageMenu2():
@@ -210,6 +212,8 @@ def pageMenu2():
         elif menu.Bouton == "Moins" : 
             menu.date_peremption = menu.date_peremption - menu.delta
         elif menu.Bouton == "Ok" :
+            with open("../log.txt", "w") as fichier:
+                fichier.write("Ajout d'un produit dans le frigo \n")
             menu.df_frigo = p.read_csv('../CSV/frigo.csv') #On récupère les CSV des produits dans le stock
             menu.pageAjout = 0
             menu.pageMenu = 0
@@ -219,8 +223,6 @@ def pageMenu2():
             LCD.setTextLigne1("Produit ajouté")
             menu.date_peremption = menu.date
             time.sleep(1)
-        else : 
-            print("mauvaise commande")
 
 def pageMenu3() :
     menu.df_frigo = p.read_csv('../CSV/frigo.csv') #On récupère les CSV des produits dans le stock
@@ -241,6 +243,8 @@ def pageMenu3() :
         LCD.setTextLigne1("Nom : " + nom_produit.values[0])
         LCD.setTextLigne2("Prtp " + produit["date_péremption"].values[0])
         time.sleep(1)
+    with open("../log.txt", "w") as fichier:
+        fichier.write("Affichage de l'ensemble des produits \n")
     menu.pageMenu = 0
 
 
@@ -279,6 +283,8 @@ def pageMenu4():
             else :
                 menu.index_menu4 -= 1
         if menu.Bouton == "Ok":
+            with open("../log.txt", "w") as fichier:
+                fichier.write("Suppression d'un produit \n")
             menu.df_frigo = menu.df_frigo.drop(liste_index[menu.index_menu4])
             menu.df_frigo.to_csv('../CSV/frigo.csv',index=False)
             menu.pageMenu = 0
@@ -309,6 +315,8 @@ def pageMenu5():
             if menu.blocked :
                 menu.cursor[0] = "<-"
                 menu.blocked = False
+                with open("../log.txt", "w") as fichier:
+                    fichier.write("Sortie des paramètres \n")
             else :
                 menu.pageParamètre = 0
                 menu.poscursor = 0
@@ -321,6 +329,8 @@ def pageMenu5():
             menu.deplacementcursor()
 
 def pageMenu6():
+    with open("../log.txt", "w") as fichier:
+        fichier.write("Extinction du dispositif \n")
     LCD.setTextLigne1("      Fin      ")
     time.sleep(0.2)
     tabtext = [" "," "," "," "," "," "," "," "," "," "]
@@ -350,6 +360,8 @@ def main():
     LCD.initialisation()
     LCD.effacerText()
     LCD.setRGB(127,0,127)
+    with open("../log.txt", "w") as fichier:
+        fichier.write("Suppression d'un produit \n")
 
     LCD.setTextLigne2("    Bienvenue"    )
     time.sleep(2)
