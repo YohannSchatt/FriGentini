@@ -125,10 +125,8 @@ def Alarme():
 
 
 def SelectionPage():
-    with verrou:
-        rt.releve_temp(menu.températureAct)
-        print("boucle deu relevé")
     while True:
+        rt.releve_temp(menu.températureAct)
         with verrou:
             if menu.pageMenu == 0 :
                 pageMenu0()
