@@ -362,6 +362,8 @@ def main():
     LCD.setRGB(127,0,127)
     with open("../log.txt", "w") as fichier:
         fichier.write("Suppression d'un produit \n")
+        print("ecriture dans fichier")
+    print("sortie fichier ")
 
     LCD.setTextLigne2("    Bienvenue"    )
     time.sleep(2)
