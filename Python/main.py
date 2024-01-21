@@ -63,11 +63,7 @@ class Menu:
 #pageParamètre = 0
 #Int qui permet de connaitre ou se situe le curseur dans paramètre
 #poscursor = 0
-# curseur utilisé dans les différents menu qui se déplace sur les deux lignes
-#cursor = ["<-",""]
-#variable pour savoir si l'alarme est active ou non
-#Alarme = True
-#variable qui permet de bloquer le curseur
+# curseur utilisé dans les différents menu qui se déplace sur les deux lignes    #df_produits = p.read_csv('../CSV/liste_produits.csv') #On récupère le csv des produits
 #blocked = False
 #variable qui stocke la valeur du bouton
 #Bouton = None
@@ -194,7 +190,6 @@ def pageMenu1():
         menu.pageMenu = 0
 
 def pageMenu2():
-    #df_produits = p.read_csv('../CSV/liste_produits.csv') #On récupère le csv des produits
     if menu.pageAjout == 0:
         LCD.setTextLigne1("Veuillez scanner")
         LCD.setTextLigne2("votre produit")
@@ -202,7 +197,6 @@ def pageMenu2():
         menu.NFC = 0
         while menu.NFC == 0 and not cancel : 
             menu.NFC = ''.join([hex(i)[-2:] for i in nfc.ReadCard()])
-            #print(NFC)
         menu.pageAjout = 1
         menu.Bouton = None
     if menu.pageAjout == 1:

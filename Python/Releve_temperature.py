@@ -17,15 +17,14 @@ def releve_temp(temperature):
     diff =  date_jour - dernier_releve 
 
     if diff.days >= 1 :
-        print([len(df_temperature)+1,date_jour.strftime('%d/%m/%Y'),date_jour.hour,5])
         df_temperature.loc[len(df_temperature.index)] = [len(df_temperature),date_jour.strftime('%d/%m/%Y'),date_jour.hour,temperature] #Ajout d'une ligne dans le csv de la liste des produits dans le stock
         df_temperature.to_csv('../CSV/temperature.csv',index=False)
         print("Relevé effectué")
     elif diff.seconds/3600 >= 1:
-        print([len(df_temperature)+1,date_jour.strftime('%d/%m/%Y'),date_jour.hour,5])
         df_temperature.loc[len(df_temperature.index)] = [len(df_temperature),date_jour.strftime('%d/%m/%Y'),date_jour.hour,temperature] #Ajout d'une ligne dans le csv de la liste des produits dans le stock
         df_temperature.to_csv('../CSV/temperature.csv',index=False)
         print("Relevé effectué")
 
 
-releve_temp(5)
+if __name__ == '__main__':
+    releve_temp(5)
