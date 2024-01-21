@@ -14,6 +14,7 @@ import led
 import threading
 import datetime as dt
 import NFCDriver as nfc
+import Releve_temperature as rt
 
 class Menu:
     def __init__(self):
@@ -62,11 +63,7 @@ class Menu:
 #pageParamètre = 0
 #Int qui permet de connaitre ou se situe le curseur dans paramètre
 #poscursor = 0
-# curseur utilisé dans les différents menu qui se déplace sur les deux lignes
-#cursor = ["<-",""]
-#variable pour savoir si l'alarme est active ou non
-#Alarme = True
-#variable qui permet de bloquer le curseur
+# curseur utilisé dans les différents menu qui se déplace sur les deux lignes    #df_produits = p.read_csv('../CSV/liste_produits.csv') #On récupère le csv des produits
 #blocked = False
 #variable qui stocke la valeur du bouton
 #Bouton = None
@@ -95,8 +92,10 @@ def LectBouton():
         grovepi.pinMode(buzzer,"OUTPUT")
 
     while True:
-        menu.températureAct = thermo.ReadTemperature()
         event_Bouton.wait()
+        menu.températureAct = thermo.ReadTemperature()
+        rt.releve_temp(menu.températureAct)
+        print("execution de la verif releve")
         with verrou:
             if grovepi.digitalRead(buttonOk) == 1:
                 menu.Bouton = "Ok"
@@ -191,7 +190,6 @@ def pageMenu1():
         menu.pageMenu = 0
 
 def pageMenu2():
-    #df_produits = p.read_csv('../CSV/liste_produits.csv') #On récupère le csv des produits
     if menu.pageAjout == 0:
         LCD.setTextLigne1("Veuillez scanner")
         LCD.setTextLigne2("votre produit")
@@ -199,7 +197,6 @@ def pageMenu2():
         menu.NFC = 0
         while menu.NFC == 0 and not cancel : 
             menu.NFC = ''.join([hex(i)[-2:] for i in nfc.ReadCard()])
-            #print(NFC)
         menu.pageAjout = 1
         menu.Bouton = None
     if menu.pageAjout == 1:
@@ -262,6 +259,8 @@ def pageMenu4():
         time.sleep(1)
         menu.page_menu_4 = 1
         menu.Bouton = None
+
+        
     if menu.page_menu_4 == 1 :
         liste_index = menu.df_frigo.index
         produit = menu.df_frigo.iloc[[liste_index[menu.index_menu4]]]
@@ -342,6 +341,11 @@ def pageMenu6():
     LCD.effacerText()
     LCD.setRGB(0,0,0)
     quit()
+
+
+
+
+
 
 def main():
     LCD.initialisation()
