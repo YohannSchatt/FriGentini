@@ -46,15 +46,17 @@ def main() :
 
         #On recupere seulement les lignes qui correspondent a nos jours de marge selectionné
         filtered_df = df[df['date_péremption'].apply(est_date_courte, nb_jour=nb_jour)]
-        st.dataframe(filtered_df)
+        df1 = mn.get_data('../CSV/liste_produits.csv')
+        df2 = pd.merge(filtered_df,df1,left_on= 'Type_Produit',right_on='Code_barre')
+        st.dataframe(df2[["nom","date_péremption"]])
 
     #Condition si le toggle est eteint
     if not on :
         #On récupère le CSV
         df = mn.get_data('../CSV/frigo.csv')
         df1 = mn.get_data('../CSV/liste_produits.csv')
-        df2 = pd.merge(df,df1,on = ['Type_Produit','Code_barre'])
-        st.dataframe(df2) 
+        df2 = pd.merge(df,df1,left_on= 'Type_Produit',right_on='Code_barre')
+        st.dataframe(df2[["nom","date_péremption"]]) 
 
 
 if __name__ == '__main__':
