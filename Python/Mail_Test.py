@@ -6,7 +6,7 @@ smtp_port = 465
 
 # on rentre les informations sur notre adresse e-mail
 email_address = 'frigentini@gmail.com'
-email_password = 'polytech'
+email_password = 'bzkj puyn afbc rghm '
 
 # on rentre les informations sur le destinataire
 email_receiver = 'mathnor01@gmail.com'
