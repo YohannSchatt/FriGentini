@@ -14,7 +14,7 @@ import led
 import threading
 import datetime as dt
 import NFCDriver as nfc
-import os
+import Releve_temperature as rt
 
 class Menu:
     def __init__(self):
@@ -129,6 +129,8 @@ def Alarme():
 
 
 def SelectionPage():
+    with verrou:
+        rt.releve_temp(menu.températureAct)
     while True:
         with verrou:
             if menu.pageMenu == 0 :
