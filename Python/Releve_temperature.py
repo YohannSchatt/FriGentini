@@ -25,6 +25,3 @@ def releve_temp(temperature):
         df_temperature.to_csv('../CSV/temperature.csv',index=False)
         print("Relevé effectué")
 
-
-if __name__ == '__main__':
-    releve_temp(5)
