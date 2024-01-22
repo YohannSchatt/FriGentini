@@ -5,11 +5,15 @@ from PIL import Image
 import datetime
 
 #Fonction qui vérifie si la date en entrée au format date, est la date du jour
+#Entrée : date au format jour/mois/année
+#Sortie : Vrai si le jour correspond a aujourd'hui
 def isToday (date:datetime.date) -> bool: 
     date_jour = datetime.date.today()
     return date_jour == date
 
 #Fonction qui vérifie si la date en entrée au format date, est une date dans la semaine courante
+#Entrée : date au format jour/mois/année
+#Sortie : Vrai si le jour correspond a la semaine courante
 def isWeek(date) : 
     date_jour = datetime.date.today()
     return 0<= date_jour.weekday() - (date_jour - date).days and date_jour.weekday() - (date_jour - date).days < 7

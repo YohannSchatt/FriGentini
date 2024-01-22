@@ -1,8 +1,8 @@
+#Biblitheque qui permet le support de lecteur NFC
 import RPi.GPIO as GPIO
-
 from pn532 import *
 
-
+#Fonction qui renvoie l'uid lus sur la carte au format 0x.. 0x.. 0x.. ...
 def ReadCard () : 
     try : 
         print("Beginning of reading")
@@ -21,10 +21,8 @@ def ReadCard () :
             # Check if a card is available to read
             uid = pn532.read_passive_target(timeout=0.5)
             print('.', end="")
-            # Try again if no card is available.
             if uid is None:
                 continue
-            #print('Found card with UID:', [hex(i) for i in uid])
             lecture = True
     except Exception as e: 
         print("Exception")

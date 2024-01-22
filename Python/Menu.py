@@ -1,3 +1,4 @@
+#Fichier permettant de gérer l'affichage du dashboard grace a la bibliotheque streamlit
 import streamlit as st
 import pandas as pd
 from PIL import Image
@@ -10,11 +11,16 @@ import datetime
 def get_data(chemin) -> pd.DataFrame:
     return pd.read_csv(chemin)
 
+#Fonction qui vérifie si la date de péremption est antérieur a la date actuelle
+#Entrée : date au format jour/mois/année
+#True si la date est antérieur a celle d'aujourd'hui sinon False
 def est_périmé (date:str) -> bool : 
     auj = datetime.datetime.today()
     diff =  -(auj - datetime.datetime.strptime(date,'%d/%m/%Y')).days
     return diff < 0
 
+#Fonction qui gère l'affichage de la page d'accueil
+#Les pages annexes sont dans le dossier Python/pages
 def main () :
 
     #Récupération de l'image pour l'icone de la page 
@@ -33,10 +39,9 @@ def main () :
 
     st.write("Bienvenu sur votre dashboard")
 
+    #Lecture de la température pour affichage
     with open('temperature.txt', 'r') as file:
         contenu = file.read()
-
-    import pandas as pd
 
     # Spécifiez le chemin vers votre fichier CSV
     chemin_fichier_csv = '../CSV/frigo.csv'
@@ -50,13 +55,13 @@ def main () :
     filtered_df = df[df['date_péremption'].apply(est_périmé)]
     count_périmé = filtered_df.shape[0]
 
-    #Gestion des metrics qui sont utilisés pour résumer l'etat de notre système
-    #A rendre dynamique (Capturer la température au lancement de la page et compter les objets dans nos tables)
+    #Gestion des metrics qui sont utilisés pour résumer l'état de notre système
     col1, col2, col3 = st.columns(3)
     col1.metric("Temperature", str(contenu))
     col2.metric("Aliments", str(nombre_lignes))
     col3.metric("Aliments périmée", count_périmé)
 
+    #Bouton pour recharger la page
     refresh_button = st.button("Refresh")
 
     # Vérifiez si le bouton a été cliqué

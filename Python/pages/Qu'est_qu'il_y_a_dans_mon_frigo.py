@@ -5,7 +5,7 @@ from PIL import Image
 import pandas as pd
 
 
-#Fonction qui permet de savoir si une date du format jour/mois/année est dans moins du nombre de jour
+#Fonction qui permet de savoir si une date du format jour/mois/année est dans moins du nombre de jour ou périmé
 
 def est_date_courte (date:str,nb_jour:int) -> bool:
     auj = datetime.datetime.today()
@@ -13,12 +13,14 @@ def est_date_courte (date:str,nb_jour:int) -> bool:
     return diff <= nb_jour
 
 
-
+#Affichage de la page sur le contenu du stockage
 def main() :
 
+    #Récupération de l'image pour le logo du site 
     image_directory = '../Image/icons8-fromage-50.png'   
     image = Image.open(image_directory)
 
+    #Parametre de la page 
     st.set_page_config(
         page_title = 'Frigentini Dashboard', 
         page_icon = image,
@@ -47,16 +49,17 @@ def main() :
         #On recupere seulement les lignes qui correspondent a nos jours de marge selectionné
         filtered_df = df[df['date_péremption'].apply(est_date_courte, nb_jour=nb_jour)]
         df1 = mn.get_data('../CSV/liste_produits.csv')
-        df2 = pd.merge(filtered_df,df1,left_on= 'Type_Produit',right_on='Code_barre')
-        st.dataframe(df2[["nom","date_péremption"]])
+        df2 = pd.merge(filtered_df,df1,left_on= 'Type_Produit',right_on='Code_barre')#On rajoute les noms par le merge
+        st.dataframe(df2[["nom","date_péremption"]])#Affichage du nom et de la date de chaque produit
+
 
     #Condition si le toggle est eteint
     if not on :
-        #On récupère le CSV
+        #On récupère les CSV
         df = mn.get_data('../CSV/frigo.csv')
         df1 = mn.get_data('../CSV/liste_produits.csv')
-        df2 = pd.merge(df,df1,left_on= 'Type_Produit',right_on='Code_barre')
-        st.dataframe(df2[["nom","date_péremption"]]) 
+        df2 = pd.merge(df,df1,left_on= 'Type_Produit',right_on='Code_barre')#On rajoute les noms par le merge 
+        st.dataframe(df2[["nom","date_péremption"]]) #Affichage du nom et de la date de chaque produit
 
 
 if __name__ == '__main__':
