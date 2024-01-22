@@ -27,14 +27,14 @@ def setRGB(rouge,vert,bleu):
 # l'utilisez dans la fonction suivante, sinon donnez 2000€
 # a la banque et allez dictement en prison :)
 def textCmd(cmd):
-    bus.write_byte_data(DISPLAY_TEXT_ADDR,0x80,cmd)
+        bus.write_byte_data(DISPLAY_TEXT_ADDR,0x80,cmd)
 
 # Completez le code de la fonction permettant d'ecrire le texte recu en parametre
 # Si le texte contient un \n ou plus de 16 caracteres pensez a gerer
 # le retour a la ligne
 
 #initialise l'écran
-def Textinitialisation():
+def initialisation():
         textCmd(0x01)
         time.sleep(0.001)
         textCmd(0x0F)
@@ -62,16 +62,17 @@ def setTextLigne2(texte):
                 i += 1
 
 #fonction qui défile un texte sur l'écran
-def setText(texte):
-        row = 1
+def setText(texte,temps):
         tab = texte.split("\n")
-        print(tab)
-        for i in range(len(tab)-1):
-                effacerText()
-                setTextLigne1(tab[i])
-                setTextLigne2(tab[i+1])
-                print("Coucou")
-                time.sleep(2)
+        if len(texte) == 1:
+                setTextLigne1(tab[0])
+        else : 
+                for i in range(len(tab)-1):
+                        effacerText()
+                        setTextLigne1(tab[i])
+                        setTextLigne2(tab[i+1])
+                        time.sleep(2)
 
+#fonction qui efface le texte a l'écran
 def effacerText():
         textCmd(0x01)
