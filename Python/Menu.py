@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 from PIL import Image
+import main as mn
 
 #Commande pour lancer l'application
 #streamlit run Menu.py
@@ -30,7 +31,7 @@ def main () :
     #Gestion des metrics qui sont utilisés pour résumer l'etat de notre système
     #A rendre dynamique (Capturer la température au lancement de la page et compter les objets dans nos tables)
     col1, col2, col3 = st.columns(3)
-    col1.metric("Temperature", "3 °C")
+    col1.metric("Temperature", str(mn.menu.températureAct))
     col2.metric("Aliments", "5")
     col3.metric("Aliments périmée", "1")
 

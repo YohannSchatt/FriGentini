@@ -15,19 +15,21 @@ import threading
 import datetime as dt
 import NFCDriver as nfc
 import Mail as ml
+import Releve_temperature as rt
+
 
 class Menu:
     def __init__(self):
-        self.temp = [24,2]
-        self.pageMenu = 0
-        self.selectionPage = 0
-        self.pageParamètre = 0
-        self.poscursor = 0
-        self.cursor = ["<-",""]
-        self.Alarme = True
-        self.blocked = False
-        self.Bouton = None
-        self.températureAct = thermo.ReadTemperature()
+        self.temp = [24,2] #température initial pour les paramètres
+        self.pageMenu = 0 #menu
+        self.selectionPage = 0 #selectionne page de pageMenu0
+        self.pageParamètre = 0 #pageParamètre selection
+        self.poscursor = 0 #position du curseur
+        self.cursor = ["<-",""] #curseur sur 2 ligne
+        self.Alarme = True #Active l'alarme
+        self.blocked = False #variable qui blocked l'avancé du programme dans des cas spécifique
+        self.Bouton = None #variable de bouton lu
+        self.températureAct = thermo.ReadTemperature() #lit une température initial
         self.pageAjout = 0 
         self.date = dt.date.today() #On set la date d'achat a aujourd'hui
         self.date_peremption = self.date #On initialise la date de péremption a aujourd'hui
@@ -37,9 +39,9 @@ class Menu:
         self.df_frigo = p.read_csv('../CSV/frigo.csv') #On récupère les CSV des produits dans le stock
         self.df_produits = p.read_csv('../CSV/liste_produits.csv') #On récupère le csv des produits
         self.page_menu_4 = 0
-        self.tmenu = -1
-        self.tbouton = -1
-        self.eteindre = False
+        self.tmenu = -1 #défini une valeur au thread
+        self.tbouton = -1 #défini une valeur au thread
+        self.eteindre = False #variable qui éteindra le programme
     def deplacementcursor(self):
         if self.Bouton == "Moins" or self.Bouton == "Plus": # Permet de déplacer le curseur
             if self.poscursor == 0:
@@ -63,19 +65,15 @@ class Menu:
 #pageParamètre = 0
 #Int qui permet de connaitre ou se situe le curseur dans paramètre
 #poscursor = 0
-# curseur utilisé dans les différents menu qui se déplace sur les deux lignes
-#cursor = ["<-",""]
-#variable pour savoir si l'alarme est active ou non
-#Alarme = True
-#variable qui permet de bloquer le curseur
+# curseur utilisé dans les différents menu qui se déplace sur les deux lignes    #df_produits = p.read_csv('../CSV/liste_produits.csv') #On récupère le csv des produits
 #blocked = False
 #variable qui stocke la valeur du bouton
 #Bouton = None
 
-event_Bouton = threading.Event()
-event_Menu = threading.Event()
-verrou = threading.Lock()
-menu = Menu()
+event_Bouton = threading.Event() #crée le semaphore event_bouton
+event_Menu = threading.Event() #crée le semaphire event_menu
+verrou = threading.Lock() #crée un mutex
+menu = Menu() #crée l'objet menu
 
 
 def LectBouton():
@@ -96,8 +94,9 @@ def LectBouton():
         grovepi.pinMode(buzzer,"OUTPUT")
 
     while True:
-        menu.températureAct = thermo.ReadTemperature()
-        event_Bouton.wait()
+        event_Bouton.wait() #attend le menu
+        menu.températureAct = thermo.ReadTemperature() #temperature
+        rt.releve_temp(menu.températureAct)
         with verrou:
             if grovepi.digitalRead(buttonOk) == 1:
                 menu.Bouton = "Ok"
@@ -120,30 +119,30 @@ def LectBouton():
 def Alarme():
     buzzer = 6
     diode = 8
-    if menu.Alarme and (menu.températureAct < menu.temp[0] - menu.temp[1] or menu.températureAct > menu.temp[0] + menu.temp[1]):
+    if menu.Alarme and (menu.températureAct < menu.temp[0] - menu.temp[1] or menu.températureAct > menu.temp[0] + menu.temp[1]): #si la température est comprise entre la température voulu et approximé
         led.TurnOn(buzzer)
-        led.TurnOn(diode)
+        led.TurnOn(diode) #on allume diode et buzzer
     else :
-        led.TurnOff(buzzer)
+        led.TurnOff(buzzer) #sinon on l'éteint
         led.TurnOff(diode)
 
 
 def SelectionPage():
     while True:
         with verrou:
-            if menu.pageMenu == 0 :
+            if menu.pageMenu == 0 : #Menu principale
                 pageMenu0()
             if menu.pageMenu == 1 : #Affiche la température
                 pageMenu1()
-            if menu.pageMenu == 2:
+            if menu.pageMenu == 2: #ajout data
                 pageMenu2()
-            if menu.pageMenu == 3:
+            if menu.pageMenu == 3: #affiche data
                 pageMenu3()
-            if menu.pageMenu == 4:
+            if menu.pageMenu == 4: #supprime data
                 pageMenu4()
             if menu.pageMenu == 5 : #Paramètre
                 pageMenu5()
-            if menu.pageMenu == 6:
+            if menu.pageMenu == 6: #Eteindre
                 pageMenu6()
         event_Bouton.set()
         time.sleep(0.2)
@@ -151,21 +150,21 @@ def SelectionPage():
 
 
 
-def pageMenu0():
+def pageMenu0(): #Menu principale, affiche la page ou se trouve l'utilisateur
     LCD.setTextLigne1("    Selection     ")
-    if menu.selectionPage == 0:
+    if menu.selectionPage == 0: #affice temp
         LCD.setTextLigne2("< affiche Temp >")
         if menu.Bouton == "Ok":
             menu.pageMenu = 1
-    if menu.selectionPage == 1:
+    if menu.selectionPage == 1: #ajout data
         LCD.setTextLigne2("<  ajout data  >")
         if menu.Bouton == "Ok":
             menu.pageMenu = 2
-    if menu.selectionPage == 2:
+    if menu.selectionPage == 2: #affiche data
         LCD.setTextLigne2("< affiche data >")
         if menu.Bouton == "Ok":
             menu.pageMenu = 3
-    if menu.selectionPage == 3:
+    if menu.selectionPage == 3: #suppr data
         LCD.setTextLigne2("<  suppr data  >")
         if menu.Bouton == "Ok":
             menu.pageMenu = 4
@@ -173,11 +172,12 @@ def pageMenu0():
         LCD.setTextLigne2("<  Parametres  >")
         if menu.Bouton == "Ok":
             menu.pageMenu = 5
+            blocked = True
     if menu.selectionPage == 5: #Stoppe le programme
         LCD.setTextLigne2("<   Eteindre   >")
         if menu.Bouton == "Ok":
            menu.pageMenu = 6
-    if menu.Bouton == "Plus":
+    if menu.Bouton == "Plus": #permet d'incrémenter la selection de Page
         menu.selectionPage = (menu.selectionPage+1)%6
     if menu.Bouton == "Moins":
         if menu.selectionPage == 0:
@@ -192,7 +192,6 @@ def pageMenu1():
         menu.pageMenu = 0
 
 def pageMenu2():
-    #df_produits = p.read_csv('../CSV/liste_produits.csv') #On récupère le csv des produits
     if menu.pageAjout == 0:
         LCD.setTextLigne1("Veuillez scanner")
         LCD.setTextLigne2("votre produit")
@@ -200,7 +199,6 @@ def pageMenu2():
         menu.NFC = 0
         while menu.NFC == 0 and not cancel : 
             menu.NFC = ''.join([hex(i)[-2:] for i in nfc.ReadCard()])
-            #print(NFC)
         menu.pageAjout = 1
         menu.Bouton = None
     if menu.pageAjout == 1:
@@ -224,8 +222,6 @@ def pageMenu2():
             LCD.setTextLigne1("Produit ajouté")
             menu.date_peremption = menu.date
             time.sleep(1)
-        else : 
-            print("mauvaise commande")
 
 def pageMenu3() :
     menu.df_frigo = p.read_csv('../CSV/frigo.csv') #On récupère les CSV des produits dans le stock
@@ -250,6 +246,7 @@ def pageMenu3() :
 
 
 
+#Menu de suppression d'un produit
 def pageMenu4():
     if menu.page_menu_4 == 0:
         menu.df_frigo = p.read_csv('../CSV/frigo.csv') #On récupère les CSV des produits dans le stock
@@ -259,8 +256,11 @@ def pageMenu4():
         LCD.effacerText()
         LCD.setTextLigne1("Selectionné")
         LCD.setTextLigne2("celui a retire")
+        time.sleep(1)
         menu.page_menu_4 = 1
         menu.Bouton = None
+
+        
     if menu.page_menu_4 == 1 :
         liste_index = menu.df_frigo.index
         produit = menu.df_frigo.iloc[[liste_index[menu.index_menu4]]]
@@ -285,21 +285,24 @@ def pageMenu4():
             menu.pageMenu = 0
             menu.page_menu_4 = 0
             menu.index_menu4 = 0
-            print(menu.df_frigo)
+            LCD.effacerText()
+            LCD.setTextLigne1("Produit retiré")
+            time.sleep(1)
 
 
 def pageMenu5():
     if menu.pageParamètre == 0 : # Menu principale des paramètres
         LCD.setTextLigne1("temp : " + str(menu.temp[0]) + " +- "+ str(menu.temp[1]) + " " + menu.cursor[menu.poscursor] + "        ")
         LCD.setTextLigne2("Alarme : " + str(menu.Alarme) +  menu.cursor[(menu.poscursor+1)%2] + "       ") #(poscursor+1%2) permet de selectionner l'autre element du tableau
-        menu.deplacementcursor()
-        if menu.Bouton == "Ok" and menu.poscursor == 0: 
+        menu.deplacementcursor() #permet de déplacer le curseur
+        if menu.Bouton == "Ok" and menu.poscursor == 0 and not menu.blocked: 
             menu.pageParamètre = 1 
-        elif menu.Bouton == "Ok" and menu.poscursor == 1: 
+        elif menu.Bouton == "Ok" and menu.poscursor == 1 and not menu.blocked: 
             menu.Alarme = not menu.Alarme
         elif menu.Bouton == "Back": #permet de faire retour
             menu.pageMenu = 0
             menu.poscursor = 0
+        blocked = False
     elif menu.pageParamètre == 1 :  #Menu selection
         LCD.setTextLigne1("temp : " + str(menu.temp[0]) + " " +str(menu.cursor[menu.poscursor]) +"         ")
         LCD.setTextLigne2("approx : " + str(menu.temp[1]) + " " +str(menu.cursor[(menu.poscursor+1)%2])  +"       ") 
@@ -318,43 +321,62 @@ def pageMenu5():
         else:
             menu.deplacementcursor()
 
+#affiche la page eteindre
 def pageMenu6():
-    LCD.setTextLigne1("      Fin      ")
+    LCD.setTextLigne1("      Fin      ") #affiche fin
     time.sleep(0.2)
-    tabtext = [" "," "," "," "," "," "," "," "," "," "]
+    tabtext = [" "," "," "," "," "," "," "," "," "," "] #stock les différents caractère de la barre de chargement
     text = "          "
     LCD.setTextLigne2("  [" + text + "]    ")
     for i in range(10):
         text = ""
         tabtext[i] = "#"
         for j in range(10):
-            text = text + tabtext[j]
-        LCD.setTextLigne2("  [" + text + "]     ")
+            text = text + tabtext[j] #actualise le texte
+        LCD.setTextLigne2("  [" + text + "]     ") #affiche le texte
         time.sleep(0.2)
-    menu.eteindre = True
+    menu.eteindre = True #lance l'extinction LectBouton
     event_Bouton.set()
+<<<<<<< Python/main.py
     led.TurnOff(6)
     led.TurnOff(8)
     LCD.effacerText()
     LCD.setRGB(0,0,0)
     ml.mail_arret()
+=======
+    led.TurnOff(6) #coupe le buzzer
+    led.TurnOff(8) #coupe la led
+    LCD.effacerText() #efface text
+    LCD.setRGB(0,0,0) #stop l'écran
+>>>>>>> Python/main.py
     quit()
 
+
+
+
+
+
 def main():
+<<<<<<< Python/main.py
     ml.mail_demarrage()
     LCD.initialisation()
     LCD.effacerText()
     LCD.setRGB(127,0,127)
+=======
+    LCD.initialisation() #initialise l'écran
+    LCD.effacerText() #efface l'ancien text
+    LCD.setRGB(127,0,127) #met l'écran en violet
+>>>>>>> Python/main.py
 
-    LCD.setTextLigne2("    Bienvenue"    )
-    time.sleep(2)
+    LCD.setTextLigne2("    Bienvenue"    ) #écrit bienvenue sur la ligne 2
+    time.sleep(2) 
 
     menu.tmenu = threading.Thread(target=SelectionPage) #tmenu lancera SelectionPage()
     menu.tbouton = threading.Thread(target=LectBouton) #tbouton lancera LectBouton() 
 
-    menu.tbouton.start()
-    menu.tmenu.start()  
+    menu.tbouton.start() #lance le thread tbouton
+    menu.tmenu.start()  #lance le thread tmenu
 
-    menu.tbouton.join()
-    menu.tmenu.join()     
+    menu.tbouton.join() #rejoint les deux threads
+    menu.tmenu.join()   #rejoint les deux threads
 main()
