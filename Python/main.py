@@ -170,6 +170,7 @@ def pageMenu0():
         LCD.setTextLigne2("<  Parametres  >")
         if menu.Bouton == "Ok":
             menu.pageMenu = 5
+            blocked = True
     if menu.selectionPage == 5: #Stoppe le programme
         LCD.setTextLigne2("<   Eteindre   >")
         if menu.Bouton == "Ok":
@@ -291,14 +292,15 @@ def pageMenu5():
     if menu.pageParamètre == 0 : # Menu principale des paramètres
         LCD.setTextLigne1("temp : " + str(menu.temp[0]) + " +- "+ str(menu.temp[1]) + " " + menu.cursor[menu.poscursor] + "        ")
         LCD.setTextLigne2("Alarme : " + str(menu.Alarme) +  menu.cursor[(menu.poscursor+1)%2] + "       ") #(poscursor+1%2) permet de selectionner l'autre element du tableau
-        menu.deplacementcursor()
-        if menu.Bouton == "Ok" and menu.poscursor == 0: 
+        menu.deplacementcursor() #permet de déplacer le curseur
+        if menu.Bouton == "Ok" and menu.poscursor == 0 and not blocked: 
             menu.pageParamètre = 1 
-        elif menu.Bouton == "Ok" and menu.poscursor == 1: 
+        elif menu.Bouton == "Ok" and menu.poscursor == 1 not blocked: 
             menu.Alarme = not menu.Alarme
         elif menu.Bouton == "Back": #permet de faire retour
             menu.pageMenu = 0
             menu.poscursor = 0
+        blocked = False
     elif menu.pageParamètre == 1 :  #Menu selection
         LCD.setTextLigne1("temp : " + str(menu.temp[0]) + " " +str(menu.cursor[menu.poscursor]) +"         ")
         LCD.setTextLigne2("approx : " + str(menu.temp[1]) + " " +str(menu.cursor[(menu.poscursor+1)%2])  +"       ") 
@@ -317,25 +319,26 @@ def pageMenu5():
         else:
             menu.deplacementcursor()
 
+#affiche la page eteindre
 def pageMenu6():
-    LCD.setTextLigne1("      Fin      ")
+    LCD.setTextLigne1("      Fin      ") #affiche fin
     time.sleep(0.2)
-    tabtext = [" "," "," "," "," "," "," "," "," "," "]
+    tabtext = [" "," "," "," "," "," "," "," "," "," "] #stock les différents caractère de la barre de chargement
     text = "          "
     LCD.setTextLigne2("  [" + text + "]    ")
     for i in range(10):
         text = ""
         tabtext[i] = "#"
         for j in range(10):
-            text = text + tabtext[j]
-        LCD.setTextLigne2("  [" + text + "]     ")
+            text = text + tabtext[j] #actualise le texte
+        LCD.setTextLigne2("  [" + text + "]     ") #affiche le texte
         time.sleep(0.2)
-    menu.eteindre = True
+    menu.eteindre = True #lance l'extinction LectBouton
     event_Bouton.set()
-    led.TurnOff(6)
-    led.TurnOff(8)
-    LCD.effacerText()
-    LCD.setRGB(0,0,0)
+    led.TurnOff(6) #coupe le buzzer
+    led.TurnOff(8) #coupe la led
+    LCD.effacerText() #efface text
+    LCD.setRGB(0,0,0) #stop l'écran
     quit()
 
 
@@ -344,19 +347,19 @@ def pageMenu6():
 
 
 def main():
-    LCD.initialisation()
-    LCD.effacerText()
-    LCD.setRGB(127,0,127)
+    LCD.initialisation() #initialise l'écran
+    LCD.effacerText() #efface l'ancien text
+    LCD.setRGB(127,0,127) #met l'écran en violet
 
-    LCD.setTextLigne2("    Bienvenue"    )
-    time.sleep(2)
+    LCD.setTextLigne2("    Bienvenue"    ) #écrit bienvenue sur la ligne 2
+    time.sleep(2) 
 
     menu.tmenu = threading.Thread(target=SelectionPage) #tmenu lancera SelectionPage()
     menu.tbouton = threading.Thread(target=LectBouton) #tbouton lancera LectBouton() 
 
-    menu.tbouton.start()
-    menu.tmenu.start()  
+    menu.tbouton.start() #lance le thread tbouton
+    menu.tmenu.start()  #lance le thread tmenu
 
-    menu.tbouton.join()
-    menu.tmenu.join()     
+    menu.tbouton.join() #rejoint les deux threads
+    menu.tmenu.join()   #rejoint les deux threads
 main()
