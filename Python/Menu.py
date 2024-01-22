@@ -26,7 +26,7 @@ def main () :
 
     st.write("Bienvenu sur votre dashboard")
 
-    with open('Python/temperature.txt', 'r') as file:
+    with open('temperature.txt', 'r') as file:
         contenu = file.read()
         print(contenu)
 
