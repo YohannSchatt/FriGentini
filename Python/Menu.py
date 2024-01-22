@@ -32,7 +32,7 @@ def main () :
     import pandas as pd
 
     # Spécifiez le chemin vers votre fichier CSV
-    chemin_fichier_csv = 'chemin/vers/votre/fichier.csv'
+    chemin_fichier_csv = 'CSV/frigo.csv'
 
     # Chargez le fichier CSV dans un DataFrame
     df = pd.read_csv(chemin_fichier_csv)
