@@ -98,7 +98,7 @@ def LectBouton():
         menu.températureAct = thermo.ReadTemperature() #temperature
         rt.releve_temp(menu.températureAct)
         with open('temperature.txt', 'w') as file:
-            file.write(str(menu.températureAct))
+            file.write(str(round(menu.températureAct)))
         with verrou:
             if grovepi.digitalRead(buttonOk) == 1:
                 menu.Bouton = "Ok"
