@@ -1,12 +1,10 @@
 import streamlit as st
 import pandas as pd
 from PIL import Image
-import main as mn
 
 #Commande pour lancer l'application
 #streamlit run Menu.py
 #!etre dans le repertoire Python
-@st.cache_data
 def get_data(chemin) -> pd.DataFrame:
     return pd.read_csv(chemin)
 
