@@ -26,10 +26,15 @@ def main () :
 
     st.write("Bienvenu sur votre dashboard")
 
+    with open('Python/temperature.txt', 'r') as file:
+        contenu = file.read()
+        print(contenu)
+
+
     #Gestion des metrics qui sont utilisés pour résumer l'etat de notre système
     #A rendre dynamique (Capturer la température au lancement de la page et compter les objets dans nos tables)
     col1, col2, col3 = st.columns(3)
-    col1.metric("Temperature", "3")
+    col1.metric("Temperature", str(contenu))
     col2.metric("Aliments", "5")
     col3.metric("Aliments périmée", "1")
 
