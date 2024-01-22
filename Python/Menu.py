@@ -2,12 +2,18 @@ import streamlit as st
 import pandas as pd
 from PIL import Image
 import pandas as pd
+import datetime
 
 #Commande pour lancer l'application
 #streamlit run Menu.py
 #!etre dans le repertoire Python
 def get_data(chemin) -> pd.DataFrame:
     return pd.read_csv(chemin)
+
+def est_périmé (date:str) -> bool : 
+    auj = datetime.datetime.today()
+    diff =  -(auj - datetime.datetime.strptime(date,'%d/%m/%Y')).days
+    return diff < 0
 
 def main () :
 
@@ -41,6 +47,8 @@ def main () :
     # Obtenez le nombre de lignes en utilisant la propriété shape
     nombre_lignes = df.shape[0]
 
+    filtered_df = df[df['date_péremption'].apply(est_périmé)]
+    count_périmé = filtered_df.shape[0]
 
     #Gestion des metrics qui sont utilisés pour résumer l'etat de notre système
     #A rendre dynamique (Capturer la température au lancement de la page et compter les objets dans nos tables)
