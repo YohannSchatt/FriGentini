@@ -149,14 +149,6 @@ def SelectionPage():
 
 
 def pageMenu0(): #Menu principale, affiche la page ou se trouve l'utilisateur
-    LCD.setTextLigne1("    Selection     ")
-    if menu.Bouton == "Plus": #permet d'incrémenter la selection de Page
-        menu.selectionPage = (menu.selectionPage+1)%6
-    if menu.Bouton == "Moins":
-        if menu.selectionPage == 0:
-            menu.selectionPage = 6
-        else :
-            menu.selectionPage = menu.selectionPage - 1
     if menu.selectionPage == 0: #affice temp
         LCD.setTextLigne2("< affiche Temp >")
         if menu.Bouton == "Ok":
@@ -182,6 +174,14 @@ def pageMenu0(): #Menu principale, affiche la page ou se trouve l'utilisateur
         LCD.setTextLigne2("<   Eteindre   >")
         if menu.Bouton == "Ok":
            menu.pageMenu = 6
+        LCD.setTextLigne1("    Selection     ")
+    if menu.Bouton == "Plus": #permet d'incrémenter la selection de Page
+        menu.selectionPage = (menu.selectionPage+1)%6
+    if menu.Bouton == "Moins":
+        if menu.selectionPage == 0:
+            menu.selectionPage = 6
+        else :
+            menu.selectionPage = menu.selectionPage - 1
 
 def pageMenu1():
     LCD.setTextLigne1(str(round(menu.températureAct,1))+' Celsius       ')
