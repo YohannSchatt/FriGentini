@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 from PIL import Image
+import pandas as pd
 
 #Commande pour lancer l'application
 #streamlit run Menu.py
@@ -32,7 +33,7 @@ def main () :
     import pandas as pd
 
     # Spécifiez le chemin vers votre fichier CSV
-    chemin_fichier_csv = 'CSV/frigo.csv'
+    chemin_fichier_csv = '../CSV/frigo.csv'
 
     # Chargez le fichier CSV dans un DataFrame
     df = pd.read_csv(chemin_fichier_csv)
