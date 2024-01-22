@@ -31,9 +31,16 @@ def main () :
     #Gestion des metrics qui sont utilisés pour résumer l'etat de notre système
     #A rendre dynamique (Capturer la température au lancement de la page et compter les objets dans nos tables)
     col1, col2, col3 = st.columns(3)
-    col1.metric("Temperature", str(mn.menu.températureAct))
+    col1.metric("Temperature", "3")
     col2.metric("Aliments", "5")
     col3.metric("Aliments périmée", "1")
+
+    refresh_button = st.button("Refresh")
+
+    # Vérifiez si le bouton a été cliqué
+    if refresh_button:
+        # Utilisez le module streamlit pour forcer le rafraîchissement
+        st.experimental_rerun()
 
 if __name__ == '__main__':
     main()
