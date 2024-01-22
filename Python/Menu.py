@@ -29,12 +29,23 @@ def main () :
     with open('temperature.txt', 'r') as file:
         contenu = file.read()
 
+    import pandas as pd
+
+    # Spécifiez le chemin vers votre fichier CSV
+    chemin_fichier_csv = 'chemin/vers/votre/fichier.csv'
+
+    # Chargez le fichier CSV dans un DataFrame
+    df = pd.read_csv(chemin_fichier_csv)
+
+    # Obtenez le nombre de lignes en utilisant la propriété shape
+    nombre_lignes = df.shape[0]
+
 
     #Gestion des metrics qui sont utilisés pour résumer l'etat de notre système
     #A rendre dynamique (Capturer la température au lancement de la page et compter les objets dans nos tables)
     col1, col2, col3 = st.columns(3)
     col1.metric("Temperature", str(contenu))
-    col2.metric("Aliments", "5")
+    col2.metric("Aliments", str(nombre_lignes))
     col3.metric("Aliments périmée", "1")
 
     refresh_button = st.button("Refresh")
