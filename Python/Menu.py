@@ -55,7 +55,7 @@ def main () :
     col1, col2, col3 = st.columns(3)
     col1.metric("Temperature", str(contenu))
     col2.metric("Aliments", str(nombre_lignes))
-    col3.metric("Aliments périmée", "1")
+    col3.metric("Aliments périmée", count_périmé)
 
     refresh_button = st.button("Refresh")
 
