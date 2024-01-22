@@ -14,7 +14,7 @@ import led
 import threading
 import datetime as dt
 import NFCDriver as nfc
-import os
+import Mail as ml
 
 class Menu:
     def __init__(self):
@@ -337,9 +337,11 @@ def pageMenu6():
     led.TurnOff(8)
     LCD.effacerText()
     LCD.setRGB(0,0,0)
+    ml.mail_arret()
     quit()
 
 def main():
+    ml.mail_demarrage()
     LCD.initialisation()
     LCD.effacerText()
     LCD.setRGB(127,0,127)
