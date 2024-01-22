@@ -14,7 +14,9 @@ import led
 import threading
 import datetime as dt
 import NFCDriver as nfc
+import Mail as ml
 import Releve_temperature as rt
+
 
 class Menu:
     def __init__(self):
@@ -335,10 +337,18 @@ def pageMenu6():
         time.sleep(0.2)
     menu.eteindre = True #lance l'extinction LectBouton
     event_Bouton.set()
+<<<<<<< Python/main.py
+    led.TurnOff(6)
+    led.TurnOff(8)
+    LCD.effacerText()
+    LCD.setRGB(0,0,0)
+    ml.mail_arret()
+=======
     led.TurnOff(6) #coupe le buzzer
     led.TurnOff(8) #coupe la led
     LCD.effacerText() #efface text
     LCD.setRGB(0,0,0) #stop l'écran
+>>>>>>> Python/main.py
     quit()
 
 
@@ -347,9 +357,16 @@ def pageMenu6():
 
 
 def main():
+<<<<<<< Python/main.py
+    ml.mail_demarrage()
+    LCD.initialisation()
+    LCD.effacerText()
+    LCD.setRGB(127,0,127)
+=======
     LCD.initialisation() #initialise l'écran
     LCD.effacerText() #efface l'ancien text
     LCD.setRGB(127,0,127) #met l'écran en violet
+>>>>>>> Python/main.py
 
     LCD.setTextLigne2("    Bienvenue"    ) #écrit bienvenue sur la ligne 2
     time.sleep(2) 
