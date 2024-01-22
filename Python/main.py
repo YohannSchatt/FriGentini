@@ -295,7 +295,7 @@ def pageMenu5():
         menu.deplacementcursor() #permet de déplacer le curseur
         if menu.Bouton == "Ok" and menu.poscursor == 0 and not menu.blocked: 
             menu.pageParamètre = 1 
-        elif menu.Bouton == "Ok" and menu.poscursor == 1 not menu.blocked: 
+        elif menu.Bouton == "Ok" and menu.poscursor == 1 and not menu.blocked: 
             menu.Alarme = not menu.Alarme
         elif menu.Bouton == "Back": #permet de faire retour
             menu.pageMenu = 0
