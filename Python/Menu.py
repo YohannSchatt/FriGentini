@@ -28,7 +28,6 @@ def main () :
 
     with open('temperature.txt', 'r') as file:
         contenu = file.read()
-        print(contenu)
 
 
     #Gestion des metrics qui sont utilisés pour résumer l'etat de notre système
