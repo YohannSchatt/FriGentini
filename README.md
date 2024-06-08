@@ -4,9 +4,9 @@
 
 ## Frigentini qu'est ce que c'est ?
 
-Frigentini est un gestionnaire de stock alimentaire développé par Schatt Yohann et Puyfages Mathias dans le cadre de nos étude a Polytech Montpellier.
+Frigentini est un gestionnaire de stock alimentaire développé par Schatt Yohann et Puyfages Mathias dans le cadre de nos études a Polytech Montpellier.
 
-Vous pourrez consulter/gérer votre stock mais aussi relevé la température.
+Vous pourrez consulter/gérer votre stock, mais aussi relevé la température.
 
 ---
 
@@ -50,4 +50,4 @@ Pour les installer, consultez le manuel utilisateur.
 - 1x Grove - LCD RGB Backlight
 - 1x Grove NFC tag
 
-Pour plus d'information, n'hésitez pas a consulter le manuel utilisateur
+Pour plus d'information, n'hésitez pas à consulter le manuel utilisateur.
